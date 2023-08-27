@@ -1,0 +1,41 @@
+.navbar{
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 101;
+}
+.user img{
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.icons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+.logo{
+    align-items: center;
+    gap: 20px;
+}
+.notification{
+    position: relative;
+}
+.notificationCount{
+    position: absolute;
+    background-color: red;
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    font-size: 10px;
+    width: 17px;
+    height: 17px;
+    text-align: center;
+    justify-content: center;
+}
