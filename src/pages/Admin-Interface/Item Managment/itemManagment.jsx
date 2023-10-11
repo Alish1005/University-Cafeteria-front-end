@@ -8,4 +8,4 @@ function itemManagment() {
      );
 }
 
-export default itemManagment;
+export default itemManagmen
