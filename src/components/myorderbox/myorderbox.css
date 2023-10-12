@@ -1,0 +1,15 @@
+.myOrderbox{
+ position: relative;
+}
+.myOrderbadge{
+ position: absolute;
+ top:20%;
+ right: 40%;
+ /*
+  right: 0%;
+  width:100%;
+ */
+}
+.bg-success{
+    background-color: #1fcc67 !important ;
+}

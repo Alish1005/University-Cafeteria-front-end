@@ -1,0 +1,9 @@
+.offerbox{
+    
+}
+.table.table-striped-gray tr:hover{
+    background-color: rgb(151, 148, 148);
+}
+.table.table-striped-gray tr:nth-child(2n){
+    background-color: lightgray;
+}

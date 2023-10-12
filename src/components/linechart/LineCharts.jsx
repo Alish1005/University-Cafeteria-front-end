@@ -1,3 +1,4 @@
+import { Padding } from '@mui/icons-material';
 import {
     LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,Legend,Brush,AreaChart,Area,ResponsiveContainer,} from 'recharts';
 function LineCharts(props) {
@@ -20,8 +21,8 @@ function LineCharts(props) {
             <YAxis />
             <Tooltip />
             {props.datakey!=null && <Line type="monotone" dataKey={props.datakey} stroke="#8884d8" fill="#8884d8" />}
-            {props.datakey2!=null && <Line type="monotone" dataKey={props.datakey2} stroke="#F2D944" fill="#F2D944" />}
-            {props.datakey3!=null && <Line type="monotone" dataKey={props.datakey3} stroke="#44FF44" fill="#44FF44" />}
+            {props.datakey2!=null && <Line type="monotone" dataKey={props.datakey2} stroke="#0DCAF0" fill="#0DCAF0" />}
+            {props.datakey3!=null && <Line type="monotone" dataKey={props.datakey3} stroke="#F2D944" fill="#F2D944" />}
           </LineChart>
         </ResponsiveContainer>
      );

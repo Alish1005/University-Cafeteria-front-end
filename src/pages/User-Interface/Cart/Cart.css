@@ -1,0 +1,31 @@
+.cartbiv{
+    margin-top: 108px;
+    margin-bottom: 50px;
+}
+.carttable{
+    width: 100%;
+}
+#table{
+    display: flex;
+    justify-content: center;
+}
+
+#cart_footer{
+    display: flex;
+    justify-content: center;
+}
+
+.input-delv{
+    width: 10%;
+    min-width: 40px;
+    margin: 10px 10px 0 10px;
+}
+.btn-send{
+    position: fixed;
+    bottom: 50px;
+    left: 42%;
+}
+.btn-send:hover{
+    box-shadow: 0 0 50px 5px yellow;
+    transition: all .3s;
+}

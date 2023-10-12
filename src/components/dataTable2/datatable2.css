@@ -1,0 +1,28 @@
+.table tr td{
+    padding: 5px;
+}
+.table.btn-danger{
+    background-color: red !important;
+}
+.table.table-primary th{
+    border-bottom: solid 2px #F2D944;
+}
+.table.table-primary tr:hover{
+    background-color: #044ae0 !important;
+}
+.table.table-primary.table-striped tr:nth-child(2n){
+    background-color: #264996;
+}
+
+.table.table-secondary th{
+    border-bottom: solid 2px #1E3669;
+}
+.table.table-secondary tr:hover{
+    background-color: #b19d2c !important;
+}
+.table.table-secondary.table-striped tr:nth-child(2n){
+    background-color: #d1b306 !important;
+}
+.bg-gray{
+    background-color: rgba(211, 211, 211, 0.438)
+}

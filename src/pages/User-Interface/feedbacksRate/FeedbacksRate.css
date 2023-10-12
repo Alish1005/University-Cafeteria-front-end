@@ -1,0 +1,82 @@
+.body{
+    background:  #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.wrapper{
+    background:  #ffffff;
+    padding: 2rem;
+    max-width: 576px;
+    width: 100%;
+    border-radius: .75rem;
+    box-shadow: 2px  4px rgba(0, 0, 0, 0.2);
+    text-align: center
+
+}
+
+.wrapper h3{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.rating{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: .5rem;
+    font-size: 2rem;
+    color: #ffff00;
+    margin-bottom: 2rem;
+
+}
+.rating .star{
+    cursor: pointer;
+}
+.rating .star.active{
+    opacity: 0;
+    animation: animate .5s calc(var(--i)*.1s) ease-in-out forwards;
+}
+.rating .star:hover{
+    transform: scale(1.1);
+}
+
+textarea{
+    width: 100%;
+    height: 150px;
+    background: #f0f0f0;
+    padding: 1rem;
+    border-radius: .5rem;
+    border: none;
+    outline: none;
+    resize: none;
+    margin-bottom: .5rem;
+}
+.button-group{
+    display: flex;
+    grid-gap: .5rem;
+    align-items: center;
+
+}
+.button-group .button{
+    padding: .75rem 1rem;
+    border-radius: .5rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.button-group button.submit{
+    background-color: navy;
+    color:  yellow;
+}
+.button-group button.submit:hover{
+    background: #4169e1;
+}
+.button-group button.cancel{
+    background:  yellow;
+    color: navy;
+}
+.button-group button.cancel:hover{
+    background: rgb(236, 236, 56);
+}

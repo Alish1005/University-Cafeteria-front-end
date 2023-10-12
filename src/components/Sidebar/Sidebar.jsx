@@ -18,68 +18,68 @@ function Sidebar() {
     return (
         <div className="Sidebar">
             <div className="items">
-                <input type='checkbox' className='menuCheckBox' checked={menuShow} hidden/><ReorderIcon className='menuBtn' onClick={()=>{
+                <input type='checkbox' className='menuCheckBox' checked={menuShow} hidden/><ReorderIcon className='menuBtn text-secondary' onClick={()=>{
                     setMenuShow(menuShow=>!menuShow)
                 }}/>
                 <div className="title">Main</div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/" className='listItem' >
                         <BarChartIcon/>
                         { !menuShow ? <span className="listItemTitle">Dashbord</span> : <span className="listItemTitle" style={{display:"none"}}>Home</span>}
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/" className='listItem' >
                         <HomeIcon/>
                         { !menuShow ? <span className="listItemTitle">Home</span> : <span className="listItemTitle" style={{display:"none"}}>Home</span>}
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/StaffMenu" className='listItem'  data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <RestaurantMenuIcon/>
                         { !menuShow ? <span className="listItemTitle">Menu</span> : <span className="listItemTitle" style={{display:"none"}}>Menu</span>}
                     </Link>
                 </div>
                 <div className="title">Lists</div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/itemManagment" className='listItem' >
                         <FastfoodIcon />
                         { !menuShow ? <span className="listItemTitle">Item Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Staff Managment</span>}
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/StaffList" className='listItem' >
                         <EngineeringIcon />
                         { !menuShow ? <span className="listItemTitle">Staff Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Staff Managment</span>}
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/CustomerList" className='listItem' >
                         <ManageAccountsIcon />
                         { !menuShow ? <span className="listItemTitle">Customer Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Customer Managment</span>}
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/OrdersList" className='listItem' >
                         <ShoppingCartIcon/>
                         { !menuShow ? <span className="listItemTitle">Order Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Order Managment</span>}
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/OfferList" className='listItem' >
                         <LocalOfferIcon/>
                         { !menuShow ? <span className="listItemTitle">Offer Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Offer Managment</span>}
                     </Link>
                 </div>
                 <div className="title">General</div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/FeedBack" className='listItem' >
                         <FeedbackIcon/>
                         { !menuShow ? <span className="listItemTitle">Feedbacks</span> : <span className="listItemTitle" style={{display:"none"}}>Feedbacks</span> }
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/" className='listItem' onClick={()=>{setTimeout(()=>{window.location.reload()},500)}}>
+                    <Link to="/Settings" className='listItem' >
                         <SettingsIcon/>
                         { !menuShow ? <span className="listItemTitle">Settings</span> : <span className="listItemTitle" style={{display:"none"}}>Settings</span>}
                     </Link>

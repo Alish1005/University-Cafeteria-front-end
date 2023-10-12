@@ -1,0 +1,50 @@
+@import url("../../style/variables.css");
+.UserTopbar{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 100;
+}
+.Usermenu ul li :hover{
+    color: #aa9627 !important;
+    transition: all .35s;
+}
+.Usermenu{
+    background-color: navy;
+    color: yellow;
+    transition: all .35s;
+}
+.Usermenu ul{
+    text-align: center;
+    text-decoration: none;
+}
+.Usermenu ul li{
+    display: inline-block;
+    padding: 5px 20px;
+    font-size: 20px;
+    text-decoration: none;
+}
+.cart{
+    position: relative;
+}
+.notificationSpan{
+    position: absolute;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    right: 10px;
+    font-size: 12px !important;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+@media (max-width :768px){
+    .Usermenu ul li{
+        font-size: 15px;
+        padding: 5px 10px;
+    }
+}

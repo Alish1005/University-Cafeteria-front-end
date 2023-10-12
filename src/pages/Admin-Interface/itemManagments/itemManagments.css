@@ -1,0 +1,30 @@
+@import "../../../style/variables.css";
+.action{
+    display: flex;
+    gap: 10px;
+}
+
+.action img{
+    width: 23px;
+    height: 23px;
+    cursor: pointer;
+}
+.actions{
+    position: fixed;
+    top: 50px;
+    right: 50px;
+}
+/*
+.Tab{
+    color:var(--soft-bg) !important;
+}
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
+    color: aliceblue !important;
+}
+.MuiButtonBase-root:not(:focus){
+    color: #F2D944 !important;
+}
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
+    color: #F2D944;
+}
+*/

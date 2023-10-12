@@ -1,0 +1,32 @@
+.Settingsinput{
+    width: 10%;
+    min-width: 210px;
+    margin: 10px 10px 0 10px;
+}
+.Settingsinput:focus{
+    outline:solid 1px #3A88E8 ;
+
+    box-shadow: 0px 0px 10px #5ea6ff;
+}
+.Settingsinput:hover{
+    outline:solid 1px #3A88E8 ;
+}
+.settingsTitles{
+    margin-top: 20px;
+    text-align: start;
+}
+.SettingsTextArea{
+    min-width: 90%;
+}
+.SettingsSavebtn{
+    bottom: 50px;
+}
+
+.SettingsOffday{
+    max-height: 300px;
+    overflow-y: auto;
+}
+.SettingsOffdaytable {
+    max-height: 150px;
+    
+}

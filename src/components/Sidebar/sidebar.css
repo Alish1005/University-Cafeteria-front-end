@@ -12,6 +12,7 @@
     align-self: start;
     justify-self: start;
     cursor:pointer;
+    margin-right: 10px;
 }
 
 .menuCheckBox{
@@ -20,8 +21,8 @@
 
 .contentContainer {
     flex: 13;
-    padding: 5px 20px 30px 20px;
-    height: 100%;
+    padding: 5px 0px 30px 20px;
+    height: 100vh;
 }
 
 .menuCheckBox:checked ~.title{
@@ -43,20 +44,24 @@
     margin-bottom: 20px;
     text-align: end;
     transition: all .3s;
+
 }
 
 ::-webkit-scrollbar{
     /*the scrollbar is none */
-    display: none;
-    width:.3em!important ;
+    display: block;
+    width:5px ;
+}
+::-webkit-scrollbar-track{
+    display: block;
+    
 }
 
-::-webkit-scrollbar-track{
- 
-}
 
 ::-webkit-scrollbar-thumb{
     background-color:#6498ff;
+    border-radius: 10px;
+
 }
 
 .item{
@@ -64,6 +69,8 @@
     background:var(--main-bg);
     gap: 10px;
     transition: all .3s;
+    margin-right: 10px;
+
 }
 
 .title{
@@ -73,6 +80,7 @@
     justify-self: start;
     text-transform: uppercase;
     padding-bottom: 2px;
+    margin-right: 10px;
     border-bottom: solid var(--main-color) 2px;
     text-align: center;
     cursor:default;
@@ -85,7 +93,7 @@
     gap: 5px;
     padding: 5px;
     border-radius: 5px;
-    transition: all .2s;
+    transition: all .5s;
     margin-bottom: 10px;
 }
 
@@ -94,6 +102,7 @@
     color:#1E3669 !important;
     transition: all .5s;
 }
+
 
 @media (max-width :768px){
     ::-webkit-scrollbar{

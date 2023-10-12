@@ -1,0 +1,36 @@
+@import url("../../style/variables.css");
+.orderbox{
+    border-radius: 5px;
+}
+.table-striped-gray tr:nth-child(2n){
+background-color: lightgrey ;
+}
+.table thead{
+    border-bottom: solid 2px var(--main-bg);
+}
+.table.table-striped-gray tr:hover{
+    background-color: rgb(151, 148, 148) !important;
+}
+.dropdown-menu{
+    padding: 0 0 0 0;
+    border-radius: 5px !important;
+    font-size: 14px;
+    min-width: 5px;
+    width: fit-content !important;
+    transition: all .3s;
+}
+.dropdown-menu li,.dropdown-menu li a{
+    width: fit-content;
+    transition: all .2s;
+}
+.dropdown-menu li a.bg-danger:hover{
+    background:#c52222 !important;
+}
+.dropdown-menu li a:hover{
+    font-weight: bold;
+    transition: all .3s;
+}
+
+.dropdown-menu li,.dropdown-menu li a{
+    width: 100%;
+}

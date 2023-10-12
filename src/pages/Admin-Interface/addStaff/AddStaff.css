@@ -1,0 +1,22 @@
+label{
+    text-align: center;
+}
+.staff{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+.staff button{
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 150px;
+}
+.add{
+    background-color: navy;
+    color: yellow;
+}
+.cancel{
+    background-color: yellow;
+    color: navy;
+}

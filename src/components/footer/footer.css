@@ -1,5 +1,6 @@
 @import '../../style/variables.css';
 .footer{
+    z-index: 2;
     background-color: var(--main-color);
     color: var(--main-bg);
     font-weight: 500;
@@ -9,4 +10,10 @@
     bottom: 0;
     padding: 5px 10px;
     justify-content: space-between;
+}
+.btn-footer-feedback{
+    border: 0;
+    background-color: transparent;
+    font-weight: 700;
+    text-decoration: underline;
 }

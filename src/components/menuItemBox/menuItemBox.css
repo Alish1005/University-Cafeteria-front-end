@@ -1,0 +1,34 @@
+.btn-count{
+    border-radius: 50%;
+    padding: 5px;
+    margin: 0 15px;
+    font-size: 11px;
+}
+.input-note-pop{
+    width: 400px;
+}
+.input-count{
+    border-radius: 30px;
+}
+.input-count::-webkit-inner-spin-button,
+.input-count::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0; /* Optional: You can also set margin to zero to eliminate any remaining spacing */
+}
+.MenuItemBoxImg{
+    width: 90%;
+}
+.menuItemBox{
+    height: 10;
+}
+.blackwhite{
+    filter: grayscale(100%);
+}
+.newspan{
+    position: absolute;
+    top:10px;
+    left: 10px;
+}
+.menupopimg{
+    width: 400px;
+}

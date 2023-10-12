@@ -1,9 +1,11 @@
+@import url("../../style/variables.css");
 .navbar{
     width: 100%;
     padding: 20px;
     display: flex;
     align-items: center;
     z-index: 101;
+    border-bottom: solid 2px var(--soft-bg);
 }
 .user img{
     width: 26px;
@@ -13,7 +15,10 @@
     align-items: center;
     margin-right: 10px;
 }
-
+.bg-transperant{
+    background-color: rgba(255, 255, 255, 0.336); /* Transparent background color */
+    backdrop-filter: blur(3px); /* Adjust the blur value as needed */
+}
 .icons{
     display: flex;
     align-items: center;
@@ -30,6 +35,8 @@
 .notificationCount{
     position: absolute;
     background-color: red;
+    color: white;
+    font-weight: 500;
     border-radius: 50%;
     top: -5px;
     right: -5px;
