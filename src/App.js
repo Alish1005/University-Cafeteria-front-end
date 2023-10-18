@@ -11,6 +11,7 @@ function App() {
         Switch
       </button>
       {isA ? <Admin/> : <User/>}
+  
     </div>
   );
 }
