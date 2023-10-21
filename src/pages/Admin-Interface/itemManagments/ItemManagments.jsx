@@ -10,40 +10,65 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import { ToastContainer,toast } from "react-toastify";
 import { variables } from "../../Variables";
 import axios from "axios";
 import { format } from 'date-fns';
+import { useToast } from '@chakra-ui/react'
+
 
 function ItemManagments(props) {
+  const toast = useToast()
 
   //Set the Value of the Tab we are on
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-//fake data
-const row = [{id: 1,name: "Delicious Delights",price: 15.99,income: 319.80,quantity: 30,points: 4.5,publishDate: "2023-08-25",orders: 45 },{id: 2,name: "Savory Bites",price: 12.49,income: 224.82,quantity: 20,points: 4.2,publishDate: "2023-08-24",orders: 37 },{id: 3,name: "Taste Haven",price: 18.75,income: 337.50,quantity: 25,points: 4.8,publishDate: "2023-08-23",orders: 50 },{id: 4,name: "Flavorful Eats",price: 9.99,income: 179.82,quantity: 15,points: 4.0,publishDate: "2023-08-22",orders: 30 },{id: 5,name: "Cuisine Corner",price: 14.25,income: 256.50,quantity: 18,points: 4.6,publishDate: "2023-08-21",orders: 42},{id: 6,name: "Gourmet Grill",price: 20.50,income: 369.00,quantity: 22,points: 4.9,publishDate: "2023-08-20",orders: 55},{id: 7,name: "Spice Palace",price: 11.95,income: 215.10,quantity: 16,points: 4.3,publishDate: "2023-08-19",orders: 39},{id: 8,name: "Flourish Flavors",price: 16.75,income: 301.50,quantity: 28,points: 4.7,publishDate: "2023-08-18",orders: 48},{id: 9,name: "Tasty Treats",price: 13.50,income: 243.00,quantity: 19,points: 4.4,publishDate: "2023-08-17",orders: 41},{id: 11,name: "Flavorsome Fusion",price: 22.99,income: 413.82,quantity: 24,points: 4.8,publishDate: "2023-08-16",orders: 57},  {id: 8,name: "Flourish Flavors",price: 16.75,income: 301.50,quantity: 28,points: 4.7,publishDate: "2023-08-18",orders: 48},{id: 12,name: "Tasty Treats",price: 13.50,income: 243.00,quantity: 19,points: 4.4,publishDate: "2023-08-17",orders: 41},{id: 13,name: "Flavorsome Fusion",price: 22.99,income: 413.82,quantity: 24,points: 4.8,publishDate: "2023-08-16",orders: 57}];
 
 //Columns Data
 const columns = [
- { field: "id", headerName: "ID", width: 40 },
- {field: "img",headerName: "Avatar",width: 70,renderCell: (params) => {return <img src={params.row.img || "/noavatar.png"} alt="" />;},},
- {field: "name",type: "string",headerName: "Item name",width: 170},
- {field: "section",type: "string",headerName: "Section",width: 90},
- {field: "price",type: "float",headerName: "price",},
- {field: "income",type: "float",headerName: "Income",width: 100},
- {field: "quantity",type: "integer",headerName: "Quantity",width: 70},
- {field: "points",headerName: "Points",width: 50,type: "integer"},
- {field: "rating",headerName: "rating",width: 50,type: "integer"},
- {field: "publishDate",headerName: "Publish Date",width: 100,type: "string"},
+ { field: "id", headerName: "ID", width: 70 },
+ {field: "photo",headerName: "Avatar",sortable: false,width: 60,renderCell: (params) => {return <img src={params.row.photo || "/noavatar.png"} alt="" />;},},
+ {field: "name",type: "string",headerName: "Item name",width: 150},
+ {field: "section",type: "string",headerName: "section",width: 100,renderCell: (params) => {
+  const s=FindSection(params.row.section_id).name
+  return s;
+},
+},
+{field: "description",type: "string",headerName: "component",width: 100,sortable: false},
+ {field: "price",type: "float",headerName: "price",width: 70},
+ {field: "quantity",type: "number",headerName: "Quantity",width: 70},
+ {field: "orders_number",type: "number",headerName: "orders #",width: 70},
+ {field: "publishDate",headerName: "Publish Date",renderCell: (params) => (<div>{format(new Date(params.value), 'yyyy-MM-dd')}</div>),width: 100,type: "Date",},
+ {field: "action",headerName: "Action",width: 200,sortable: false,renderCell: (params) => {
+  return (
+    <div className="action">
+        <button data-bs-toggle="modal" data-bs-target="#AddSectionModal" className="delete btn btn-info btn-sm" onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}>
+           Edit
+        </button>
+        <button className="delete btn btn-danger btn-sm" onClick={()=>{DeleteItem(params.row.id)}}>
+          Delete
+        </button>
+        {params.row.status==variables.hideValue ?
+          <button className="delete btn btn-primary btn-sm" onClick={()=>HideItem(params.row.id,params.row.status)}>
+          Add
+        </button>:
+         <button className="delete btn btn-warning btn-sm" onClick={()=>HideItem(params.row.id,params.row.status)}>
+          Hide
+        </button>
+         }  
+    </div>
+  );
+},
+}
 ];
+//Section Columns
 const Sectioncolumns = [
  { field: "id", headerName: "ID", width: 40 },
  {field: "name",type: "string",headerName: "Item name",width: 170,},
  {field: "items_number",type: "int",headerName: "number of items",width: 130,},
  {field: "isHidden",headerName: "is Hidden?",width: 170,type: "boolean",},
- {field: "publishDate",headerName: "Publish Date",renderCell: (params) => (<div>{format(new Date(params.value), 'yyyy-MM-dd')}</div>),width: 170,type: "Date",},
+ {field: "publishDate",headerName: "Publish Date",renderCell: (params) => (<div>{format(new Date(params.value), 'yyyy-MM-dd')}</div>),width: 100,type: "Date",},
  {field: "action",headerName: "Action",width: 200,renderCell: (params) => {
     return (
       <div className="action">
@@ -72,50 +97,152 @@ const Sectioncolumns = [
   const [value, setValue] = useState('1');//For the 
   const [sectionId,setSectionId]=useState(0)
   const [sectionName,setSectionName]=useState("")
+  const [sectionN,setSectionN]=useState({})
+
+
   const [sections,setSections]=useState([])
+  const [items,setItems]=useState([])
+
+
+  const [itemsM,setItemsM]=useState([])
+  const [itemsH,setItemsH]=useState([])
 
 
 //refresh function
 const refresh=()=>{
+    //Save items
+    axios.get(variables.API_URL+"Item")
+    .then((res) => {
+      setItems(res.data);
+      //setItemsM(res.data.filter((item)=>item.status==variables.onMenuValue));
+      //setItemsH(res.data.filter((item)=>item.status==variables.hideValue));      
+      })
+  //Save Sections
   axios.get(variables.API_URL+"Item/Sections")
   .then((res) => {
     setSections(res.data);
-    console.log("response from reports api is ", res)
     })
-    }
+  }
     useEffect(()=> {
       refresh();
       },[])
-//Section Action
 
+//Item Actions
+//Delete Item
+const DeleteItem = (id) => {
+  axios.delete(`${variables.API_URL}Item/${id}`)  
+  .then((result)=>{
+    refresh();
+    toast({
+      title: 'Item Deleted Successfully !',
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
+  }).catch((error)=>{
+    toast({
+      title: error,
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  })
+};
+const HideItem = (id,status) => {
+  if(status==variables.onMenuValue){
+    status=variables.hideValue;
+  }else{
+    status=variables.onMenuValue;
+  }
+  axios.put(`${variables.API_URL}Item/UpdateStatus/${id}/${status}`)  
+  .then((result)=>{
+    refresh();
+    toast({
+      title: `Item is being ${status} Successfully`,
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'success',
+      duration: 1500,
+      isClosable: false,
+    })
+  }).catch((error)=>{
+    toast({
+      title: error,
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  })
+};
+
+//Section Actions
 //OnClick Add Section
 const SectionOnClick=()=>{
+  if(sectionName=="" || sectionName.length<=3){
+    toast({
+      title: "Section name must be greater than 3 characters",
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+    return
+  }
   if(sectionId==0){
     const data={"id":0,"name":sectionName};
     axios.post(variables.API_URL+"Item/AddSection",data)
     .then((result)=>{
-      if(sectionName=="" || sectionName.length<=3){
-        throw new Error("Enter section name");
-      }
       refresh();
-      toast.success("Section Added Successfully");
+      toast({
+        title: "Section Added Successfully",
+        /*description: "Fill all the information",*/
+        position:'top-right',
+        status: 'success',
+        duration: 3000,
+        isClosable: false,
+      })
       setSectionName("");
     }).catch((error)=>{
-      toast.error(error)
+      toast({
+        title: error,
+        /*description: "Fill all the information",*/
+        position:'top-right',
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      })
       setSectionName("");
     })
 }else{
   axios.put(variables.API_URL+"Item/UpdateSection/"+sectionId+"/"+sectionName)
   .then((result)=>{
-    if(sectionName=="" || sectionName.length<=3){
-      throw new Error("Enter section name");
-    }
     refresh();
-    toast.success("Section Added Successfully");
+    toast({
+      title: "Section Updated Successfully",
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
     setSectionName("");
     setSectionId(0);
   }).catch((error)=>{
-    toast.error(error)
+    toast({
+      title: error,
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    });
     setSectionName("");
     setSectionId(0);
   })
@@ -130,29 +257,61 @@ const EditSectionOnClick=(id,name)=>{
   setSectionId(id);
   setSectionName(name);
 }
-
-
 //Delete Section
   const DeleteSection = (id) => {
     axios.delete(`${variables.API_URL}Item/DeleteSection/${id}`)  
     .then((result)=>{
       refresh();
-      toast.success("Section Deleted Successfully"+id);
+      toast({
+        title: 'Section Deleted Successfully !',
+        /*description: "Fill all the information",*/
+        position:'top-right',
+        status: 'success',
+        duration: 3000,
+        isClosable: false,
+      })
     }).catch((error)=>{
-      toast.error(error)
+      toast({
+        title: error,
+        /*description: "Fill all the information",*/
+        position:'top-right',
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      })
     })
   };
+
   const HideSection = (id,status) => {
     axios.put(`${variables.API_URL}Item/UpdateSectionStatus/${id}/${!status}`)  
     .then((result)=>{
       refresh();
-      toast.success("Section Deleted Successfully "+status);
+      toast({
+        title: 'Section Status Changed Successfully',
+        /*description: "Fill all the information",*/
+        position:'top-right',
+        status: 'success',
+        duration: 1500,
+        isClosable: false,
+      })
     }).catch((error)=>{
-      toast.error(error)
+      toast({
+        title: error,
+        /*description: "Fill all the information",*/
+        position:'top-right',
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      })
     })
   };
+  const FindSection=(id)=>{
+    var s=sections.filter((section)=>section.id==id);
+    return(s[0])
+  }
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       return (
-        <div className="pagesContent mb-2 ms-0 ">
+        <div className="pagesContent ms-0 ">
           <h5>Item Managment</h5>
           <div className="actions my-3">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSectionModal" className='btn btn-secondary m-1'>Add Section</button>
@@ -170,15 +329,15 @@ const EditSectionOnClick=(id,name)=>{
                     "& button.Mui-selected":{color:'#1E3669',fontWeight:"bold"}
                   }}
                 >
-                  <Tab label="Sections" value="2"  className='btn btn-secondary' />
                   <Tab label="Item on menu" value="1" className='btn btn-secondary' />
-                  <Tab label="Hidden" value="3"  className='btn btn-secondary' />
+                  <Tab label="Hidden" value="2"  className='btn btn-secondary' />
+                  <Tab label="Sections" value="3"  className='btn btn-secondary' />
                   
                 </TabList>
               </Box>
-              <TabPanel value="1"><DataTable row={row} columns={columns} btn="hide"/></TabPanel>
-              <TabPanel value="2"><DataTable controller="item" changeStatus="UpdateSectionStatus" delete="DeleteSection" refresh={()=>refresh()} row={sections} columns={Sectioncolumns} btn="Delete"/></TabPanel>
-              <TabPanel value="3"><DataTable row={row} columns={columns} btn="add"/></TabPanel>
+              <TabPanel value="1"><DataTable row={itemsM} columns={columns} /></TabPanel>
+              <TabPanel value="2"><DataTable row={itemsH} columns={columns} /></TabPanel>
+              <TabPanel value="3"><DataTable row={sections} columns={Sectioncolumns} /></TabPanel>
             </TabContext>
           </Box>
           
@@ -218,7 +377,6 @@ const EditSectionOnClick=(id,name)=>{
   </div>
 </div>
           </div>
-          <ToastContainer/>
         </div> 
       );
     

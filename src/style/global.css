@@ -20,7 +20,7 @@
     margin-left: 50px;
     min-height: 100vh;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     
 }
   .main {

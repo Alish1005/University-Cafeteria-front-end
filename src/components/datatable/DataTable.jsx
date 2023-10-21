@@ -13,18 +13,8 @@ import { ToastContainer,toast } from "react-toastify";
 function DataTable(props) {
   
 
-  const handleDelete = (id) => {
-    axios.delete(variables.API_URL+"/"+props.controller+"/"+props.delete+"/"+id)  
-    .then((result)=>{
-      props.refresh();
-      toast.success("Section Deleted Successfully");
-    }).catch((error)=>{
-      toast.error(error)
-    })
-  };
-
     return ( 
-        <div className="datatable overflow-visible justify-self-center mb-5" style={{width:"fit-content",height:"75vh",marginLeft:"5%"}}>
+        <div className="datatable overflow-y justify-self-center" style={{width:"fit-content",height:"75vh",marginLeft:"5%"}}>
                 <DataGrid
                 className="dataGrid"
                     rows={props.row}

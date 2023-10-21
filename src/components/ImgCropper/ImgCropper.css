@@ -1,0 +1,9 @@
+.CropperImgComponent{
+    z-index: 1000;
+}
+.Cropbtn{
+    z-index: 1001;
+    position: fixed;
+    bottom: 70px;
+    right: 50%;
+}
