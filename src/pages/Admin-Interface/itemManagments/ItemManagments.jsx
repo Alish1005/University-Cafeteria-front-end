@@ -114,8 +114,8 @@ const refresh=()=>{
     axios.get(variables.API_URL+"Item")
     .then((res) => {
       setItems(res.data);
-      //setItemsM(res.data.filter((item)=>item.status==variables.onMenuValue));
-      //setItemsH(res.data.filter((item)=>item.status==variables.hideValue));      
+      setItemsM(res.data.filter((item)=>item.status==variables.onMenuValue));
+      setItemsH(res.data.filter((item)=>item.status==variables.hideValue));      
       })
   //Save Sections
   axios.get(variables.API_URL+"Item/Sections")

@@ -35,6 +35,15 @@ function Menu() {
                     "& button.Mui-selected":{color:'#1E3669',fontWeight:"bold"}
                   }}
                 >
+                  {/*map(section)
+                  {
+                    <Tab label=section.name value=section.id className='btn btn-secondary' />
+                      <TabPanel value=section.id><div className="row">
+                                .map(item).filter(item.section_id==section.id)
+                      </TabPanel>
+                  }
+                */}
+
                   <Tab label="Fast Food" value="1" className='btn btn-secondary' />
                   <Tab label="Cold Drinks" value="2"  className='btn btn-secondary' />
                   <Tab label="Hot Drinks" value="3"  className='btn btn-secondary' />
@@ -46,7 +55,8 @@ function Menu() {
               <TabPanel value="1"><div className="row">
                 <MenuItemBox img="https://howtostartanllc.com/images/business-ideas/business-idea-images/fast-food.jpg" name="Burger" component="Beef, Pickles, Cheese, Fries, Potato, Tomato" price="5" id="1"/>
                 <MenuItemBox img="https://www.foodandwine.com/thmb/3kzG4PWOAgZIIfZwMBLKqoTkaGQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/margherita-pizza-with-argula-and-prosciutto-FT-RECIPE0721-04368ec288a84d2e997573aca0001d98.jpg" name="Margherita Pizza" component="Dough, Tomato Sauce, Fresh Mozzarella, Basil" price="12.99" outstock={true} id="3"/>
-                <MenuItemBox img="https://howtostartanllc.com/images/business-ideas/business-idea-images/fast-food.jpg" name="Burger" component="Beef, Pickles, Cheese, Fries, Potato, Tomato" price="5" isNew={true} outstock={true} id="4"/></div></TabPanel>
+                <MenuItemBox img="https://howtostartanllc.com/images/business-ideas/business-idea-images/fast-food.jpg" name="Burger" component="Beef, Pickles, Cheese, Fries, Potato, Tomato" price="5" isNew={true} outstock={true} id="4"/></div>
+              </TabPanel>
               
               <TabPanel value="2"><div className="row">
                 <MenuItemBox2 img="https://www.allrecipes.com/thmb/8NJNOMOOLp0nB2eNVitXk-nr9Uw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/14172-caesar-salad-supreme-armag-102369087-4547d359aee84f5a84c80b292f0d1449.jpg" name="Caesar Salad" component="Romaine Lettuce, Croutons, Parmesan Cheese, Caesar Dressing" price="7.99" id="5"/>
