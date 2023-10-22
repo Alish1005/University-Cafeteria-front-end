@@ -73,7 +73,6 @@ function AddItems(){
       .then((result)=>{
         toast({
           title: 'Item Added Successfully',
-          /*description: "Fill all the information",*/
           position:'top-right',
           status: 'success',
           duration: 3000,
@@ -82,7 +81,6 @@ function AddItems(){
       }).catch((error)=>{
         toast({
           title: error,
-          /*description: "Fill all the information",*/
           position:'top-right',
           status: 'error',
           duration: 3000,
@@ -127,12 +125,9 @@ function AddItems(){
           <label for="fileInput">Select an Image : &nbsp;</label>
           <input type="file" id="fileInput" onChange={(e)=>onChangeImg(e)} className="mb-3" name="file" accept=".jpg, .jpeg, .png, image/*" /><br />
           <img src={imgbase64} alt="" className="rounded" style={{width:"400px"}}/><br/>
-
 {/*imgbase64!="" && 
 <ImgCropper image={imgbase64} SetCrop={SetCrop} />
     */}
-
-
           <TextField onChange={(e)=>setName(e.target.value)} value={name} id="filled-basic"  className="my-2" label="Name" variant="outlined" /><br />
           <TextField onChange={(e)=>setComponent(e.target.value)} value={component} id="filled-basic" className="my-2" label="Component" variant="outlined" /><br />
           <select onChange={(e)=>setSectionId(e.target.value)} value={sectionId} className="form-select align-center mt-3"  style={{width:"200px",marginLeft:"42%"}} label="Section">
@@ -146,12 +141,12 @@ function AddItems(){
           <TextField onChange={(e)=>setCalories(e.target.value)} value={calories} id="filled-basic" className="my-1" type="number" label="Calories" variant="outlined" /><br />
         </div>
         <div className="cForm">
-          {name==""||imgbase64==""||sectionId==-1||price==0||calories<0?
+          {name==""||imgbase64==""||component==""||sectionId==-1||price==0||calories<0?
           <button onClick={()=>onClickAddItem()} type="button" className="btn btn-primary btn-lg ">
             Add
           </button>
           :
-          <Link to={"/itemManagment"} onClick={()=>onClickAddItem()} type="button" className="btn btn-primary text-light btn-lg ">
+          <Link to="/itemManagment" onClick={()=>onClickAddItem()} type="button" className="btn btn-primary text-light btn-lg ">
             Add
           </Link>
           }

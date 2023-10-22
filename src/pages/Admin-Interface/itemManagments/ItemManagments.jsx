@@ -24,14 +24,26 @@ function ItemManagments(props) {
     setValue(newValue);
   };
 
-
+  
 //Columns Data
 const columns = [
  { field: "id", headerName: "ID", width: 70 },
- {field: "photo",headerName: "Avatar",sortable: false,width: 60,renderCell: (params) => {return <img src={params.row.photo || "/noavatar.png"} alt="" />;},},
+ {field: "photo",headerName: "Avatar",sortable: false,width: 60,disableExport: true,renderCell: (params) => {return <img src={params.row.photo || "/noavatar.png"} alt="" />;},},
  {field: "name",type: "string",headerName: "Item name",width: 150},
- {field: "section",type: "string",headerName: "section",width: 100,renderCell: (params) => {
-  const s=FindSection(params.row.section_id).name
+ {field: "section",type: "string",headerName: "section",width: 100,
+ 
+ valueGetter: (params) => {
+  const s=FindSection(params.row.section_id).name;
+  return s;
+},
+ valueFormatter:  (params) => {
+  if (params.value == null) {
+    return '';
+  }
+  return `${params.value.toLocaleString()}`;
+},
+renderCell: (params) => {
+  const s=FindSection(params.row.section_id).name;
   return s;
 },
 },
@@ -40,7 +52,7 @@ const columns = [
  {field: "quantity",type: "number",headerName: "Quantity",width: 70},
  {field: "orders_number",type: "number",headerName: "orders #",width: 70},
  {field: "publishDate",headerName: "Publish Date",renderCell: (params) => (<div>{format(new Date(params.value), 'yyyy-MM-dd')}</div>),width: 100,type: "Date",},
- {field: "action",headerName: "Action",width: 200,sortable: false,renderCell: (params) => {
+ {field: "action",headerName: "Action",width: 200,sortable: false,disableExport: true,renderCell: (params) => {
   return (
     <div className="action">
         <button data-bs-toggle="modal" data-bs-target="#AddSectionModal" className="delete btn btn-info btn-sm" onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}>
@@ -69,7 +81,7 @@ const Sectioncolumns = [
  {field: "items_number",type: "int",headerName: "number of items",width: 130,},
  {field: "isHidden",headerName: "is Hidden?",width: 170,type: "boolean",},
  {field: "publishDate",headerName: "Publish Date",renderCell: (params) => (<div>{format(new Date(params.value), 'yyyy-MM-dd')}</div>),width: 100,type: "Date",},
- {field: "action",headerName: "Action",width: 200,renderCell: (params) => {
+ {field: "action",headerName: "Action",width: 200,disableExport: true,renderCell: (params) => {
     return (
       <div className="action">
           <button data-bs-toggle="modal" data-bs-target="#AddSectionModal" className="delete btn btn-info btn-sm" onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}>
@@ -144,7 +156,6 @@ const DeleteItem = (id) => {
   }).catch((error)=>{
     toast({
       title: error,
-      /*description: "Fill all the information",*/
       position:'top-right',
       status: 'error',
       duration: 3000,
@@ -163,7 +174,6 @@ const HideItem = (id,status) => {
     refresh();
     toast({
       title: `Item is being ${status} Successfully`,
-      /*description: "Fill all the information",*/
       position:'top-right',
       status: 'success',
       duration: 1500,
@@ -172,7 +182,6 @@ const HideItem = (id,status) => {
   }).catch((error)=>{
     toast({
       title: error,
-      /*description: "Fill all the information",*/
       position:'top-right',
       status: 'error',
       duration: 3000,
@@ -187,7 +196,6 @@ const SectionOnClick=()=>{
   if(sectionName=="" || sectionName.length<=3){
     toast({
       title: "Section name must be greater than 3 characters",
-      /*description: "Fill all the information",*/
       position:'top-right',
       status: 'error',
       duration: 3000,
@@ -202,7 +210,6 @@ const SectionOnClick=()=>{
       refresh();
       toast({
         title: "Section Added Successfully",
-        /*description: "Fill all the information",*/
         position:'top-right',
         status: 'success',
         duration: 3000,
@@ -212,7 +219,6 @@ const SectionOnClick=()=>{
     }).catch((error)=>{
       toast({
         title: error,
-        /*description: "Fill all the information",*/
         position:'top-right',
         status: 'error',
         duration: 3000,
@@ -226,7 +232,6 @@ const SectionOnClick=()=>{
     refresh();
     toast({
       title: "Section Updated Successfully",
-      /*description: "Fill all the information",*/
       position:'top-right',
       status: 'success',
       duration: 3000,
@@ -237,7 +242,6 @@ const SectionOnClick=()=>{
   }).catch((error)=>{
     toast({
       title: error,
-      /*description: "Fill all the information",*/
       position:'top-right',
       status: 'error',
       duration: 3000,
@@ -264,7 +268,6 @@ const EditSectionOnClick=(id,name)=>{
       refresh();
       toast({
         title: 'Section Deleted Successfully !',
-        /*description: "Fill all the information",*/
         position:'top-right',
         status: 'success',
         duration: 3000,
@@ -273,7 +276,6 @@ const EditSectionOnClick=(id,name)=>{
     }).catch((error)=>{
       toast({
         title: error,
-        /*description: "Fill all the information",*/
         position:'top-right',
         status: 'error',
         duration: 3000,
@@ -288,7 +290,6 @@ const EditSectionOnClick=(id,name)=>{
       refresh();
       toast({
         title: 'Section Status Changed Successfully',
-        /*description: "Fill all the information",*/
         position:'top-right',
         status: 'success',
         duration: 1500,
@@ -297,7 +298,6 @@ const EditSectionOnClick=(id,name)=>{
     }).catch((error)=>{
       toast({
         title: error,
-        /*description: "Fill all the information",*/
         position:'top-right',
         status: 'error',
         duration: 3000,
@@ -307,14 +307,18 @@ const EditSectionOnClick=(id,name)=>{
   };
   const FindSection=(id)=>{
     var s=sections.filter((section)=>section.id==id);
+    console.log(s)
+    if(s.length>0){
     return(s[0])
+    }
+    return({id:0,name:""})
   }
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       return (
         <div className="pagesContent ms-0 ">
           <h5>Item Managment</h5>
           <div className="actions my-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSectionModal" className='btn btn-secondary m-1'>Add Section</button>
+            <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddSectionModal" className='btn btn-secondary m-1'>Add Section</button>
             <Link to="/itemManagment/AddItem" className='btn btn-secondary m-1'>Add item</Link>
           </div>
           <div className="mx-lg-5 mx-sm-1 mx-xs-1">
