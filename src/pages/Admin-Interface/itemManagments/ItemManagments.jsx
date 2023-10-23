@@ -55,9 +55,9 @@ renderCell: (params) => {
  {field: "action",headerName: "Action",width: 200,sortable: false,disableExport: true,renderCell: (params) => {
   return (
     <div className="action">
-        <button data-bs-toggle="modal" data-bs-target="#AddSectionModal" className="delete btn btn-info btn-sm" onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}>
+        <Link /*data-bs-toggle="modal" data-bs-target="#AddSectionModal"*/ to="/itemManagment/EditItem" onClick={()=>props.setEditItemId(params.row.id)} className="delete btn btn-info btn-sm" /*onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}*/>
            Edit
-        </button>
+        </Link>
         <button className="delete btn btn-danger btn-sm" onClick={()=>{DeleteItem(params.row.id)}}>
           Delete
         </button>

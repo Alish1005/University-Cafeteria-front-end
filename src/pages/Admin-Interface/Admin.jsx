@@ -18,10 +18,13 @@ import AdminSettings from '../../pages/Admin-Interface/AdminSettings/AdminSettin
 import AddCustomer from "./AddCustomer/AddCustomer";
 import AddStaff from "./addStaff/AddStaff";
 import AddItems from "./addItems/AddItems";
+import EditItems from "./editItems/EditItems";
+import { useState } from "react";
 
 
 
 function Admin() {
+    const [EditItemId,setEditItemId]=useState(-1);
     return ( 
         <div className="Admin">
             <Router>
@@ -34,7 +37,7 @@ function Admin() {
                     <div className="contentContainer">
                             <Routes>
                                 <Route path='/' element={<Dashboard/>}/>
-                                <Route path='/itemManagment' element={<ItemManagments/>}/>
+                                <Route path='/itemManagment' element={<ItemManagments setEditItemId={setEditItemId}/>}/>
                                 <Route path='/StaffList' element={<StaffList/>}/>
                                 <Route path='/CustomerList' element={<CustomerList/>}/>
                                 <Route path='/OrdersList' element={<OrderList/>}/>
@@ -46,6 +49,7 @@ function Admin() {
                                 <Route path='/CustomerList/AddCustomer' element={<AddCustomer/>}/>
                                 <Route path='/StaffList/AddStaff' element={<AddStaff/>}/>
                                 <Route path='/itemManagment/AddItem' element={<AddItems/>}/>
+                                <Route path='/itemManagment/EditItem' element={<EditItems id={EditItemId}/>}/>
 
 
                             </Routes>
