@@ -10,13 +10,24 @@ import TabPanel from "@mui/lab/TabPanel";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import MenuItemBox from "../../../components/menuItemBox/MenuItemBox";
 import MenuItemBox2 from "../../../components/menuItemBox2/MenuItemBox2";
+import { useState ,useEffect } from "react";
+import axios from "axios";
+import { variables } from "../../Variables";
 
 function Menu() {
   const [value, setValue] = React.useState("1");
 
+
+
+  const [sectionId,setSectionId]=useState(0)
+  const [sectionName,setSectionName]=useState("")
+  const [sectionN,setSectionN]=useState({})
+
+  const [itemsM,setItemsM]=useState([])
+  const [itemsH,setItemsH]=useState([])
   const handleChange = (event, newValue) => {
     setValue(newValue);
-
+  };
     //refresh function
     const refresh = () => {
       //Save items
@@ -34,13 +45,14 @@ function Menu() {
         setSections(res.data);
       });
     };
+
     useEffect(() => {
       refresh();
     }, []);
 
     const [sections, setSections] = useState([]);
     const [items, setItems] = useState([]);
-  };
+
   return (
     <div className="mb-3">
       <div className="MenuPage">

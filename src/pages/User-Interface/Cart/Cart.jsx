@@ -4,7 +4,22 @@ import { type, dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Space, TimePicker } from "antd";
 import SendIcon from "@mui/icons-material/Send";
+import { useState ,useEffect } from "react";
+import axios from "axios";
+import { variables } from "../../Variables";
 
+function Cart() {
+  const [value, setValue] = useState('1');//For the 
+  const [sectionId,setSectionId]=useState(0)
+  const [sectionName,setSectionName]=useState("")
+  const [sectionN,setSectionN]=useState({})
+
+
+  const [sections,setSections]=useState([])
+
+
+  const [itemsM,setItemsM]=useState([])
+  const [itemsH,setItemsH]=useState([])
 const onChange = (time, timeString) => {
   console.log(time, timeString);
 };
@@ -46,7 +61,7 @@ const deleteFromCart = (itemId) => {
 
 const [items, setItems] = useState([]);
 
-function Cart() {
+
   const disabledHours = () => {
     //Disable Time
     let currentHour = new Date().getHours();
