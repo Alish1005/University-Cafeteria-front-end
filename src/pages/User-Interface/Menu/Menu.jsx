@@ -17,31 +17,22 @@ import { variables } from "../../Variables";
 function Menu() {
   const [value, setValue] = React.useState("1");
 
+  const [sections, setSections] = useState([]);
+  const [items, setItems] = useState([]);
 
-
-  const [sectionId,setSectionId]=useState(0)
-  const [sectionName,setSectionName]=useState("")
-  const [sectionN,setSectionN]=useState({})
-
-  const [itemsM,setItemsM]=useState([])
-  const [itemsH,setItemsH]=useState([])
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
     //refresh function
     const refresh = () => {
       //Save items
-      axios.get(variables.API_URL + "Menu").then((res) => {
-        setItems(res.data);
-        setItemsM(
+      axios.get(variables.API_URL + "Item").then((res) => {
+        setItems(
           res.data.filter((item) => item.status == variables.onMenuValue)
-        );
-        setItemsH(
-          res.data.filter((item) => item.status == variables.hideValue)
         );
       });
       //Save Sections
-      axios.get(variables.API_URL + "Menu/Sections").then((res) => {
+      axios.get(variables.API_URL + "Item/Sections").then((res) => {
         setSections(res.data);
       });
     };
@@ -50,8 +41,7 @@ function Menu() {
       refresh();
     }, []);
 
-    const [sections, setSections] = useState([]);
-    const [items, setItems] = useState([]);
+
 
   return (
     <div className="mb-3">
