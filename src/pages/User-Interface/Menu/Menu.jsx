@@ -70,7 +70,7 @@ function Menu() {
                   {sections.map((section) => (
                     <div key={section.id}>
                       <Tab
-                        label={section.Name}
+                        label={section.name}
                         value={section.id}
                         className="btn btn-secondary"
                       />
