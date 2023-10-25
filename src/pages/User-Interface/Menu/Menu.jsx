@@ -88,7 +88,7 @@ function Menu() {
                             .filter((item) => item.section_id === section.id)
                             .map((item) => (
                               <MenuItemBox2
-                              item={item}
+                              item={item} 
                             />
                             ))}
                         </div>
