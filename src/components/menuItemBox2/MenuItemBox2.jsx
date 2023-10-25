@@ -16,6 +16,7 @@ function MenuItemBox2(props) {
       name: props.item.name,
       price: props.item.price,
       quantity: props.item.quantity,
+      //add new attr.s in the Menu for each Item (Iquantity and notes)
       notes: document.querySelector(".input-note-pop").value,
     };
 

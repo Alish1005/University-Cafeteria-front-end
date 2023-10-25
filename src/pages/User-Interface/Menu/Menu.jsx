@@ -13,10 +13,10 @@ import { variables } from "../../Variables";
 
 function Menu() {
   const [value, setValue] = useState("1");
-
   const [sections, setSections] = useState([]);
   const [items, setItems] = useState([]);
-
+  //add new attr.s in the Menu for each Item (Iquantity and notes)
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
