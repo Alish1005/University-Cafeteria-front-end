@@ -25,6 +25,10 @@ import { useState } from "react";
 
 function Admin() {
     const [EditItemId,setEditItemId]=useState(-1);
+    //list item for cart
+    //Add item to cart list (function)
+    //give the Menu page the fucntion (props)
+    //give the items list to the cart
     return ( 
         <div className="Admin">
             <Router>
