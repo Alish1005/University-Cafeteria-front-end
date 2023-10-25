@@ -87,6 +87,15 @@ function EditItems(props){
         duration: 3000,
         isClosable: false,
       })
+    }else if(Number(quantity) % 1 !== 0||Number(calories) % 1 !== 0){
+      toast({
+        title: 'Quantity and Calories cant be a decimal number!',
+        /*description: "Fill all the information",*/
+        position:'top-right',
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      })
     }else{
       axios.put(variables.API_URL+"Item",data)
       .then((result)=>{
@@ -143,7 +152,7 @@ function EditItems(props){
         <div className="cForm">
           <label for="fileInput">Select an Image : &nbsp;</label>
           <input type="file" id="fileInput" onChange={(e)=>onChangeImg(e)} className="mb-3" name="file" accept=".jpg, .jpeg, .png, image/*" /><br />
-          <img src={imgbase64} alt="" className="rounded" style={{width:"400px"}}/><br/>
+          {imgbase64!="" && <img src={imgbase64} alt="" className="AddItemBoxImg rounded" style={{width:"400px"}}/>}<br/>
 {/*imgbase64!="" && 
 <ImgCropper image={imgbase64} SetCrop={SetCrop} />
     */}
@@ -160,7 +169,7 @@ function EditItems(props){
           <TextField onChange={(e)=>setCalories(e.target.value)} value={calories} id="filled-basic" className="my-1" type="number" label="Calories" variant="outlined" /><br />
         </div>
         <div className="cForm">
-          {name==""||imgbase64==""||component==""||sectionId==-1||price==0||calories<0?
+          {name==""||imgbase64==""||component==""||sectionId==-1||price==0||calories<0||Number(quantity) % 1 !== 0||Number(calories) % 1 !== 0?
           <button onClick={()=>onClickAddItem()} type="button" className="btn btn-primary btn-lg ">
             Update
           </button>

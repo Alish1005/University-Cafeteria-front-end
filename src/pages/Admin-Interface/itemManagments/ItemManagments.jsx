@@ -307,7 +307,6 @@ const EditSectionOnClick=(id,name)=>{
   };
   const FindSection=(id)=>{
     var s=sections.filter((section)=>section.id==id);
-    console.log(s)
     if(s.length>0){
     return(s[0])
     }
