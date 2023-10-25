@@ -12,7 +12,7 @@ import OfferList from "./OfferList/OfferList";
 import StaffMenu from "./StaffMenu/StaffMenu";
 import Feedback from "./FeedBack/FeedBack";
 import ChangePassword from "../User-Interface/changePass/ChangePass";
-//import Home from "./Home/Home";
+import { Link } from "react-router-dom"; 
 import Dashboard from "./Dashboard/dashboard";
 import AdminSettings from '../../pages/Admin-Interface/AdminSettings/AdminSettings';
 import AddCustomer from "./AddCustomer/AddCustomer";
@@ -20,6 +20,7 @@ import AddStaff from "./addStaff/AddStaff";
 import AddItems from "./addItems/AddItems";
 import EditItems from "./editItems/EditItems";
 import { useState } from "react";
+import NotFound from "../NotFound/NotFound";
 
 
 
@@ -54,13 +55,14 @@ function Admin() {
                                 <Route path='/StaffList/AddStaff' element={<AddStaff/>}/>
                                 <Route path='/itemManagment/AddItem' element={<AddItems/>}/>
                                 <Route path='/itemManagment/EditItem' element={<EditItems id={EditItemId}/>}/>
+                                <Route path='/*' element={<NotFound/>}/>
 
 
                             </Routes>
                     </div>
                 </div> 
             </div>
-            </Router>
+            
             <Footer/>
             <div class="modal fade" id="exampleModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -75,11 +77,13 @@ function Admin() {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onClick={()=>{window.location.pathname="/StaffMenu"}}>Save changes</button>
+                        {/*<button type="button" class="btn btn-primary" onClick={()=>{window.location.pathname="/StaffMenu"}}>Save changes</button>*/}
+                        <Link to="/StaffMenu" type="button" class="btn btn-primary text-secondary" >Save changes</Link>
                     </div>
                     </div>
                 </div>
             </div>
+            </Router>
         </div>
      );
 }

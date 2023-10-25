@@ -11,6 +11,7 @@ import { Rate } from 'antd';
 import TextArea from "antd/es/input/TextArea";
 import MyOrders from "./MyOrders/MyOrders";
 import Offers from "./Offers/Offers";
+import NotFound from "../NotFound/NotFound";
 
 function User() {
   return (
@@ -27,6 +28,7 @@ function User() {
         <Route path="/MyOrders" element={<MyOrders />} />
         <Route path="/Offers" element={<Offers />} />
         <Route path="/Login" element={<Login />} />
+        <Route path='/*' element={<NotFound/>}/>
 
 
       </Routes>
