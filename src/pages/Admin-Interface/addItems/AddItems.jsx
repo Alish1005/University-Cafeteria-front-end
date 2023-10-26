@@ -124,7 +124,7 @@ function AddItems(){
         <div className="cForm">
           <label for="fileInput">Select an Image : &nbsp;</label>
           <input type="file" id="fileInput" onChange={(e)=>onChangeImg(e)} className="mb-3" name="file" accept=".jpg, .jpeg, .png, image/*" /><br />
-          <img src={imgbase64} alt="" className="rounded" style={{width:"400px"}}/><br/>
+          {imgbase64!="" && <img src={imgbase64} alt="" className="AddItemBoxImg rounded" style={{width:"400px"}}/>}<br/>
 {/*imgbase64!="" && 
 <ImgCropper image={imgbase64} SetCrop={SetCrop} />
     */}

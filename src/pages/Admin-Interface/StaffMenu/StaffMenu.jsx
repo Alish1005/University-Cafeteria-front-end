@@ -5,149 +5,116 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import TextField from '@mui/material/TextField';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
+import "./staffmenu.css"
+import { variables } from '../../Variables';
+import { Link } from 'react-router-dom';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import PrintIcon from '@mui/icons-material/Print';
+import { useToast } from '@chakra-ui/react'
 
-
-const restaurantSections = {
-  "Appetizers": [
-    { name: "Mozzarella Sticks", price: 7.99 },
-    { name: "Spinach Artichoke Dip", price: 8.99 },
-    { name: "Bruschetta", price: 6.49 },
-    { name: "Chicken Wings", price: 9.99 },
-    { name: "Potato Skins", price: 7.49 },
-    { name: "Shrimp Cocktail", price: 10.99 },
-    { name: "Stuffed Mushrooms", price: 8.99 },
-    { name: "Onion Rings", price: 6.99 },
-    { name: "Caprese Salad", price: 8.49 },
-    { name: "Fried Calamari", price: 9.49 }
-  ],
-  "Main Courses": [
-    { name: "Grilled Steak", price: 18.99 },
-    { name: "Spaghetti Carbonara", price: 14.49 },
-    { name: "Chicken Alfredo", price: 15.99 },
-    { name: "Salmon Fillet", price: 17.49 },
-    { name: "Vegetable Stir-Fry", price: 13.99 },
-    { name: "Burger with Fries", price: 12.99 },
-    { name: "Lobster Tail", price: 22.99 },
-    { name: "Eggplant Parmesan", price: 14.99 },
-    { name: "BBQ Ribs", price: 16.99 },
-    { name: "Shrimp Scampi", price: 18.49 }
-  ],
-  "Desserts": [
-    { name: "Chocolate Cake", price: 6.99 },
-    { name: "Tiramisu", price: 7.49 },
-    { name: "Cheesecake", price: 6.99 },
-    { name: "Apple Pie", price: 5.99 },
-    { name: "Ice Cream Sundae", price: 4.99 },
-    { name: "Fruit Tart", price: 6.49 },
-    { name: "Brownie Sundae", price: 7.49 },
-    { name: "Panna Cotta", price: 5.99 },
-    { name: "Creme Brulee", price: 7.99 },
-    { name: "Key Lime Pie", price: 6.49 }
-  ],
-  "Beverages": [
-    { name: "Soda (Can)", price: 1.99 },
-    { name: "Iced Tea", price: 2.49 },
-    { name: "Lemonade", price: 2.49 },
-    { name: "Coffee", price: 1.99 },
-    { name: "Mineral Water", price: 2.99 },
-    { name: "Fruit Juice", price: 2.99 },
-    { name: "Milkshake", price: 3.99 },
-    { name: "Cappuccino", price: 3.49 },
-    { name: "Smoothie", price: 4.49 },
-    { name: "Hot Chocolate", price: 2.99 }
-  ],
-  "Salads": [
-    { name: "Caesar Salad", price: 8.99 },
-    { name: "Greek Salad", price: 9.49 },
-    { name: "Cobb Salad", price: 9.99 },
-    { name: "Caprese Salad", price: 8.49 },
-    { name: "Spinach Salad", price: 8.99 },
-    { name: "Chef's Salad", price: 9.99 },
-    { name: "Asian Salad", price: 8.49 },
-    { name: "Nicoise Salad", price: 10.49 },
-    { name: "Waldorf Salad", price: 9.49 },
-    { name: "Mediterranean Salad", price: 9.99 }
-  ],
-  "Specials of the Day": [
-    { name: "Chef's Special Pasta", price: 16.99 },
-    { name: "Seafood Platter", price: 19.99 },
-    { name: "Vegetarian Curry", price: 14.99 },
-    { name: "Grilled Chicken Sandwich", price: 12.99 },
-    { name: "Soup of the Day", price: 5.99 },
-    { name: "BBQ Pulled Pork", price: 13.99 },
-    { name: "Stuffed Bell Peppers", price: 14.49 },
-    { name: "Beef Tacos", price: 11.99 },
-    { name: "Pesto Pasta", price: 15.49 },
-    { name: "Blackened Salmon", price: 18.99 }
-  ],
-  "Sides": [
-    { name: "French Fries", price: 3.49 },
-    { name: "Garlic Bread", price: 2.99 },
-    { name: "Mashed Potatoes", price: 3.99 },
-    { name: "Steamed Vegetables", price: 4.49 },
-    { name: "Onion Rings", price: 3.99 },
-    { name: "Coleslaw", price: 2.49 },
-    { name: "Rice Pilaf", price: 3.49 },
-    { name: "Side Salad", price: 3.99 },
-    { name: "Macaroni and Cheese", price: 4.49 },
-    { name: "Baked Beans", price: 2.99 }
-  ],
-  "Kids Menu": [
-    { name: "Chicken Tenders", price: 6.99 },
-    { name: "Mini Cheeseburger", price: 5.99 },
-    { name: "Grilled Cheese Sandwich", price: 4.99 },
-    { name: "Spaghetti with Marinara", price: 5.49 },
-    { name: "Peanut Butter & Jelly", price: 4.49 },
-    { name: "Kid's Pizza", price: 6.49 },
-    { name: "Mini Hot Dogs", price: 5.99 },
-    { name: "Fish Sticks", price: 6.49 },
-    { name: "Macaroni and Cheese", price: 5.49 },
-    { name: "Chicken Quesadilla", price: 6.99 }
-  ],
-  "Vegetarian Options": [
-    { name: "Vegetable Stir-Fry", price: 13.99 },
-    { name: "Mushroom Risotto", price: 14.49 },
-    { name: "Vegetarian Pizza", price: 11.99 },
-    { name: "Spinach and Feta Wrap", price: 10.99 },
-    { name: "Vegetable Curry", price: 12.99 },
-    { name: "Eggplant Parmesan", price: 13.49 },
-    { name: "Tofu Scramble", price: 10.99 },
-    { name: "Veggie Burger", price: 9.99 },
-    { name: "Quinoa Salad", price: 10.49 },
-    { name: "Stuffed Bell Peppers (Vegetarian)", price: 14.49 }
-  ],
-  "Gluten-Free": [
-    { name: "Gluten-Free Pizza", price: 12.99 },
-    { name: "Grilled Chicken Breast", price: 15.99 },
-    { name: "Quinoa Bowl", price: 13.99 },
-    { name: "Salmon with Steamed Veggies", price: 18.99 },
-    { name: "Gluten-Free Pasta with Pesto", price: 14.99 },
-    { name: "Vegetable Stir-Fry (Gluten-Free)", price: 14.49 },
-    { name: "Fruit Salad", price: 6.99 },
-    { name: "Chocolate Flourless Cake", price: 7.99 },
-    { name: "Gluten-Free Pancakes", price: 8.99 },
-    { name: "Grilled Shrimp Skewers", price: 16.99 }
-  ]
-};
-
-const u=Object.keys(restaurantSections);
 
 function StaffMenu() {
-    const [value, setValue] = React.useState('1');
-    const [orderlist, setOrderlist] = React.useState([]);
-    const [item, setItem] = React.useState("");
+  const toast = useToast()
+
+    const [value, setValue] = useState("1");
+    const [orderlist, setOrderlist] = useState([]);
+
+    const [total, setTotal] = useState(0);
+    const [sections,setSections]=useState([])
+    const [items,setItems]=useState([])
+    const [discount,setDiscount]=useState(0)
+    const [discounts,setDiscounts]=useState(0)
+    const [Idnote, setIdNote] = useState(-1);
+    const [note, setNote] = useState("");
+
+
+
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
+
+    //ADD Item to the Order List
     const addItem = (s) => {
-      setOrderlist(prevArray => [...prevArray, s]);
+      const found=orderlist.filter((item)=>item.id==s.id);
+      if(found.length==0){
+      const data={...s,Iquantity:1,note:""}
+      setOrderlist(prevArray => [...prevArray, data]);
+    }else{
+        //const i=orderlist.filter((item)=>item.id==s.id)[0];
+        const ind=orderlist.map((i)=>i.id).indexOf(s.id);
+        console.log(ind)
+        const i=orderlist[ind]
+        console.log(i)
+        const noti=orderlist.filter((item,index)=>index<ind);
+        const noti2=orderlist.filter((item,index)=>index>ind);
+        const q=i.Iquantity+1;
+        i.Iquantity=q;
+        setOrderlist([...noti,i,...noti2])
+      }
+      setTotal(total+s.price);
+      refresh()
     };
+    //Delete Item
+    const deleteItem=(e)=>{
+      const l=orderlist.filter((item)=>item.id!=e.id);
+      setOrderlist(l);
+      setTotal(total-(e.price*e.Iquantity));
+      refresh();
+      }
+    //Add Notes
+    const SetNotePop=(id)=>{
+      const l=orderlist.filter((item)=>item.id==id);
+      setIdNote(id)
+      setNote(l[0].note);
+    }
+    const SaveNoteItem=(id)=>{
+        const ind=orderlist.map((i)=>i.id).indexOf(id);
+        const i=orderlist[ind]
+        const noti=orderlist.filter((item,index)=>index<ind);
+        const noti2=orderlist.filter((item,index)=>index>ind);
+        i.note=note;
+        setOrderlist([...noti,i,...noti2])
+        setNote("")
+        setIdNote(-1)
+         }
+
+//refresh function
+const refresh=()=>{
+  //Save Sections
+axios.get(variables.API_URL+"Item/Sections")
+.then((res) => {
+  setSections(res.data.filter((section)=>section.isHidden==false));
+  
+  })
+  //Save items
+  axios.get(variables.API_URL+"Item")
+  .then((res) => {
+    setItems(res.data.filter((item)=>item.status==variables.onMenuValue));
+    console.log(items)
+    })
+}
+  useEffect(()=> {
+    refresh();
+    if(sections.length==0){
+      setValue("1")
+    }else{
+    setValue(`${sections[0].id}`)
+    }
+    },[])
+
+
+
+
     return ( 
         <div className="pagesContent">
           <h3>Menu</h3>
           <div className="row">
-          <div className="col-lg-7 col-sm-12">
-            <Box sx={{ width: '100%', typography: 'body1' }}>
+          <div className="StaffMenu col-lg-7 col-xs-10 col-md-6">
+            <Box variant="scrollable" sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 {/*Label nav bar*/}
@@ -158,76 +125,145 @@ function StaffMenu() {
                     "& button.Mui-selected":{color:'#1E3669',fontWeight:"bold"}
                   }}
                 >
-
-                  <Tab label="Appetizers" value="1"  className='btn btn-secondary' />
-                  <Tab label="Sides" value="2" className='btn btn-secondary' />
-                  <Tab label="Desserts" value="3"  className='btn btn-secondary' />
+                  {sections.map((section)=>(
+                    <Tab label={section.name} value={`${section.id}`}/>
+                  ))}
                 </TabList>
               </Box>
-              <TabPanel value="1">
+              {/*Content of each section*/}
+              {sections.map((section)=>(
+                    <TabPanel value={`${section.id}`}>
                 {
-                restaurantSections.Appetizers.map(s => (
-                    <button onClick={()=>addItem(s)}  className='col-3 m-2 text-black btn btn-secondary'>
+                items.filter((item)=>item.section_id==section.id).map(s => {
+                  if(s.quantity>0){
+                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
                       <p>{s.name}</p>
                       <p>{s.price}$</p>
-                    </button>
-                ))
+                    </button>)
+                  }else{
+                    return (<button className='col-3 m-2 text-black btn btn-secondary' disabled>
+                    <p>{s.name}</p>
+                    <p>{s.price}$</p>
+                  </button>)
+                  }
+
+                  })
                 }
-              </TabPanel>
-              <TabPanel value="2">
-                <div className="row">
-                {
-                restaurantSections.Sides.map(s => (
-                    <a onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
-                      <p>{s.name}</p>
-                      <p>{s.price}$</p>
-                    </a>
-                ))
-                }
-                </div>
-                </TabPanel>
-              <TabPanel value="3">
-                <div className="row">
-                {
-                restaurantSections.Desserts.map(s => (
-                    <a  onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
-                      <p>{s.name}</p>
-                      <p>{s.price}$</p>
-                    </a>
-                ))
-                }
-                </div>
-                </TabPanel>
+                    </TabPanel>
+              ))}
             </TabContext>
           </Box>
           </div>
-            <div className="col-lg-4 col-md-12 col-sm-12 p-2 text-black bg-secondary rounded">
-              <h3>Order List</h3>
+          {/*Order List */}
+            <div className="col-lg-4 col-md-6 col-sm-11 ms-sm-3 col-xs-11 p-2 text-black bg-secondary rounded">
+
+                <div className="OrderListStaff d-flex justify-content-between">
+                  <span></span>
+                <h3>Order List</h3>
+                <div class="dropdown">
+                    <div class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <MoreVertIcon className="icon"/>
+                    </div>
+                    <ul class={`dropdown-menu bg-gray`}>
+                        <li><a class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#OrderBoxDiscount" href="#">Disount</a></li>
+                        <li><a class="dropdown-item rounded-bottom" onClick={()=>window.print("OrderListStaff")} href="#"><PrintIcon/> print</a></li>
+                    </ul>
+                </div>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <p>Customer: Abbas</p>
+                  <p>26/10/2023</p>
+                  <p>Employye: Ali</p>
+                </div>
               <hr />
               <table className='table'>
-                <tr>
+                <thead>
                   <th>item</th>
                   <th>price</th>
                   <th>quantity</th>
-                  <th>action</th>
-                </tr>
+                  <th>total</th>
+                  <th className='OrderListStaffNote'>note</th>
+                  <th className='OrderListStaffActions'>action</th>
+                </thead>
               {
                 orderlist.map(s => (
                     <tr>
                       <td>{s.name}</td>
                       <td>{s.price}$</td>
-                      <td>1</td>
-                      <td><button className='btn btn-danger'><DeleteIcon/></button></td>
+                      <td>{s.Iquantity}</td>
+                      <td>{(s.Iquantity*s.price).toFixed(2)}$</td>
+                      <td className='OrderListStaffNote'>{s.note}</td>
+                      <td className='OrderListStaffActions'>
+                      <Link title='Write note' onClick={()=>SetNotePop(s.id)} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddItemNoteModal" className='text-info bg-transparent'><EditNoteIcon/></Link>
+                      <Link title='Delete' onClick={()=>deleteItem(s)} className='text-danger bg-transparent'><DeleteIcon/></Link>
+                      </td>
+                      
                     </tr>
                 ))
                 }
               </table>
               <hr />
-              <h4>Total Price : 12$</h4>
+              <div className="d-flex  justify-content-between mx-5">
+                <p>Discount:{discount}%</p>
+                <p>Actual Price: {total.toFixed(2)}$</p>
+              </div>
+              <h4>Total Price : {(total*(1-(discount/100))).toFixed(2)}$</h4>
             </div>
           </div>
-          
+          {/*Note window */}
+          <div class="modal fade" id="AddItemNoteModal" tabindex="-1" aria-labelledby="AddItemNoteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="AddItemNoteModalLabel">Write Note</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" onClick={()=>{setTimeout(() => {}, 350)}} aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div className="">
+        <div className="cForm">
+          <TextField id="filled-basic" value={note} onChange={(e)=>setNote(e.target.value)}  className="my-2" label="Note" variant="outlined" /><br />
         </div>
+        <div className="cForm">
+        </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onClick={()=>{setTimeout(() => {}, 350)}} data-bs-dismiss="modal">Close</button>
+          <button type="button" data-bs-dismiss="modal" onClick={()=>{SaveNoteItem(Idnote)}}  class="btn btn-primary">save</button>
+      </div>
+    </div>
+  </div>
+</div>
+{/*Discount Window */}
+<div class="modal fade" id="OrderBoxDiscount" data-bs-backdrop="static" tabindex="-1" aria-labelledby="OrderBoxDiscountLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title text-primary fs-5" id="OrderBoxDiscountLabel">Discount</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input className='col-5 p-1' value={discounts} onChange={(e)=>setDiscounts(e.target.value)} type="number" min={0} max={100} placeholder='Discount' />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button"  class="btn btn-primary" onClick={()=>{
+          if(discounts>100 || discounts<0){
+            toast({
+              title: "Discount cant be > 100 or < 0",
+              position:'top-right',
+              status: 'error',
+              duration: 3000,
+              isClosable: false,
+            })
+            return;
+          }
+          setDiscount(discounts)}} data-bs-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
      );
 }
 

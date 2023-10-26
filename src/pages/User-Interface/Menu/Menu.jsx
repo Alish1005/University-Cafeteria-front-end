@@ -12,11 +12,11 @@ import axios from "axios";
 import { variables } from "../../Variables";
 
 function Menu() {
-  const [value, setValue] = React.useState("1");
-
+  const [value, setValue] = useState("1");
   const [sections, setSections] = useState([]);
   const [items, setItems] = useState([]);
-
+  //add new attr.s in the Menu for each Item (Iquantity and notes)
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -30,7 +30,8 @@ function Menu() {
       });
       //Save Sections
       axios.get(variables.API_URL + "Item/Sections").then((res) => {
-        setSections(res.data);
+        const s=res.data.filter((sec)=>sec.isHidden==false);
+        setSections(s);
         console.log(sections)
 
       });
@@ -38,6 +39,11 @@ function Menu() {
 
     useEffect(() => {
       refresh();
+      if(sections.length==0){
+        setValue("1")
+      }else{
+      setValue(`${sections[0].id}`)
+      }
     }, []);
 
 
@@ -66,28 +72,23 @@ function Menu() {
                     },
                   }}
                 >
-                  {sections.filter((sec)=>sec.isHidden==false).map((section) => (
+                  {sections.map((section) => (
                       <Tab
                         label={section.name}
-                        value={section.id}
+                        value={`${section.id}`}
                         className="btn btn-secondary"
                       />
                   ))}
                 </TabList>
               </Box>
               {sections.map((section) => (
-                      <TabPanel value={section.id}>
+                      <TabPanel value={`${section.id}`}>
                         <div className="row">
                           {items
                             .filter((item) => item.section_id === section.id)
                             .map((item) => (
                               <MenuItemBox2
-                              id={item.id}
-                              name={item.name}
-                              img={item.photo}
-                              component={item.description}
-                              price={item.price}
-                              outstock={item.quantity<1}
+                              item={item} 
                             />
                             ))}
                         </div>

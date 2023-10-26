@@ -12,7 +12,7 @@ import OfferList from "./OfferList/OfferList";
 import StaffMenu from "./StaffMenu/StaffMenu";
 import Feedback from "./FeedBack/FeedBack";
 import ChangePassword from "../User-Interface/changePass/ChangePass";
-//import Home from "./Home/Home";
+import { Link } from "react-router-dom";
 import Dashboard from "./Dashboard/dashboard";
 import AdminSettings from "../../pages/Admin-Interface/AdminSettings/AdminSettings";
 import AddCustomer from "./AddCustomer/AddCustomer";
@@ -23,7 +23,10 @@ import { useState } from "react";
 
 function Admin() {
   const [EditItemId, setEditItemId] = useState(-1);
-
+  //list item for cart
+  //Add item to cart list (function)
+  //give the Menu page the fucntion (props)
+  //give the items list to the cart
   return (
     <div className="Admin">
       <Router>

@@ -6,44 +6,57 @@ import { useState } from "react";
 import "./menuItemBox2.css";
 
 function MenuItemBox2(props) {
+  const { item } = props;
   const [count, setCount] = useState(1);
 
-  const [items, setItems] = useState([]);
   const [cart, setCart] = useState([]);
 
-  function addToCart(item) {
-    setCart([...cart, item]);
-  }
+  // Function to handle adding the item to the cart
+  const addToCart = () => {
+    const newItem = {
+      id: props.id,
+      name: props.name,
+      price: props.price,
+      quantity: count,
+      notes: document.querySelector(".input-note-pop").value,
+    };
 
-  items.map((item) => (
-    <div key={item.id}>
-      <h3>{item.name}</h3>
-      <p>Price: ${item.price}</p>
-      <p>Calories: ${item.calories}</p>
-      <p>Quantity: ${item.quantity}</p>
-      <p>Status: ${item.status}</p>
-      <p>{item.description}</p>
-      <button onClick={() => addToCart(item)}>Add to Cart</button>
-    </div>
-  ));
+    setCart([...cart, newItem]);
 
-  cart.map((cartItem) => <li key={cartItem.id}>{cartItem.name}</li>);
+    // Close the modal after adding to cart
+    document.querySelector(`#${props.id}`).classList.remove("show");
+    document.querySelector(".modal-backdrop").remove();
+
+    // Reset count and notes
+    setCount(1);
+    document.querySelector(".input-note-pop").value = "";
+  };
 
   return (
     <div className="menuItemBox col-lg-3 col-md-4 col-sm-10 my-3">
-      <img className="MenuItemBoxImg m-1 mb-3 rounded" src={props.img} alt="" />
-      {props.isNew && <span class="newspan badge bg-danger">New</span>}
-      {props.outstock && (
+      <img
+        className="MenuItemBoxImg m-1 mb-3 rounded"
+        src={item.photo}
+        alt=""
+      />
+      {item.publishDate > new Date().setDate(new Date().getDate() - 7) && (
+        <span class="newspan badge bg-danger">New</span>
+      )}
+      {item.quantity < 1 && (
         <span class="newspan badge bg-secondary text-primary">
           out of stock
         </span>
       )}
-      <h5>{props.name}</h5>
-      <p>{props.component}</p>
+      <h5>{item.name}</h5>
+      {item.description != "-" && item.description != null ? (
+        <p>{item.description}</p>
+      ) : (
+        <br />
+      )}
       <p>
-        <strong>{props.price}$</strong>
+        <strong>{item.price}$</strong>
       </p>
-      {props.outstock ? (
+      {item.quantity < 1 ? (
         <button className="btn btn-primary" disabled>
           <AddShoppingCartIcon /> Add to cart
         </button>
@@ -51,7 +64,7 @@ function MenuItemBox2(props) {
         <button
           className="btn btn-primary"
           data-bs-toggle="modal"
-          data-bs-target={`#${props.id}`}
+          data-bs-target={`#${item.id}`}
         >
           <AddShoppingCartIcon /> Add to cart
         </button>
@@ -60,7 +73,7 @@ function MenuItemBox2(props) {
       {/*---------Item PoP ----------- */}
       <div
         class="modal fade"
-        id={props.id}
+        id={item.id}
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hiddden="true"
@@ -69,7 +82,7 @@ function MenuItemBox2(props) {
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                {props.name}
+                {item.name}
               </h1>
               <button
                 type="button"
@@ -80,34 +93,51 @@ function MenuItemBox2(props) {
             </div>
             <div class="modal-body">
               <img
-                className="menupopimg m-2 mb-3 rounded"
-                src={props.img}
+                className="AddItemBoxImg menupopimg m-2 mb-3 rounded"
+                src={item.photo}
+                style={{ width: "90%" }}
                 alt=""
               />
-              <p>{props.component}</p>
-              <button
-                className="btn-count btn btn-primary"
-                onClick={() => setCount(count - 1)}
-              >
-                {" "}
-                <RemoveIcon />{" "}
-              </button>
+              {item.description != "-" && item.description != null && (
+                <p>{item.description}</p>
+              )}
+              {/*Minus Button */}
+              {count <= 1 ? (
+                <button className="btn-count btn btn-primary" disabled={true}>
+                  <RemoveIcon />{" "}
+                </button>
+              ) : (
+                <button
+                  className="btn-count btn btn-primary"
+                  onClick={() => setCount(count - 1)}
+                >
+                  <RemoveIcon />{" "}
+                </button>
+              )}
+              {/*quantity input */}
               <input
                 type="number"
                 className="input-count text-center border-1"
                 placeholder="quantity"
                 value={count}
                 min={1}
-                max={100}
+                max={item.quantity}
               />
-              <button
-                className="btn-count btn btn-primary"
-                onClick={() => setCount(count + 1)}
-              >
-                {" "}
-                <AddIcon />{" "}
-              </button>
+              {/*plus button*/}
+              {count >= item.quantity ? (
+                <button className="btn-count btn btn-primary" disabled={true}>
+                  <AddIcon />{" "}
+                </button>
+              ) : (
+                <button
+                  className="btn-count btn btn-primary"
+                  onClick={() => setCount(count + 1)}
+                >
+                  <AddIcon />{" "}
+                </button>
+              )}{" "}
               <br />
+              {/*Notes Input */}
               <input
                 type="text"
                 className="input-note-pop m-3 p-2"

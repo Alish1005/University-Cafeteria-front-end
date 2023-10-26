@@ -109,13 +109,8 @@ const Sectioncolumns = [
   const [value, setValue] = useState('1');//For the 
   const [sectionId,setSectionId]=useState(0)
   const [sectionName,setSectionName]=useState("")
-  const [sectionN,setSectionN]=useState({})
-
-
   const [sections,setSections]=useState([])
   const [items,setItems]=useState([])
-
-
   const [itemsM,setItemsM]=useState([])
   const [itemsH,setItemsH]=useState([])
 
@@ -135,9 +130,9 @@ const refresh=()=>{
     setSections(res.data);
     })
   }
-    useEffect(()=> {
+useEffect(()=> {
       refresh();
-      },[])
+  },[])
 
 //Item Actions
 //Delete Item
@@ -307,7 +302,6 @@ const EditSectionOnClick=(id,name)=>{
   };
   const FindSection=(id)=>{
     var s=sections.filter((section)=>section.id==id);
-    console.log(s)
     if(s.length>0){
     return(s[0])
     }
