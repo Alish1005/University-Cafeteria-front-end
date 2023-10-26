@@ -29,12 +29,6 @@ function Sidebar() {
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/" className='listItem' >
-                        <HomeIcon/>
-                        { !menuShow ? <span className="listItemTitle">Home</span> : <span className="listItemTitle" style={{display:"none"}}>Home</span>}
-                    </Link>
-                </div>
-                <div className="item">
                     <Link to="/StaffMenu" className='listItem'  data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <RestaurantMenuIcon/>
                         { !menuShow ? <span className="listItemTitle">Menu</span> : <span className="listItemTitle" style={{display:"none"}}>Menu</span>}
