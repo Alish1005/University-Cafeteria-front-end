@@ -15,9 +15,10 @@ import { Link } from 'react-router-dom';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PrintIcon from '@mui/icons-material/Print';
 import { useToast } from '@chakra-ui/react'
+import { format } from 'date-fns';
 
 
-function StaffMenu() {
+function StaffMenu(props) {
   const toast = useToast()
 
     const [value, setValue] = useState("1");
@@ -30,8 +31,7 @@ function StaffMenu() {
     const [discounts,setDiscounts]=useState(0)
     const [Idnote, setIdNote] = useState(-1);
     const [note, setNote] = useState("");
-
-
+    const [date,setDate]=useState("0");
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -94,11 +94,11 @@ axios.get(variables.API_URL+"Item/Sections")
   axios.get(variables.API_URL+"Item")
   .then((res) => {
     setItems(res.data.filter((item)=>item.status==variables.onMenuValue));
-    console.log(items)
     })
 }
   useEffect(()=> {
     refresh();
+    setDate(format(new Date(), 'dd/MM/yyyy'))
     if(sections.length==0){
       setValue("1")
     }else{
@@ -114,6 +114,7 @@ axios.get(variables.API_URL+"Item/Sections")
           <h3>Menu</h3>
           <div className="row">
           <div className="StaffMenu col-lg-7 col-xs-10 col-md-6">
+            {/*----------------Menu---------------- */}
             <Box variant="scrollable" sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -154,25 +155,25 @@ axios.get(variables.API_URL+"Item/Sections")
             </TabContext>
           </Box>
           </div>
-          {/*Order List */}
+          {/*-----------------Order List----------------*/}
             <div className="col-lg-4 col-md-6 col-sm-11 ms-sm-3 col-xs-11 p-2 text-black bg-secondary rounded">
 
                 <div className="OrderListStaff d-flex justify-content-between">
-                  <span></span>
-                <h3>Order List</h3>
+                <p>{date}</p>
+                <h4>Order List</h4>
                 <div class="dropdown">
                     <div class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <MoreVertIcon className="icon"/>
                     </div>
                     <ul class={`dropdown-menu bg-gray`}>
                         <li><a class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#OrderBoxDiscount" href="#">Disount</a></li>
-                        <li><a class="dropdown-item rounded-bottom" onClick={()=>window.print("OrderListStaff")} href="#"><PrintIcon/> print</a></li>
+                        {total>0 && <li><a class="dropdown-item rounded-bottom" onClick={()=>window.print("OrderListStaff")} href="#"><PrintIcon/> print</a></li>}
                     </ul>
                 </div>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <p>Customer: Abbas</p>
-                  <p>26/10/2023</p>
+                  <p>Customer: {props.CName}</p>
+                  <p>{props.CPhone}</p>
                   <p>Employye: Ali</p>
                 </div>
               <hr />
