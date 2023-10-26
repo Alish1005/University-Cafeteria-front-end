@@ -6,30 +6,39 @@ import { useState } from "react";
 import "./menuItemBox2.css";
 
 function MenuItemBox2(props) {
-  const { item } = props;
+  const { item, cart, setCart } = props;
   const [count, setCount] = useState(1);
 
-  const [cart, setCart] = useState([]);
-
   // Function to handle adding the item to the cart
-  const addToCart = () => {
-    const newItem = {
-      id: props.id,
-      name: props.name,
-      price: props.price,
-      quantity: count,
-      notes: document.querySelector(".input-note-pop").value,
-    };
-
-    setCart([...cart, newItem]);
-
-    // Close the modal after adding to cart
-    document.querySelector(`#${props.id}`).classList.remove("show");
-    document.querySelector(".modal-backdrop").remove();
-
-    // Reset count and notes
-    setCount(1);
-    document.querySelector(".input-note-pop").value = "";
+  // item.map((item) => (
+  //   <div key={item.id}>
+  //     <h3>{item.name}</h3>
+  //     <p>Price: ${item.price}</p>
+  //     <p>Calories: ${item.calories}</p>
+  //     <p>Quantity: ${item.quantity}</p>
+  //     <p>Status: ${item.status}</p>
+  //     <p>{item.description}</p>
+  //   </div>
+  // ));
+  //ADD Item to the Order List
+  const addToCart = (s) => {
+    const found = cart.filter((item) => item.id == s.id);
+    if (found.length == 0) {
+      const data = { ...s, Iquantity: 1, note: "" };
+      setCart((prevArray) => [...prevArray, data]);
+    } else {
+      //const i=orderlist.filter((item)=>item.id==s.id)[0];
+      const ind = cart.map((i) => i.id).indexOf(s.id);
+      console.log(ind);
+      const i = cart[ind];
+      console.log(i);
+      const noti = cart.filter((item, index) => index < ind);
+      const noti2 = cart.filter((item, index) => index > ind);
+      const q = i.Iquantity + 1;
+      i.Iquantity = q;
+      setCart([...noti, i, ...noti2]);
+      console.log(cart);
+    }
   };
 
   return (
@@ -152,7 +161,11 @@ function MenuItemBox2(props) {
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary" onClick={addToCart}>
+              <button
+                onClick={() => addToCart(item)}
+                type="button"
+                class="btn btn-primary"
+              >
                 <AddShoppingCartIcon /> Add to Cart
               </button>
             </div>

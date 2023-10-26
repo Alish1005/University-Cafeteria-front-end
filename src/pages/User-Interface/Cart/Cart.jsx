@@ -8,41 +8,25 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { variables } from "../../Variables";
 
-function Cart() {
+function Cart(props) {
   const [value, setValue] = useState("1"); //For the
-  const [sectionId, setSectionId] = useState(0);
-  const [sectionName, setSectionName] = useState("");
-  const [sectionN, setSectionN] = useState({});
+  const [total, setTotal] = useState(0);
+  // const [cart, setCart] = useState([]);
+  // const [items, setItems] = useState([]);
 
-  const [sections, setSections] = useState([]);
-
-  const [itemsM, setItemsM] = useState([]);
-  const [itemsH, setItemsH] = useState([]);
   const onChange = (time, timeString) => {
     console.log(time, timeString);
   };
 
   const refresh = () => {
     //Save items
-    axios.get(variables.API_URL + "Item").then((res) => {
-      setItems(res.data);
-      setItemsM(
-        res.data.filter((item) => item.status == variables.onMenuValue)
-      );
-      setItemsH(res.data.filter((item) => item.status == variables.hideValue));
-    });
-
-    //Save Sections
-    axios.get(variables.API_URL + "Menu/Sections").then((res) => {
-      setItems(res.data);
+    props.cart.map((item) => {
+      setTotal(total + item.price * item.Iquantity);
     });
   };
   useEffect(() => {
     refresh();
   }, []);
-
-  const [cart, setCart] = useState([]);
-  const [items, setItems] = useState([]);
 
   function addToCart(item) {
     setCart([...cart, item]);
@@ -97,60 +81,35 @@ function Cart() {
       <div className="heading text-primary bg-secondary">
         <h3>&mdash; Cart &mdash;</h3>
       </div>
-
       <div id="table">
         <table className="carttable table table-striped">
           <thead>
             <tr>
               <th scope="col">Item Name</th>
-              <th scope="col">Quantity</th>
               <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
               <th scope="col">Total</th>
               <th scope="col">Calories</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">Burger</th>
-              <td>2</td>
-              <td>10$</td>
-              <td>20$</td>
-              <td>1000</td>
-              <td>
+            {props.cart.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{item.price}</td>
+                <td>{item.Iquantity}</td>
+                <td></td>
+                <td>{item.calories}</td>
                 <button type="button" id="delete" className="btn btn-danger">
                   Delete
                 </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Pizza</th>
-              <td>1</td>
-              <td>15$</td>
-              <td>15$</td>
-              <td>2000</td>
-              <td>
-                <button type="button" id="delete" className="btn btn-danger">
-                  Delete
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Pepsi</th>
-              <td>2</td>
-              <td>1$</td>
-              <td>2$</td>
-              <td>200</td>
-              <td>
-                <button type="button" id="delete" className="btn btn-danger">
-                  Delete
-                </button>
-              </td>
-            </tr>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-      <h4 className="text-start  ms-5">Total Price: 59$</h4>
+      <h4 className="text-start  ms-5">Total Price: {total}$</h4>
       <TimePicker
         use12Hours
         format="h:mm a"
