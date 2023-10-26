@@ -9,6 +9,7 @@ function MenuItemBox2(props) {
   const [count, setCount] = useState(1);
   const [cart, setCart] = useState([]);
 
+
   // Function to handle adding the item to the cart
   const addToCart = () => {
     const newItem = {
@@ -17,7 +18,7 @@ function MenuItemBox2(props) {
       price: item.price,
       quantity: item.quantity,
       //add new attr.s in the Menu for each Item (Iquantity and notes)
-      notes: document.querySelector(".input-note-pop").value,
+      note: document.querySelector(".input-note-pop").value,
     };
 
     setCart([...cart, newItem]);
