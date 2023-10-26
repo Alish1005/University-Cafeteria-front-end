@@ -9,18 +9,16 @@ import axios from "axios";
 import { variables } from "../../Variables";
 
 function Cart(props) {
-  const [value, setValue] = useState("1"); //For the
+  const {cart,setCart}=props;
   const [total, setTotal] = useState(0);
-  // const [cart, setCart] = useState([]);
-  // const [items, setItems] = useState([]);
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
   };
-
+//Refresh
   const refresh = () => {
     //Save items
-    props.cart.map((item) => {
+    cart.map((item) => {
       setTotal(total + item.price * item.Iquantity);
     });
   };
@@ -28,27 +26,10 @@ function Cart(props) {
     refresh();
   }, []);
 
-  function addToCart(item) {
-    setCart([...cart, item]);
-  }
-
-  cart.map((cartItem) => <li key={cartItem.id}>{cartItem.name}</li>);
-
   const deleteFromCart = (itemId) => {
     const updatedCart = cart.filter((item) => item.id !== itemId);
     setCart(updatedCart);
   };
-
-  {
-    cart.map((item) => (
-      <div key={item.id}>
-        <p>
-          {item.name} - ${item.price}
-        </p>
-        <button onClick={() => deleteFromCart(item.id)}>Delete</button>
-      </div>
-    ));
-  }
 
   const disabledHours = () => {
     //Disable Time
@@ -94,7 +75,7 @@ function Cart(props) {
             </tr>
           </thead>
           <tbody>
-            {props.cart.map((item) => (
+            {cart.map((item) => (
               <tr key={item.id}>
                 <td>{item.name}</td>
                 <td>{item.price}</td>

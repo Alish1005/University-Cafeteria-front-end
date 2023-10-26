@@ -20,6 +20,7 @@ import AddStaff from "./addStaff/AddStaff";
 import AddItems from "./addItems/AddItems";
 import EditItems from "./editItems/EditItems";
 import { useState } from "react";
+import NotFound from "../NotFound/NotFound";
 
 function Admin() {
     const [EditItemId,setEditItemId]=useState(-1);
@@ -30,10 +31,6 @@ function Admin() {
     const OnClickCustomerOrder=()=>{
         
     }
-    //list item for cart
-    //Add item to cart list (function)
-    //give the Menu page the fucntion (props)
-    //give the items list to the cart
     return ( 
         <div className="Admin">
             <Router>
