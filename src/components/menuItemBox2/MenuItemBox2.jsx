@@ -2,51 +2,70 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useState } from "react";
+
 import "./menuItemBox2.css";
 
 function MenuItemBox2(props) {
-  const { item } = props;
+  const { item, cart, setCart } = props;
   const [count, setCount] = useState(1);
-  const [cart, setCart] = useState([]);
-
 
   // Function to handle adding the item to the cart
-  const addToCart = () => {
-    const newItem = {
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      quantity: item.quantity,
-      //add new attr.s in the Menu for each Item (Iquantity and notes)
-      note: document.querySelector(".input-note-pop").value,
-    };
-
-    setCart([...cart, newItem]);
-
-    // Close the modal after adding to cart
-    document.querySelector(`#${item.id}`).classList.remove("show");
-    document.querySelector(".modal-backdrop").remove();
-
-    // Reset count and notes
-    setCount(1);
-    document.querySelector(".input-note-pop").value = "";
+  // item.map((item) => (
+  //   <div key={item.id}>
+  //     <h3>{item.name}</h3>
+  //     <p>Price: ${item.price}</p>
+  //     <p>Calories: ${item.calories}</p>
+  //     <p>Quantity: ${item.quantity}</p>
+  //     <p>Status: ${item.status}</p>
+  //     <p>{item.description}</p>
+  //   </div>
+  // ));
+  //ADD Item to the Order List
+  const addToCart = (s) => {
+    const found = cart.filter((item) => item.id == s.id);
+    if (found.length == 0) {
+      const data = { ...s, Iquantity: 1, note: "" };
+      setCart((prevArray) => [...prevArray, data]);
+    } else {
+      //const i=orderlist.filter((item)=>item.id==s.id)[0];
+      const ind = cart.map((i) => i.id).indexOf(s.id);
+      console.log(ind);
+      const i = cart[ind];
+      console.log(i);
+      const noti = cart.filter((item, index) => index < ind);
+      const noti2 = cart.filter((item, index) => index > ind);
+      const q = i.Iquantity + 1;
+      i.Iquantity = q;
+      setCart([...noti, i, ...noti2]);
+      console.log(cart);
+    }
   };
 
   return (
     <div className="menuItemBox col-lg-3 col-md-4 col-sm-10 my-3">
-      <img className="MenuItemBoxImg m-1 mb-3 rounded" src={item.photo} alt="" />
-      {item.publishDate>(new Date().setDate(new Date().getDate() - 7)) && <span class="newspan badge bg-danger">New</span>}
-      {item.quantity<1 && (
+      <img
+        className="MenuItemBoxImg m-1 mb-3 rounded"
+        src={item.photo}
+        alt=""
+      />
+      {item.publishDate > new Date().setDate(new Date().getDate() - 7) && (
+        <span class="newspan badge bg-danger">New</span>
+      )}
+      {item.quantity < 1 && (
         <span class="newspan badge bg-secondary text-primary">
           out of stock
         </span>
       )}
       <h5>{item.name}</h5>
-      {item.description!="-" && item.description!=null ? <p>{item.description}</p>:<br/>}
+      {item.description != "-" && item.description != null ? (
+        <p>{item.description}</p>
+      ) : (
+        <br />
+      )}
       <p>
         <strong>{item.price}$</strong>
       </p>
-      {item.quantity<1 ? (
+      {item.quantity < 1 ? (
         <button className="btn btn-primary" disabled>
           <AddShoppingCartIcon /> Add to cart
         </button>
@@ -85,22 +104,25 @@ function MenuItemBox2(props) {
               <img
                 className="AddItemBoxImg menupopimg m-2 mb-3 rounded"
                 src={item.photo}
-                style={{width:"90%"}}
+                style={{ width: "90%" }}
                 alt=""
               />
-              {item.description!="-" && item.description!=null && <p>{item.description}</p>}
+              {item.description != "-" && item.description != null && (
+                <p>{item.description}</p>
+              )}
               {/*Minus Button */}
-              {count<=1 ?
-               <button
-               className="btn-count btn btn-primary"
-               disabled={true} ><RemoveIcon />{" "}
+              {count <= 1 ? (
+                <button className="btn-count btn btn-primary" disabled={true}>
+                  <RemoveIcon />{" "}
                 </button>
-              :               
-              <button
-                className="btn-count btn btn-primary"
-                onClick={() => setCount(count - 1)}
-              ><RemoveIcon />{" "}
-              </button>}
+              ) : (
+                <button
+                  className="btn-count btn btn-primary"
+                  onClick={() => setCount(count - 1)}
+                >
+                  <RemoveIcon />{" "}
+                </button>
+              )}
               {/*quantity input */}
               <input
                 type="number"
@@ -111,20 +133,18 @@ function MenuItemBox2(props) {
                 max={item.quantity}
               />
               {/*plus button*/}
-              {count>=item.quantity ?
-               <button
-               className="btn-count btn btn-primary"
-               disabled={true} ><AddIcon />{" "}
+              {count >= item.quantity ? (
+                <button className="btn-count btn btn-primary" disabled={true}>
+                  <AddIcon />{" "}
                 </button>
-              :               
-              <button
-                className="btn-count btn btn-primary"
-                onClick={() => setCount(count + 1)}
-              ><AddIcon />{" "}
-              </button>}
-
-                {" "}
-
+              ) : (
+                <button
+                  className="btn-count btn btn-primary"
+                  onClick={() => setCount(count + 1)}
+                >
+                  <AddIcon />{" "}
+                </button>
+              )}{" "}
               <br />
               {/*Notes Input */}
               <input
@@ -141,7 +161,11 @@ function MenuItemBox2(props) {
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary" onClick={addToCart}>
+              <button
+                onClick={() => addToCart(item)}
+                type="button"
+                class="btn btn-primary"
+              >
                 <AddShoppingCartIcon /> Add to Cart
               </button>
             </div>

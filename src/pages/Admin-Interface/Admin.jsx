@@ -1,8 +1,8 @@
-import { Route, BrowserRouter as Router , Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import '../../style/global.css';
-import '../../style/bootstrap.css'
+import "../../style/global.css";
+import "../../style/bootstrap.css";
 import Footer from "../../components/footer/Footer";
 import ItemManagments from "./itemManagments/ItemManagments";
 import StaffList from "./StaffList/StaffList";
@@ -12,17 +12,14 @@ import OfferList from "./OfferList/OfferList";
 import StaffMenu from "./StaffMenu/StaffMenu";
 import Feedback from "./FeedBack/FeedBack";
 import ChangePassword from "../User-Interface/changePass/ChangePass";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import Dashboard from "./Dashboard/dashboard";
-import AdminSettings from '../../pages/Admin-Interface/AdminSettings/AdminSettings';
+import AdminSettings from "../../pages/Admin-Interface/AdminSettings/AdminSettings";
 import AddCustomer from "./AddCustomer/AddCustomer";
 import AddStaff from "./addStaff/AddStaff";
 import AddItems from "./addItems/AddItems";
 import EditItems from "./editItems/EditItems";
 import { useState } from "react";
-import NotFound from "../NotFound/NotFound";
-
-
 
 function Admin() {
     const [EditItemId,setEditItemId]=useState(-1);
