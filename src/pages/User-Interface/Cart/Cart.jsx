@@ -4,63 +4,67 @@ import { type, dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Space, TimePicker } from "antd";
 import SendIcon from "@mui/icons-material/Send";
-import { useState ,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { variables } from "../../Variables";
 
 function Cart() {
-  const [value, setValue] = useState('1');//For the 
-  const [sectionId,setSectionId]=useState(0)
-  const [sectionName,setSectionName]=useState("")
-  const [sectionN,setSectionN]=useState({})
+  const [value, setValue] = useState("1"); //For the
+  const [sectionId, setSectionId] = useState(0);
+  const [sectionName, setSectionName] = useState("");
+  const [sectionN, setSectionN] = useState({});
 
+  const [sections, setSections] = useState([]);
 
-  const [sections,setSections]=useState([])
+  const [itemsM, setItemsM] = useState([]);
+  const [itemsH, setItemsH] = useState([]);
+  const onChange = (time, timeString) => {
+    console.log(time, timeString);
+  };
 
+  const refresh = () => {
+    //Save items
+    axios.get(variables.API_URL + "Item").then((res) => {
+      setItems(res.data);
+      setItemsM(
+        res.data.filter((item) => item.status == variables.onMenuValue)
+      );
+      setItemsH(res.data.filter((item) => item.status == variables.hideValue));
+    });
 
-  const [itemsM,setItemsM]=useState([])
-  const [itemsH,setItemsH]=useState([])
-const onChange = (time, timeString) => {
-  console.log(time, timeString);
-};
+    //Save Sections
+    axios.get(variables.API_URL + "Menu/Sections").then((res) => {
+      setItems(res.data);
+    });
+  };
+  useEffect(() => {
+    refresh();
+  }, []);
 
-const refresh = () => {
-  //Save items
-  axios.get(variables.API_URL + "Cart").then((res) => {
-    setItems(res.data);
-    setItemsM(res.data.filter((item) => item.status == variables.onMenuValue));
-    setItemsH(res.data.filter((item) => item.status == variables.hideValue));
-  });
+  const [cart, setCart] = useState([]);
+  const [items, setItems] = useState([]);
 
-  //Save Sections
-  axios.get(variables.API_URL + "Menu/Sections").then((res) => {
-    setItems(res.data);
-  });
-};
-useEffect(() => {
-  refresh();
-}, []);
+  function addToCart(item) {
+    setCart([...cart, item]);
+  }
 
-const [cart, setCart] = useState([]);
+  cart.map((cartItem) => <li key={cartItem.id}>{cartItem.name}</li>);
 
-const deleteFromCart = (itemId) => {
-  const updatedCart = cart.filter((item) => item.id !== itemId);
-  setCart(updatedCart);
-};
+  const deleteFromCart = (itemId) => {
+    const updatedCart = cart.filter((item) => item.id !== itemId);
+    setCart(updatedCart);
+  };
 
-{
-  cart.map((item) => (
-    <div key={item.id}>
-      <p>
-        {item.name} - ${item.price}
-      </p>
-      <button onClick={() => deleteFromCart(item.id)}>Delete</button>
-    </div>
-  ));
-}
-
-const [items, setItems] = useState([]);
-
+  {
+    cart.map((item) => (
+      <div key={item.id}>
+        <p>
+          {item.name} - ${item.price}
+        </p>
+        <button onClick={() => deleteFromCart(item.id)}>Delete</button>
+      </div>
+    ));
+  }
 
   const disabledHours = () => {
     //Disable Time
@@ -93,6 +97,7 @@ const [items, setItems] = useState([]);
       <div className="heading text-primary bg-secondary">
         <h3>&mdash; Cart &mdash;</h3>
       </div>
+
       <div id="table">
         <table className="carttable table table-striped">
           <thead>

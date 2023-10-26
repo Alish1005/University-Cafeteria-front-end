@@ -2,33 +2,32 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useState } from "react";
+
 import "./menuItemBox2.css";
 
 function MenuItemBox2(props) {
   const [count, setCount] = useState(1);
 
+  const [items, setItems] = useState([]);
   const [cart, setCart] = useState([]);
 
-  // Function to handle adding the item to the cart
-  const addToCart = () => {
-    const newItem = {
-      id: props.id,
-      name: props.name,
-      price: props.price,
-      quantity: count,
-      notes: document.querySelector(".input-note-pop").value,
-    };
+  function addToCart(item) {
+    setCart([...cart, item]);
+  }
 
-    setCart([...cart, newItem]);
+  items.map((item) => (
+    <div key={item.id}>
+      <h3>{item.name}</h3>
+      <p>Price: ${item.price}</p>
+      <p>Calories: ${item.calories}</p>
+      <p>Quantity: ${item.quantity}</p>
+      <p>Status: ${item.status}</p>
+      <p>{item.description}</p>
+      <button onClick={() => addToCart(item)}>Add to Cart</button>
+    </div>
+  ));
 
-    // Close the modal after adding to cart
-    document.querySelector(`#${props.id}`).classList.remove("show");
-    document.querySelector(".modal-backdrop").remove();
-
-    // Reset count and notes
-    setCount(1);
-    document.querySelector(".input-note-pop").value = "";
-  };
+  cart.map((cartItem) => <li key={cartItem.id}>{cartItem.name}</li>);
 
   return (
     <div className="menuItemBox col-lg-3 col-md-4 col-sm-10 my-3">
