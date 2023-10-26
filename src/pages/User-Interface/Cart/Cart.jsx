@@ -7,6 +7,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { variables } from "../../Variables";
+import Modal from "react-modal";
 
 function Cart(props) {
   const {cart,setCart}=props;
@@ -27,8 +28,8 @@ function Cart(props) {
   }, []);
 
   const deleteFromCart = (itemId) => {
-    const updatedCart = cart.filter((item) => item.id !== itemId);
-    setCart(updatedCart);
+    const updatedCart = props.cart.filter((item) => item.id !== itemId);
+    props.setCart(updatedCart);
   };
 
   const disabledHours = () => {
@@ -69,7 +70,6 @@ function Cart(props) {
               <th scope="col">Item Name</th>
               <th scope="col">Price</th>
               <th scope="col">Quantity</th>
-              <th scope="col">Total</th>
               <th scope="col">Calories</th>
               <th scope="col">Action</th>
             </tr>
@@ -80,9 +80,13 @@ function Cart(props) {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <td>{item.Iquantity}</td>
-                <td></td>
                 <td>{item.calories}</td>
-                <button type="button" id="delete" className="btn btn-danger">
+                <button
+                  type="button"
+                  id="delete"
+                  className="btn btn-danger"
+                  onClick={() => deleteFromCart(item.id)}
+                >
                   Delete
                 </button>
               </tr>
@@ -111,10 +115,27 @@ function Cart(props) {
           type="button"
           id="order_btn"
           className="btn-send btn btn-primary text-center p-3 "
+          onClick={openModal}
         >
           <SendIcon /> Place Order
         </button>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Order"
+        shouldCloseOnOverlayClick={true}
+      >
+        <h2>Your Order Items</h2>
+        <ul>
+          {props.cart.map((item) => (
+            <li key={item.id}>
+              {item.name} - ${item.price}
+            </li>
+          ))}
+        </ul>
+        <button onClick={closeModal}>Close</button>
+      </Modal>
     </div>
   );
 }
