@@ -165,6 +165,7 @@ function MenuItemBox2(props) {
                 onClick={() => addToCart(item)}
                 type="button"
                 class="btn btn-primary"
+                data-bs-dismiss="modal"
               >
                 <AddShoppingCartIcon /> Add to Cart
               </button>

@@ -12,7 +12,7 @@ function Cart(props) {
   const [value, setValue] = useState("1"); //For the
   const [total, setTotal] = useState(0);
   // const [cart, setCart] = useState([]);
-  // const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
@@ -28,27 +28,27 @@ function Cart(props) {
     refresh();
   }, []);
 
-  function addToCart(item) {
-    setCart([...cart, item]);
-  }
+  // function addToCart(item) {
+  //   setCart([...props.cart, item]);
+  // }
 
-  cart.map((cartItem) => <li key={cartItem.id}>{cartItem.name}</li>);
+  props.cart.map((cartItem) => <li key={cartItem.id}>{cartItem.name}</li>);
 
   const deleteFromCart = (itemId) => {
-    const updatedCart = cart.filter((item) => item.id !== itemId);
-    setCart(updatedCart);
+    const updatedCart = props.cart.filter((item) => item.id !== itemId);
+    props.setCart(updatedCart);
   };
 
-  {
-    cart.map((item) => (
-      <div key={item.id}>
-        <p>
-          {item.name} - ${item.price}
-        </p>
-        <button onClick={() => deleteFromCart(item.id)}>Delete</button>
-      </div>
-    ));
-  }
+  // {
+  //   cart.map((item) => (
+  //     <div key={item.id}>
+  //       <p>
+  //         {item.name} - ${item.price}
+  //       </p>
+  //       <button onClick={() => deleteFromCart(item.id)}>Delete</button>
+  //     </div>
+  //   ));
+  // }
 
   const disabledHours = () => {
     //Disable Time
@@ -88,7 +88,6 @@ function Cart(props) {
               <th scope="col">Item Name</th>
               <th scope="col">Price</th>
               <th scope="col">Quantity</th>
-              <th scope="col">Total</th>
               <th scope="col">Calories</th>
               <th scope="col">Action</th>
             </tr>
@@ -99,9 +98,13 @@ function Cart(props) {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <td>{item.Iquantity}</td>
-                <td></td>
                 <td>{item.calories}</td>
-                <button type="button" id="delete" className="btn btn-danger">
+                <button
+                  type="button"
+                  id="delete"
+                  className="btn btn-danger"
+                  onClick={() => deleteFromCart(item.id)}
+                >
                   Delete
                 </button>
               </tr>
