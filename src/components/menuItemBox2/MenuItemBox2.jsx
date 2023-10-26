@@ -34,14 +34,14 @@ function MenuItemBox2(props) {
   return (
     <div className="menuItemBox col-lg-3 col-md-4 col-sm-10 my-3">
       <img className="MenuItemBoxImg m-1 mb-3 rounded" src={item.photo} alt="" />
-      {item.publishDate>new Date().setDate(new Date().getDate() - 7) && <span class="newspan badge bg-danger">New</span>}
+      {item.publishDate>(new Date().setDate(new Date().getDate() - 7)) && <span class="newspan badge bg-danger">New</span>}
       {item.quantity<1 && (
         <span class="newspan badge bg-secondary text-primary">
           out of stock
         </span>
       )}
       <h5>{item.name}</h5>
-      <p>{item.description}</p>
+      {item.description!="-" && item.description!=null ? <p>{item.description}</p>:<br/>}
       <p>
         <strong>{item.price}$</strong>
       </p>
@@ -87,7 +87,7 @@ function MenuItemBox2(props) {
                 style={{width:"90%"}}
                 alt=""
               />
-              <p>{item.description}</p>
+              {item.description!="-" && item.description!=null && <p>{item.description}</p>}
               {/*Minus Button */}
               {count<=1 ?
                <button
