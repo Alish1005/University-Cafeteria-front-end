@@ -16,13 +16,13 @@ function Cart(props) {
   const [items, setItems] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  // };
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
@@ -46,6 +46,8 @@ function Cart(props) {
 
   const deleteFromCart = (itemId) => {
     const updatedCart = props.cart.filter((item) => item.id !== itemId);
+    const deletedItem = props.cart.filter((i) => i.id == itemId)[0];
+    setTotal(total - deletedItem.Iquantity * deletedItem.price);
     props.setCart(updatedCart);
   };
 
@@ -143,27 +145,10 @@ function Cart(props) {
           type="button"
           id="order_btn"
           className="btn-send btn btn-primary text-center p-3 "
-          onClick={openModal}
         >
           <SendIcon /> Place Order
         </button>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Order"
-        shouldCloseOnOverlayClick={true}
-      >
-        <h2>Your Order Items</h2>
-        <ul>
-          {props.cart.map((item) => (
-            <li key={item.id}>
-              {item.name} - ${item.price}
-            </li>
-          ))}
-        </ul>
-        <button onClick={closeModal}>Close</button>
-      </Modal>
     </div>
   );
 }
