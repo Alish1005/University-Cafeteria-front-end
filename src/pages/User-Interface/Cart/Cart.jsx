@@ -31,7 +31,7 @@ function Cart(props) {
   const refresh = () => {
     //Save items
     cart.map((item) => {
-      setTotal(total + (item.price * item.Iquantity));
+      setTotal(item.price * item.Iquantity + total);
     });
   };
   useEffect(() => {
