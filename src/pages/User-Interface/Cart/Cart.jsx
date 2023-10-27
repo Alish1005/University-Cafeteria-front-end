@@ -10,27 +10,27 @@ import { variables } from "../../Variables";
 import Modal from "react-modal";
 
 function Cart(props) {
-  const [value, setValue] = useState("1"); //For the
+  const { cart, setCart } = props;
   const [total, setTotal] = useState(0);
   // const [cart, setCart] = useState([]);
   const [items, setItems] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
+  const openModal = () => {
+    setModalOpen(true);
+  };
 
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
   };
-
+  //Refresh
   const refresh = () => {
     //Save items
-    props.cart.map((item) => {
+    cart.map((item) => {
       setTotal(total + item.price * item.Iquantity);
     });
   };
@@ -38,29 +38,12 @@ function Cart(props) {
     refresh();
   }, []);
 
-  // function addToCart(item) {
-  //   setCart([...props.cart, item]);
-  // }
-
-  props.cart.map((cartItem) => <li key={cartItem.id}>{cartItem.name}</li>);
-
   const deleteFromCart = (itemId) => {
     const updatedCart = props.cart.filter((item) => item.id !== itemId);
     const deletedItem = props.cart.filter((i) => i.id == itemId)[0];
     setTotal(total - deletedItem.Iquantity * deletedItem.price);
     props.setCart(updatedCart);
   };
-
-  // {
-  //   cart.map((item) => (
-  //     <div key={item.id}>
-  //       <p>
-  //         {item.name} - ${item.price}
-  //       </p>
-  //       <button onClick={() => deleteFromCart(item.id)}>Delete</button>
-  //     </div>
-  //   ));
-  // }
 
   const disabledHours = () => {
     //Disable Time
@@ -105,7 +88,7 @@ function Cart(props) {
             </tr>
           </thead>
           <tbody>
-            {props.cart.map((item) => (
+            {cart.map((item) => (
               <tr key={item.id}>
                 <td>{item.name}</td>
                 <td>{item.price}</td>
