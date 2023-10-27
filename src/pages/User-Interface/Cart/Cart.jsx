@@ -20,7 +20,7 @@ function Cart(props) {
   const refresh = () => {
     //Save items
     cart.map((item) => {
-      setTotal(total + item.price * item.Iquantity);
+      setTotal(total + (item.price * item.Iquantity));
     });
   };
   useEffect(() => {
@@ -115,12 +115,12 @@ function Cart(props) {
           type="button"
           id="order_btn"
           className="btn-send btn btn-primary text-center p-3 "
-          onClick={openModal}
+          // onClick={openModal}
         >
           <SendIcon /> Place Order
         </button>
       </div>
-      <Modal
+      {/* <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Order"
@@ -135,7 +135,7 @@ function Cart(props) {
           ))}
         </ul>
         <button onClick={closeModal}>Close</button>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

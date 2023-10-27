@@ -24,8 +24,6 @@ import NotFound from "../NotFound/NotFound";
 
 function Admin() {
     const [EditItemId,setEditItemId]=useState(-1);
-    const [CustomerName2,setCustomerName2]=useState("");
-    const [CustomerPhone2,setCustomerPhone2]=useState("");
     const [CustomerName,setCustomerName]=useState("");
     const [CustomerPhone,setCustomerPhone]=useState("");
     const OnClickCustomerOrder=()=>{
@@ -71,13 +69,17 @@ function Admin() {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body row d-flex justify-content-center">
-                        <input type="text" onChange={(e)=>setCustomerName2(e.target.value)} className="col-6 p-2 m-2" placeholder="Customer Name" />
-                        <input type="text" onChange={(e)=>setCustomerPhone2(e.target.value)} className="col-6 p-2 m-2" placeholder="Customer Number" />
+                        <input type="text" onChange={(e)=>setCustomerName(e.target.value)} className="col-6 p-2 m-2" placeholder="Customer Name" />
+                        <input type="text" onChange={(e)=>setCustomerPhone(e.target.value)} className="col-6 p-2 m-2" placeholder="Customer Number" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         {/*<button type="button" class="btn btn-primary" onClick={()=>{window.location.pathname="/StaffMenu"}}>Save changes</button>*/}
-                        <Link to="/StaffMenu" type="button" onClick={()=>{setCustomerName(CustomerName2);setCustomerPhone(CustomerPhone2);setCustomerName("");setCustomerPhone2("")}} class="btn btn-primary text-secondary" >Save changes</Link>
+                        {CustomerName==""||CustomerName==null||CustomerPhone==""||CustomerPhone==null ?
+                        <button type="button" data-bs-dismiss="modal" class="btn btn-primary text-secondary" >Save changes</button>
+                        :
+                        <Link to="/StaffMenu" data-bs-dismiss="modal" class="btn btn-primary text-secondary" >Save changes</Link>
+                        }
                     </div>
                     </div>
                 </div>
