@@ -9,6 +9,7 @@ function MenuItemBox2(props) {
   const { item, cart, setCart } = props;
   const [count, setCount] = useState(1);
   const [Iquantity, setIQuantity] = useState(1);
+  const [notes, setNotes] = useState("");
 
   // Function to handle adding the item to the cart
   // item.map((item) => (
@@ -25,7 +26,7 @@ function MenuItemBox2(props) {
   const addToCart = (s) => {
     const found = cart.filter((item) => item.id == s.id);
     if (found.length == 0) {
-      const data = { ...s, Iquantity: count, note: "" };
+      const data = { ...s, Iquantity: count, note: notes };
       setCart((prevArray) => [...prevArray, data]);
     } else {
       //const i=orderlist.filter((item)=>item.id==s.id)[0];
@@ -150,8 +151,10 @@ function MenuItemBox2(props) {
               {/*Notes Input */}
               <input
                 type="text"
+                value={notes}
                 className="input-note-pop m-3 p-2"
                 placeholder="Notes"
+                onChange={(n) => setNotes(n.target.value)}
               />
             </div>
             <div class="modal-footer">

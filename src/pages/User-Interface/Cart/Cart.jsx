@@ -73,6 +73,8 @@ function Cart(props) {
               <th scope="col">Price</th>
               <th scope="col">Quantity</th>
               <th scope="col">Calories</th>
+              <th scope="col">Total</th>
+              <th scope="col">Notes</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -83,6 +85,8 @@ function Cart(props) {
                 <td>{item.price}</td>
                 <td>{item.Iquantity}</td>
                 <td>{item.calories}</td>
+                <td>{item.Iquantity * item.price}</td>
+                <td>{item.note}</td>
                 <td>
                   {" "}
                   <button
