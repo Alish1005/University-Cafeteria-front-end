@@ -10,13 +10,24 @@ import { variables } from "../../Variables";
 import Modal from "react-modal";
 
 function Cart(props) {
-  const {cart,setCart}=props;
+  const { cart, setCart } = props;
   const [total, setTotal] = useState(0);
+  // const [cart, setCart] = useState([]);
+  const [items, setItems] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
   };
-//Refresh
+  //Refresh
   const refresh = () => {
     //Save items
     cart.map((item) => {
@@ -29,6 +40,8 @@ function Cart(props) {
 
   const deleteFromCart = (itemId) => {
     const updatedCart = props.cart.filter((item) => item.id !== itemId);
+    const deletedItem = props.cart.filter((i) => i.id == itemId)[0];
+    setTotal(total - deletedItem.Iquantity * deletedItem.price);
     props.setCart(updatedCart);
   };
 
@@ -115,12 +128,12 @@ function Cart(props) {
           type="button"
           id="order_btn"
           className="btn-send btn btn-primary text-center p-3 "
-          // onClick={openModal}
+          onClick={openModal}
         >
           <SendIcon /> Place Order
         </button>
       </div>
-      {/* <Modal
+      <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Order"
@@ -135,7 +148,7 @@ function Cart(props) {
           ))}
         </ul>
         <button onClick={closeModal}>Close</button>
-      </Modal> */}
+      </Modal>
     </div>
   );
 }

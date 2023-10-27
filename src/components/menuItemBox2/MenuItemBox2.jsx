@@ -8,6 +8,7 @@ import "./menuItemBox2.css";
 function MenuItemBox2(props) {
   const { item, cart, setCart } = props;
   const [count, setCount] = useState(1);
+  const [Iquantity, setIQuantity] = useState(1);
 
   // Function to handle adding the item to the cart
   // item.map((item) => (
@@ -24,7 +25,7 @@ function MenuItemBox2(props) {
   const addToCart = (s) => {
     const found = cart.filter((item) => item.id == s.id);
     if (found.length == 0) {
-      const data = { ...s, Iquantity: 1, note: "" };
+      const data = { ...s, Iquantity: count, note: "" };
       setCart((prevArray) => [...prevArray, data]);
     } else {
       //const i=orderlist.filter((item)=>item.id==s.id)[0];
@@ -34,8 +35,7 @@ function MenuItemBox2(props) {
       console.log(i);
       const noti = cart.filter((item, index) => index < ind);
       const noti2 = cart.filter((item, index) => index > ind);
-      const q = i.Iquantity + 1;
-      i.Iquantity = q;
+      i.Iquantity = Iquantity;
       setCart([...noti, i, ...noti2]);
       console.log(cart);
     }
@@ -131,6 +131,7 @@ function MenuItemBox2(props) {
                 value={count}
                 min={1}
                 max={item.quantity}
+                onChange={(e) => setIQuantity(e.target.value)}
               />
               {/*plus button*/}
               {count >= item.quantity ? (
