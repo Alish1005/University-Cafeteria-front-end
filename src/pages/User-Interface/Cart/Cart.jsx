@@ -12,26 +12,15 @@ import Modal from "react-modal";
 function Cart(props) {
   const { cart, setCart } = props;
   const [total, setTotal] = useState(0);
-  // const [cart, setCart] = useState([]);
-  const [items, setItems] = useState([]);
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
   };
   //Refresh
-  const refresh = () => {
+  const refresh = async () => {
     //Save items
     cart.map((item) => {
-      setTotal(item.price * item.Iquantity + total);
+      setTotal(total + item.price * item.Iquantity);
     });
   };
   useEffect(() => {
@@ -94,14 +83,17 @@ function Cart(props) {
                 <td>{item.price}</td>
                 <td>{item.Iquantity}</td>
                 <td>{item.calories}</td>
-                <button
-                  type="button"
-                  id="delete"
-                  className="btn btn-danger"
-                  onClick={() => deleteFromCart(item.id)}
-                >
-                  Delete
-                </button>
+                <td>
+                  {" "}
+                  <button
+                    type="button"
+                    id="delete"
+                    className="btn btn-danger"
+                    onClick={() => deleteFromCart(item.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -128,27 +120,10 @@ function Cart(props) {
           type="button"
           id="order_btn"
           className="btn-send btn btn-primary text-center p-3 "
-          onClick={openModal}
         >
           <SendIcon /> Place Order
         </button>
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Order"
-        shouldCloseOnOverlayClick={true}
-      >
-        <h2>Your Order Items</h2>
-        <ul>
-          {props.cart.map((item) => (
-            <li key={item.id}>
-              {item.name} - ${item.price}
-            </li>
-          ))}
-        </ul>
-        <button onClick={closeModal}>Close</button>
-      </Modal>
     </div>
   );
 }
