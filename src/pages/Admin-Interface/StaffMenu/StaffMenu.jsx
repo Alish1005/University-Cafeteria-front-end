@@ -16,6 +16,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PrintIcon from '@mui/icons-material/Print';
 import { useToast } from '@chakra-ui/react'
 import { format } from 'date-fns';
+import SendIcon from "@mui/icons-material/Send";
 
 
 function StaffMenu(props) {
@@ -23,7 +24,6 @@ function StaffMenu(props) {
 
     const [value, setValue] = useState("1");
     const [orderlist, setOrderlist] = useState([]);
-
     const [total, setTotal] = useState(0);
     const [sections,setSections]=useState([])
     const [items,setItems]=useState([])
@@ -36,6 +36,42 @@ function StaffMenu(props) {
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
+    //Add Order
+const MakeOrder = () => {
+  const order_item=[];
+  orderlist.map((item)=>(order_item.push({"order_id":0,"order":"string","item_id":item.id,"item":{},"quantity":item.Iquantity,"note":item.note})));
+  const order={
+    "id":0,
+    "status":variables.order_uncompete,
+    "order_time":"2023-10-27T12:14:42.322Z",
+    "discount":discount,
+    "del_Room":"0000",
+    "order_item":order_item,
+    "order_offer":[],
+  }
+  axios.post(`${variables.API_URL}order`)  
+  .then((result)=>{
+    refresh();
+    toast({
+      title: 'Order Added Successfully !',
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
+  }).catch((error)=>{
+    toast({
+      title: error,
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  })
+};
+
+
 
     //ADD Item to the Order List
     const addItem = (s) => {
@@ -155,6 +191,7 @@ axios.get(variables.API_URL+"Item/Sections")
             </TabContext>
           </Box>
           </div>
+          <button className='btn-makeOrder btn btn-primary' /*onClick={MakeOrder()}*/><SendIcon/> Make Order</button>
           {/*-----------------Order List----------------*/}
             <div className="col-lg-4 col-md-6 col-sm-11 ms-sm-3 col-xs-11 p-2 text-black bg-secondary rounded">
 

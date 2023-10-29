@@ -1,3 +1,9 @@
+.btn-makeOrder{
+  position:fixed;
+  bottom: 50px;
+  left: 45%;
+  width: 150px;
+}
 .OrderListStaffNote{
   display: none;
 }

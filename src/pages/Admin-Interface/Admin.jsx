@@ -75,10 +75,10 @@ function Admin() {
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         {/*<button type="button" class="btn btn-primary" onClick={()=>{window.location.pathname="/StaffMenu"}}>Save changes</button>*/}
-                        {CustomerName==""||CustomerName==null||CustomerPhone==""||CustomerPhone==null ?
+                        {CustomerName==""||CustomerPhone=="" ?
                         <button type="button" data-bs-dismiss="modal" class="btn btn-primary text-secondary" >Save changes</button>
                         :
-                        <Link to="/StaffMenu" data-bs-dismiss="modal" class="btn btn-primary text-secondary" >Save changes</Link>
+                        <Link to="/StaffMenu" class="btn btn-primary text-secondary" >Save changes</Link>
                         }
                     </div>
                     </div>
