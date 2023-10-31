@@ -28,19 +28,15 @@ function User() {
         <Routes>
           {/*for each page you need to create a Route */}
           <Route path="/" element={<Home />} />
-          <Route
-            path="/menu"
-            element={<Menu setCart={setCart} cart={cart} />}
-          />
+          <Route path="/menu" element={<Menu setCart={setCart} cart={cart} />}/>
           <Route path="/login" element={<Login />} />
-          <Route
-            path="/cart"
-            element={<Cart cart={cart} setCart={setCart} />}
-          />
+          <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />}/>
           <Route path="/ChangePassword" element={<ChangePassword />} />
           <Route path="/MyOrders" element={<MyOrders />} />
           <Route path="/Offers" element={<Offers />} />
           <Route path="/Login" element={<Login />} />
+          <Route path='/*' element={<NotFound/>}/>
+
         </Routes>
       </Router>
       <Footer IsUser={true} />
