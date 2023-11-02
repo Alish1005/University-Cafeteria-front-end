@@ -44,12 +44,28 @@ function EditItems(props){
       setQuantity(data.data.quantity)
       setCalories(data.data.calories)
       setDate(new Date(data.data.publishDate))
+    }).catch((error)=>{
+      toast({
+        title: "Something went wrong!",
+        position:'top-right',
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      })
     });
 
     axios.get(variables.API_URL+"Item/Sections")
     .then((data)=>{
       setSections(data.data);
       console.log(data.data);
+    }).catch((error)=>{
+      toast({
+        title: "Something went wrong!",
+        position:'top-right',
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      })
     });
   }
   useEffect(()=>{

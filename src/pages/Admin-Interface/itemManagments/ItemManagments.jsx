@@ -30,6 +30,7 @@ const columns = [
  { field: "id", headerName: "ID", width: 70 },
  {field: "photo",headerName: "Avatar",sortable: false,width: 60,disableExport: true,renderCell: (params) => {return <img src={params.row.photo || "/noavatar.png"} alt="" />;},},
  {field: "name",type: "string",headerName: "Item name",width: 150},
+ /*{field: "section",type: "string",headerName: "section",width: 150},*/
  {field: "section",type: "string",headerName: "section",width: 100,
  
  valueGetter: (params) => {
@@ -122,7 +123,8 @@ const refresh=()=>{
     .then((res) => {
       setItems(res.data);
       setItemsM(res.data.filter((item)=>item.status==variables.onMenuValue));
-      setItemsH(res.data.filter((item)=>item.status==variables.hideValue));      
+      setItemsH(res.data.filter((item)=>item.status==variables.hideValue));   
+      console.log(items);   
       })
   //Save Sections
   axios.get(variables.API_URL+"Item/Sections")
@@ -150,7 +152,7 @@ const DeleteItem = (id) => {
     })
   }).catch((error)=>{
     toast({
-      title: error,
+      title: "Something went wrong!",
       position:'top-right',
       status: 'error',
       duration: 3000,
@@ -176,7 +178,7 @@ const HideItem = (id,status) => {
     })
   }).catch((error)=>{
     toast({
-      title: error,
+      title: "Something went wrong!",
       position:'top-right',
       status: 'error',
       duration: 3000,
@@ -213,7 +215,7 @@ const SectionOnClick=()=>{
       setSectionName("");
     }).catch((error)=>{
       toast({
-        title: error,
+        title: "Something went wrong!",
         position:'top-right',
         status: 'error',
         duration: 3000,
@@ -236,7 +238,7 @@ const SectionOnClick=()=>{
     setSectionId(0);
   }).catch((error)=>{
     toast({
-      title: error,
+      title: "Something went wrong!",
       position:'top-right',
       status: 'error',
       duration: 3000,
@@ -270,7 +272,7 @@ const EditSectionOnClick=(id,name)=>{
       })
     }).catch((error)=>{
       toast({
-        title: error,
+        title: "Something went wrong!",
         position:'top-right',
         status: 'error',
         duration: 3000,
@@ -292,7 +294,7 @@ const EditSectionOnClick=(id,name)=>{
       })
     }).catch((error)=>{
       toast({
-        title: error,
+        title: "Something went wrong!",
         position:'top-right',
         status: 'error',
         duration: 3000,

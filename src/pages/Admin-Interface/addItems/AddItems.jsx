@@ -16,12 +16,12 @@ function AddItems(){
   const url=variables.API_URL;
 
   const [imgbase64,setImageBase64]=useState(""); //set encoded img
-  const [name,setName]=useState(""); //set encoded img
-  const [component,setComponent]=useState(""); //set encoded img
-  const [sectionId,setSectionId]=useState(-1); //set encoded img
-  const [price,setPrice]=useState(""); //set encoded img
-  const [quantity,setQuantity]=useState(0); //set encoded img
-  const [calories,setCalories]=useState(0); //set encoded img
+  const [name,setName]=useState("");
+  const [component,setComponent]=useState("");
+  const [sectionId,setSectionId]=useState(-1);
+  const [price,setPrice]=useState("");
+  const [quantity,setQuantity]=useState(0); 
+  const [calories,setCalories]=useState(0);
 
 
 
@@ -80,7 +80,7 @@ function AddItems(){
         })
       }).catch((error)=>{
         toast({
-          title: error,
+          title: "Something went wrong!",
           position:'top-right',
           status: 'error',
           duration: 3000,

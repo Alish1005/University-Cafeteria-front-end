@@ -10,7 +10,7 @@ function Dashboard() {
     const rushHours = [{name: '8.am',orders: 10,rating: 240,amt: 2400,},{name: '9.am',orders: 15,rating: 139,amt: 2210,},{name: '10.am',orders: 20,rating: 980,amt: 2290,},{name: '11.am',orders: 45,rating: 390,amt: 2000,},{name: '12.pm',orders: 55,rating: 480,amt: 2181,},{name: '1.pm',orders: 62,rating: 380,amt: 2500,},{name: '2.pm',orders: 45,rating: 430,amt: 2100,},{name: '3.pm',orders: 34,rating: 430,amt: 2100,},{name: '4.pm',orders: 29,rating: 430,amt: 2100,},{name: '5.pm',orders: 15,rating: 430,amt: 2100,},];
     const staff = [{name: 'Ali ',orders: 400,rating: 4.3,amt: 2400,},{name: 'kassem',orders: 300,rating: 3.2,amt: 2210,},{name: 'Ahmad',orders: 200,rating: 3.6,amt: 2290,},{name: 'Ali',orders: 980,rating: 4.5,amt: 2000,},{name: 'imad',orders: 189,rating: 2.9,amt: 2181,},{name: 'sally',orders: 239,rating: 4.6,amt: 2500,},{name: 'Abbas',orders: 349,rating: 3.4,amt: 2100,},{name: 'Hussien',orders: 323,rating: 2.6,amt: 2100,},{name: 'Hassan',orders: 349,rating: 4.9,amt: 2100,}];
     return ( 
-          <div className="pagesContent">
+          <div className="">
               <h3 className="text-center">Dashboard</h3><br/>
               <div className="TopBoxes d-flex justify-content-center row m-3">
                   <TopBox title="Top item" name="Burger" number={324}/>

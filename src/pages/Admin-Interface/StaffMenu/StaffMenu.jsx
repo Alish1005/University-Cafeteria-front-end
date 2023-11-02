@@ -124,7 +124,6 @@ const refresh=()=>{
 axios.get(variables.API_URL+"Item/Sections")
 .then((res) => {
   setSections(res.data.filter((section)=>section.isHidden==false));
-  
   })
   //Save items
   axios.get(variables.API_URL+"Item")
