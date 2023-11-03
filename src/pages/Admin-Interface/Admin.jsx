@@ -20,12 +20,19 @@ import AddStaff from "./addStaff/AddStaff";
 import AddItems from "./addItems/AddItems";
 import EditItems from "./editItems/EditItems";
 import { useState } from "react";
+import AddOffer from "../Admin-Interface/AddOffer/AddOffer";
 import NotFound from "../NotFound/NotFound";
+import ChooseOfferItems from "./ChooseOfferItems/ChooseOfferItems";
+
 
 function Admin() {
     const [EditItemId,setEditItemId]=useState(-1);
     const [CustomerName,setCustomerName]=useState("");
     const [CustomerPhone,setCustomerPhone]=useState("");
+    const [OfferItems,setOfferItems]=useState([]);
+    const [OfferTotal,setOfferTotal]=useState(0);
+    const [Offer,setOffer]=useState({"id":0,"name":"","img":"","description":"","price":0});
+
     const OnClickCustomerOrder=()=>{
         
     }
@@ -45,7 +52,6 @@ function Admin() {
                                 <Route path='/StaffList' element={<StaffList/>}/>
                                 <Route path='/CustomerList' element={<CustomerList/>}/>
                                 <Route path='/OrdersList' element={<OrderList/>}/>
-                                <Route path='/OfferList' element={<OfferList/>}/>
                                 <Route path='/StaffMenu' element={<StaffMenu CName={CustomerName} CPhone={CustomerPhone} />}/>
                                 <Route path='/FeedBack' element={<Feedback/>}/>
                                 <Route path='/Settings' element={<AdminSettings/>}/>
@@ -54,6 +60,9 @@ function Admin() {
                                 <Route path='/StaffList/AddStaff' element={<AddStaff/>}/>
                                 <Route path='/itemManagment/AddItem' element={<AddItems/>}/>
                                 <Route path='/itemManagment/EditItem' element={<EditItems id={EditItemId}/>}/>
+                                <Route path='/OfferList' element={<OfferList setOffer={setOffer}/>}/>
+                                <Route path='/OfferList/AddEditOffer' element={<AddOffer Offer={Offer} setOffer={setOffer} OfferItems={OfferItems} setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
+                                <Route path='/OfferList/AddOffer/ChooseItems' element={<ChooseOfferItems setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
                                 <Route path='/*' element={<NotFound/>}/>
                             </Routes>
                     </div>

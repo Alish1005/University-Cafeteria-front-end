@@ -42,15 +42,9 @@ function Sidebar() {
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/StaffList" className='listItem' >
-                        <EngineeringIcon />
-                        { !menuShow ? <span className="listItemTitle">Staff Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Staff Managment</span>}
-                    </Link>
-                </div>
-                <div className="item">
-                    <Link to="/CustomerList" className='listItem' >
-                        <ManageAccountsIcon />
-                        { !menuShow ? <span className="listItemTitle">Customer Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Customer Managment</span>}
+                    <Link to="/OfferList" className='listItem' >
+                        <LocalOfferIcon/>
+                        { !menuShow ? <span className="listItemTitle">Offer Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Offer Managment</span>}
                     </Link>
                 </div>
                 <div className="item">
@@ -60,9 +54,15 @@ function Sidebar() {
                     </Link>
                 </div>
                 <div className="item">
-                    <Link to="/OfferList" className='listItem' >
-                        <LocalOfferIcon/>
-                        { !menuShow ? <span className="listItemTitle">Offer Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Offer Managment</span>}
+                    <Link to="/StaffList" className='listItem' >
+                        <EngineeringIcon />
+                        { !menuShow ? <span className="listItemTitle">Staff Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Staff Managment</span>}
+                    </Link>
+                </div>
+                <div className="item">
+                    <Link to="/CustomerList" className='listItem' >
+                        <ManageAccountsIcon />
+                        { !menuShow ? <span className="listItemTitle">Customer Managment</span> : <span className="listItemTitle" style={{display:"none"}}>Customer Managment</span>}
                     </Link>
                 </div>
                 <div className="title">General</div>

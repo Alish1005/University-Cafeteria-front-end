@@ -124,7 +124,7 @@ function EditItems(props){
         })
       }).catch((error)=>{
         toast({
-          title: error,
+          title: "Something went wrong!",
           position:'top-right',
           status: 'error',
           duration: 3000,
@@ -156,7 +156,13 @@ function EditItems(props){
       console.log(image);
       setImageBase64(image);
     } catch (err) {
-      console.log(err);
+      toast({
+        title: "Something went wrong while uploading image!",
+        position:'top-right',
+        status: 'error',
+        duration: 3000,
+        isClosable: false,
+      })
     }
   };
 

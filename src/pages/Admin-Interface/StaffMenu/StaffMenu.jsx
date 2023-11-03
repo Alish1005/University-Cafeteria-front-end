@@ -17,21 +17,22 @@ import PrintIcon from '@mui/icons-material/Print';
 import { useToast } from '@chakra-ui/react'
 import { format } from 'date-fns';
 import SendIcon from "@mui/icons-material/Send";
-
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 function StaffMenu(props) {
   const toast = useToast()
 
-    const [value, setValue] = useState("1");
+    const [value, setValue] = useState("-1");
     const [orderlist, setOrderlist] = useState([]);
     const [total, setTotal] = useState(0);
-    const [sections,setSections]=useState([])
-    const [items,setItems]=useState([])
     const [discount,setDiscount]=useState(0)
     const [discounts,setDiscounts]=useState(0)
     const [Idnote, setIdNote] = useState(-1);
     const [note, setNote] = useState("");
     const [date,setDate]=useState("0");
+    const [sections,setSections]=useState([])
+    const [items,setItems]=useState([])
+    const [Offers,setOffers]=useState([])
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -130,15 +131,15 @@ axios.get(variables.API_URL+"Item/Sections")
   .then((res) => {
     setItems(res.data.filter((item)=>item.status==variables.onMenuValue));
     })
+      //Save items
+  axios.get(variables.API_URL+"Offer")
+  .then((res) => {
+    setOffers(res.data.filter((item)=>item.status==variables.onMenuValue));
+    })
 }
   useEffect(()=> {
     refresh();
     setDate(format(new Date(), 'dd/MM/yyyy'))
-    if(sections.length==0){
-      setValue("1")
-    }else{
-    setValue(`${sections[0].id}`)
-    }
     },[])
 
 
@@ -161,15 +162,34 @@ axios.get(variables.API_URL+"Item/Sections")
                     "& button.Mui-selected":{color:'#1E3669',fontWeight:"bold"}
                   }}
                 >
+                    <Tab label={<span><LocalOfferIcon/> Offers</span>} value={`-1`}/>
                   {sections.map((section)=>(
                     <Tab label={section.name} value={`${section.id}`}/>
                   ))}
                 </TabList>
               </Box>
+              <TabPanel value={`-1`}>
+                {Offers.length>0 ?
+                Offers.map(s => {
+                  /*if(s.quantity>0){*/
+                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
+                      <p>{s.name}</p>
+                      <p>{s.price}$</p>
+                    </button>)
+                  /*}else{
+                    return (<button className='col-3 m-2 text-black btn btn-secondary' disabled>
+                    <p>{s.name}</p>
+                    <p>{s.price}$</p>
+                  </button>)
+                  }*/
+
+                  }) : <p>Empty</p>
+                }
+                    </TabPanel>
               {/*Content of each section*/}
               {sections.map((section)=>(
                     <TabPanel value={`${section.id}`}>
-                {
+                {items.filter((item)=>item.section_id==section.id).length>0 ?
                 items.filter((item)=>item.section_id==section.id).map(s => {
                   if(s.quantity>0){
                     return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
@@ -183,7 +203,7 @@ axios.get(variables.API_URL+"Item/Sections")
                   </button>)
                   }
 
-                  })
+                  }) : <p>Empty</p>
                 }
                     </TabPanel>
               ))}
@@ -222,7 +242,7 @@ axios.get(variables.API_URL+"Item/Sections")
                   <th className='OrderListStaffNote'>note</th>
                   <th className='OrderListStaffActions'>action</th>
                 </thead>
-              {
+                {orderlist.length>0 ?
                 orderlist.map(s => (
                     <tr>
                       <td>{s.name}</td>
@@ -231,13 +251,13 @@ axios.get(variables.API_URL+"Item/Sections")
                       <td>{(s.Iquantity*s.price).toFixed(2)}$</td>
                       <td className='OrderListStaffNote'>{s.note}</td>
                       <td className='OrderListStaffActions'>
-                      <Link title='Write note' onClick={()=>SetNotePop(s.id)} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddItemNoteModal" className='text-info bg-transparent'><EditNoteIcon/></Link>
+                      <Link title='Write note' onClick={()=>SetNotePop(s.id)} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddItemNoteModal" className='text-primary bg-transparent'><EditNoteIcon/></Link>
                       <Link title='Delete' onClick={()=>deleteItem(s)} className='text-danger bg-transparent'><DeleteIcon/></Link>
                       </td>
                       
                     </tr>
                 ))
-                }
+                : <td className='pt-2' colSpan={5}>No items</td>}
               </table>
               <hr />
               <div className="d-flex  justify-content-between mx-5">

@@ -1,0 +1,36 @@
+.btn-makeOrder{
+  position:fixed;
+  bottom: 50px;
+  left: 45%;
+  width: 150px;
+}
+.OrderListStaffNote{
+  display: none;
+}
+@media print {
+    .OrderListStaff,.OrderListStaff *,.OrderListStaffNote{
+        display: block !important;
+        width: 100% !important;
+    } 
+    .table{
+        width: 100% !important;
+        align-items: center;
+    }
+    .Sidebar,.navbar,.footer,.StaffMenu,.dropdown-menu, h3, .OrderListStaffActions{
+        display: none !important;
+    }
+
+  /* Apply general styles to printed content */
+  body {
+    font-family: Arial, sans-serif; /* Specify the font for printed text */
+  }
+
+  /* Style headers and footers (optional) */
+  @page {
+    
+    size: A4 ;
+    /* Header content and style */
+
+  }
+
+}

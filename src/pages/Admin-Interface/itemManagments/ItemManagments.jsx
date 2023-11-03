@@ -14,7 +14,10 @@ import { variables } from "../../Variables";
 import axios from "axios";
 import { format } from 'date-fns';
 import { useToast } from '@chakra-ui/react'
-
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import AddIcon from '@mui/icons-material/Add';
 
 function ItemManagments(props) {
   const toast = useToast()
@@ -56,18 +59,18 @@ renderCell: (params) => {
  {field: "action",headerName: "Action",width: 200,sortable: false,disableExport: true,renderCell: (params) => {
   return (
     <div className="action">
-        <Link /*data-bs-toggle="modal" data-bs-target="#AddSectionModal"*/ to="/itemManagment/EditItem" onClick={()=>props.setEditItemId(params.row.id)} className="delete btn btn-info btn-sm" /*onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}*/>
-           Edit
+        <Link to="/itemManagment/EditItem" title='edit' className="delete bg-transparent text-primary btn-sm"  onClick={()=>props.setEditItemId(params.row.id)}  /*onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}*/>
+           <EditIcon/>
         </Link>
-        <button className="delete btn btn-danger btn-sm" onClick={()=>{DeleteItem(params.row.id)}}>
-          Delete
+        <button className="delete bg-transparent text-danger border border-0 btn-sm"  title='delete' onClick={()=>{DeleteItem(params.row.id)}}>
+          <DeleteIcon/>
         </button>
         {params.row.status==variables.hideValue ?
-          <button className="delete btn btn-primary btn-sm" onClick={()=>HideItem(params.row.id,params.row.status)}>
-          Add
+          <button className="delete bg-transparent text-primary border border-0 btn-sm"  title='add to menu' onClick={()=>HideItem(params.row.id,params.row.status)}>
+          <AddIcon/>
         </button>:
-         <button className="delete btn btn-warning btn-sm" onClick={()=>HideItem(params.row.id,params.row.status)}>
-          Hide
+         <button className="delete bg-transparent text-warning border border-0 btn-sm" title='hide' onClick={()=>HideItem(params.row.id,params.row.status)}>
+          <VisibilityOffIcon/>
         </button>
          }  
     </div>
@@ -85,18 +88,18 @@ const Sectioncolumns = [
  {field: "action",headerName: "Action",width: 200,disableExport: true,renderCell: (params) => {
     return (
       <div className="action">
-          <button data-bs-toggle="modal" data-bs-target="#AddSectionModal" className="delete btn btn-info btn-sm" onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}>
-             Edit
+          <button data-bs-toggle="modal" data-bs-target="#AddSectionModal" title='edit' className="delete bg-transparent text-primary border border-0 btn-sm" onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}>
+          <EditIcon/>
           </button>
-          <button className="delete btn btn-danger btn-sm" onClick={()=>DeleteSection(params.row.id)}>
-            Delete
+          <button className="delete bg-transparent text-danger border border-0 btn-sm" title='delete' onClick={()=>DeleteSection(params.row.id)}>
+          <DeleteIcon/>
           </button>
           {params.row.isHidden ?
-            <button className="delete btn btn-primary btn-sm" onClick={()=>HideSection(params.row.id,params.row.isHidden)}>
-            Add
+            <button className="delete bg-transparent text-primary border border-0 btn-sm" title='add to menu' onClick={()=>HideSection(params.row.id,params.row.isHidden)}>
+            <AddIcon/>
           </button>:
-           <button className="delete btn btn-warning btn-sm" onClick={()=>HideSection(params.row.id,params.row.isHidden)}>
-            Hide
+           <button className="delete bg-transparent text-warning border border-0 btn-sm" title='hide' onClick={()=>HideSection(params.row.id,params.row.isHidden)}>
+            <VisibilityOffIcon/>
           </button>
            }
           
