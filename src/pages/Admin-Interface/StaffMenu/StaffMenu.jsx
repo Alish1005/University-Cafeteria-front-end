@@ -39,18 +39,22 @@ function StaffMenu(props) {
     };
     //Add Order
 const MakeOrder = () => {
-  const order_item=[];
-  orderlist.map((item)=>(order_item.push({"order_id":0,"order":"string","item_id":item.id,"item":{},"quantity":item.Iquantity,"note":item.note})));
+  const order_items=[];
+  const order_offers=[];
+  orderlist.map((item)=>(item.offer_item!=null ?
+  order_offers.push({"order_id":0,"offer_id":item.id,"quantity":item.Iquantity,"note":item.note})
+  :
+  order_items.push({"order_id":0,"item_id":item.id,"quantity":item.Iquantity,"note":item.note})
+  ));
   const order={
     "id":0,
     "status":variables.order_uncompete,
-    "order_time":"2023-10-27T12:14:42.322Z",
     "discount":discount,
     "del_Room":"0000",
-    "order_item":order_item,
-    "order_offer":[],
+    "order_item":order_items,
+    "order_offer":order_offers,
   }
-  axios.post(`${variables.API_URL}order`)  
+  axios.post(`${variables.API_URL}order`,order)  
   .then((result)=>{
     refresh();
     toast({
@@ -63,7 +67,7 @@ const MakeOrder = () => {
     })
   }).catch((error)=>{
     toast({
-      title: error,
+      title: "Something went wrong!",
       position:'top-right',
       status: 'error',
       duration: 3000,
@@ -84,9 +88,7 @@ const MakeOrder = () => {
     }else{
         //const i=orderlist.filter((item)=>item.id==s.id)[0];
         const ind=orderlist.map((i)=>i.id).indexOf(s.id);
-        console.log(ind)
         const i=orderlist[ind]
-        console.log(i)
         const noti=orderlist.filter((item,index)=>index<ind);
         const noti2=orderlist.filter((item,index)=>index>ind);
         const q=i.Iquantity+1;
@@ -101,7 +103,6 @@ const MakeOrder = () => {
       const l=orderlist.filter((item)=>item.id!=e.id);
       setOrderlist(l);
       setTotal(total-(e.price*e.Iquantity));
-      refresh();
       }
     //Add Notes
     const SetNotePop=(id)=>{
@@ -119,6 +120,17 @@ const MakeOrder = () => {
         setNote("")
         setIdNote(-1)
          }
+
+    const CheckOutOfStock=(s)=>{
+      const ind=orderlist.map((i)=>i.id).indexOf(s.id);
+      const i=orderlist[ind]
+      console.log(i)
+      if(i==null){
+        return s.quantity<1
+      }else{
+      return(i.quantity/2<i.Iquantity);
+      }
+    }
 
 //refresh function
 const refresh=()=>{
@@ -172,18 +184,17 @@ axios.get(variables.API_URL+"Item/Sections")
               <TabPanel value={`-1`}>
                 {Offers.length>0 ?
                 Offers.map(s => {
-                  /*if(s.quantity>0){*/
-                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
+                  if(false){
+                    return (<button className='col-3 m-2 text-black btn btn-secondary' disabled>
                       <p>{s.name}</p>
                       <p>{s.price}$</p>
                     </button>)
-                  /*}else{
-                    return (<button className='col-3 m-2 text-black btn btn-secondary' disabled>
+                  }else{
+                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
                     <p>{s.name}</p>
                     <p>{s.price}$</p>
                   </button>)
-                  }*/
-
+                  }
                   }) : <p>Empty</p>
                 }
                     </TabPanel>
@@ -192,13 +203,13 @@ axios.get(variables.API_URL+"Item/Sections")
                     <TabPanel value={`${section.id}`}>
                 {items.filter((item)=>item.section_id==section.id).length>0 ?
                 items.filter((item)=>item.section_id==section.id).map(s => {
-                  if(s.quantity>0){
-                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
-                      <p>{s.name}</p>
-                      <p>{s.price}$</p>
-                    </button>)
-                  }else{
+                  if(CheckOutOfStock(s)){
                     return (<button className='col-3 m-2 text-black btn btn-secondary' disabled>
+                    <p>{s.name}</p>
+                    <p>{s.price}$</p>
+                  </button>)
+                  }else{
+                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
                     <p>{s.name}</p>
                     <p>{s.price}$</p>
                   </button>)
@@ -211,7 +222,7 @@ axios.get(variables.API_URL+"Item/Sections")
             </TabContext>
           </Box>
           </div>
-          <button className='btn-makeOrder btn btn-primary' /*onClick={MakeOrder()}*/><SendIcon/> Make Order</button>
+          <button className='btn-makeOrder btn btn-primary' onClick={()=>MakeOrder()}><SendIcon/> Make Order</button>
           {/*-----------------Order List----------------*/}
             <div className="col-lg-4 col-md-6 col-sm-11 ms-sm-3 col-xs-11 p-2 text-black bg-secondary rounded">
 
@@ -261,9 +272,9 @@ axios.get(variables.API_URL+"Item/Sections")
                       s.offer_item.map((i)=>(
                         <tr className='trOfferItems'>
                         <td>{i.item.name}</td>
-                        <td>{i.item.price}$</td>
+                        <td>{`${i.item.price} $`}</td>
                         <td>{i.quantity}</td>
-                        <td>{(i.quantity*i.item.price).toFixed(2)}$</td>
+                        <td>{`${i.quantity*i.item.price.toFixed(2)} $`}</td>
                         <td colSpan={2}>
                         </td>
                       </tr>
