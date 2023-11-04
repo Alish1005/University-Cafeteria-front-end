@@ -171,7 +171,7 @@ function AddOffer(props) {
           <TextField onChange={(e)=>{setPrice(e.target.value);onChangeOffer("price",e.target.value)}} value={Offer.price} id="filled-basic" className="my-2" type="number" label="Price" variant="outlined" /><br />
         </div>
         <div className="col-lg-4 col-md-11 ms-md-4 col-sm-11 ms-sm-3 col-xs-11 ">
-          <Link to="/OfferList/AddOffer/ChooseItems" className="btn btn-primary text-secondary mb-2">Choose Items</Link>
+          <Link to="/OfferList/AddEditOffer/ChooseItems" className="btn btn-primary text-secondary mb-2">Choose Items</Link>
         <div className="p-3 text-black bg-secondary rounded">
                 <div className="OrderListStaff d-flex justify-content-between">
                 <p>{date}</p>

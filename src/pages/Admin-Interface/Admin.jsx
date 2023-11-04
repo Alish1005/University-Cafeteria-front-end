@@ -62,7 +62,7 @@ function Admin() {
                                 <Route path='/itemManagment/EditItem' element={<EditItems id={EditItemId}/>}/>
                                 <Route path='/OfferList' element={<OfferList setOffer={setOffer}/>}/>
                                 <Route path='/OfferList/AddEditOffer' element={<AddOffer Offer={Offer} setOffer={setOffer} OfferItems={OfferItems} setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
-                                <Route path='/OfferList/AddOffer/ChooseItems' element={<ChooseOfferItems setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
+                                <Route path='/OfferList/AddEditOffer/ChooseItems' element={<ChooseOfferItems setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
                                 <Route path='/*' element={<NotFound/>}/>
                             </Routes>
                     </div>

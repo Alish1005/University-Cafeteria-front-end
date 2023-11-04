@@ -65,17 +65,24 @@
 }
 
 .item{
-    color: var(--main-color) !important;
+    color: var(--main-color) ;
     background:var(--main-bg);
     gap: 10px;
     transition: all .3s;
     margin-right: 10px;
 
 }
-
+.listItemTitle{
+    color: white !important;
+    transition: all .3s;
+}
+.item:hover .listItemTitle{
+    color: var(--main-bg) !important;
+    transition: all .3s;
+}
 .title{
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 500;
     color: var(--main-color);
     justify-self: start;
     text-transform: uppercase;

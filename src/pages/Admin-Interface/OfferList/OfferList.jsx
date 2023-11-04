@@ -43,7 +43,7 @@ const refresh=()=>{
             <div className="">
                 <h4>Offer List</h4>
                 <div className="actions my-3">
-            <Link to="/OfferList/AddEditOffer" onClick={()=>refresh()} className='btn btn-secondary m-1'>Add Offer</Link>
+            <Link to="/OfferList/AddEditOffer" onClick={()=>{refresh();setOffer({"id":0,"name":"","img":"","description":"","price":0})}} className='btn btn-secondary m-1'>Add Offer</Link>
           </div>
                 <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>

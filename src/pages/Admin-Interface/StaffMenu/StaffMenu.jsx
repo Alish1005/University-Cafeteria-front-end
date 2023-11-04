@@ -77,6 +77,7 @@ const MakeOrder = () => {
     //ADD Item to the Order List
     const addItem = (s) => {
       const found=orderlist.filter((item)=>item.id==s.id);
+      console.log(found[0])
       if(found.length==0){
       const data={...s,Iquantity:1,note:""}
       setOrderlist(prevArray => [...prevArray, data]);
@@ -243,9 +244,10 @@ axios.get(variables.API_URL+"Item/Sections")
                   <th className='OrderListStaffActions'>action</th>
                 </thead>
                 {orderlist.length>0 ?
-                orderlist.map(s => (
-                    <tr>
-                      <td>{s.name}</td>
+                orderlist.map((s,index) => (
+                  <React.Fragment key={index}>
+                    <tr className={s.offer_item!=null ? 'trOffer' : ''}>
+                      <td>{s.offer_item!=null && "*"}{s.name}</td>
                       <td>{s.price}$</td>
                       <td>{s.Iquantity}</td>
                       <td>{(s.Iquantity*s.price).toFixed(2)}$</td>
@@ -254,8 +256,20 @@ axios.get(variables.API_URL+"Item/Sections")
                       <Link title='Write note' onClick={()=>SetNotePop(s.id)} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddItemNoteModal" className='text-primary bg-transparent'><EditNoteIcon/></Link>
                       <Link title='Delete' onClick={()=>deleteItem(s)} className='text-danger bg-transparent'><DeleteIcon/></Link>
                       </td>
-                      
                     </tr>
+                      {s.offer_item!=null && 
+                      s.offer_item.map((i)=>(
+                        <tr className='trOfferItems'>
+                        <td>{i.item.name}</td>
+                        <td>{i.item.price}$</td>
+                        <td>{i.quantity}</td>
+                        <td>{(i.quantity*i.item.price).toFixed(2)}$</td>
+                        <td colSpan={2}>
+                        </td>
+                      </tr>
+                      ))
+                      }
+                    </React.Fragment>
                 ))
                 : <td className='pt-2' colSpan={5}>No items</td>}
               </table>

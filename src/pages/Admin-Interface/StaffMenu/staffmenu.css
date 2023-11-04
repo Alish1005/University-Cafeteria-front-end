@@ -4,6 +4,15 @@
   left: 45%;
   width: 150px;
 }
+.trOffer{
+  background-color: rgb(255, 255, 0);
+  /*border: 1px solid black;*/
+  /*font-weight: 450;*/
+}
+.trOfferItems{
+  background-color: rgb(255, 153, 0);
+  border: 1px solid black;
+}
 .OrderListStaffNote{
   display: none;
 }
