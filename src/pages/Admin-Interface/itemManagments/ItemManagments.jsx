@@ -59,17 +59,17 @@ renderCell: (params) => {
  {field: "action",headerName: "Action",width: 200,sortable: false,disableExport: true,renderCell: (params) => {
   return (
     <div className="action">
-        <Link to="/itemManagment/EditItem" title='edit' className="delete bg-transparent text-primary btn-sm"  onClick={()=>props.setEditItemId(params.row.id)}  /*onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}*/>
+        <Link to="/itemManagment/EditItem" title='Edit' className="delete bg-transparent text-primary btn-sm"  onClick={()=>props.setEditItemId(params.row.id)}  /*onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}*/>
            <EditIcon/>
         </Link>
-        <button className="delete bg-transparent text-danger border border-0 btn-sm"  title='delete' onClick={()=>{DeleteItem(params.row.id)}}>
+        <button className="delete bg-transparent text-danger border border-0 btn-sm"  title='Delete' onClick={()=>{DeleteItem(params.row.id)}}>
           <DeleteIcon/>
         </button>
         {params.row.status==variables.hideValue ?
-          <button className="delete bg-transparent text-primary border border-0 btn-sm"  title='add to menu' onClick={()=>HideItem(params.row.id,params.row.status)}>
+          <button className="delete bg-transparent text-primary border border-0 btn-sm"  title='Show' onClick={()=>HideItem(params.row.id,params.row.status)}>
           <AddIcon/>
         </button>:
-         <button className="delete bg-transparent text-warning border border-0 btn-sm" title='hide' onClick={()=>HideItem(params.row.id,params.row.status)}>
+         <button className="delete bg-transparent text-warning border border-0 btn-sm" title='Hide' onClick={()=>HideItem(params.row.id,params.row.status)}>
           <VisibilityOffIcon/>
         </button>
          }  
@@ -88,17 +88,17 @@ const Sectioncolumns = [
  {field: "action",headerName: "Action",width: 200,disableExport: true,renderCell: (params) => {
     return (
       <div className="action">
-          <button data-bs-toggle="modal" data-bs-target="#AddSectionModal" title='edit' className="delete bg-transparent text-primary border border-0 btn-sm" onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}>
+          <button data-bs-toggle="modal" data-bs-target="#AddSectionModal" title='Edit' className="delete bg-transparent text-primary border border-0 btn-sm" onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}>
           <EditIcon/>
           </button>
-          <button className="delete bg-transparent text-danger border border-0 btn-sm" title='delete' onClick={()=>DeleteSection(params.row.id)}>
+          <button className="delete bg-transparent text-danger border border-0 btn-sm" title='Delete' onClick={()=>DeleteSection(params.row.id)}>
           <DeleteIcon/>
           </button>
           {params.row.isHidden ?
-            <button className="delete bg-transparent text-primary border border-0 btn-sm" title='add to menu' onClick={()=>HideSection(params.row.id,params.row.isHidden)}>
+            <button className="delete bg-transparent text-primary border border-0 btn-sm" title='Show' onClick={()=>HideSection(params.row.id,params.row.isHidden)}>
             <AddIcon/>
           </button>:
-           <button className="delete bg-transparent text-warning border border-0 btn-sm" title='hide' onClick={()=>HideSection(params.row.id,params.row.isHidden)}>
+           <button className="delete bg-transparent text-warning border border-0 btn-sm" title='Hide' onClick={()=>HideSection(params.row.id,params.row.isHidden)}>
             <VisibilityOffIcon/>
           </button>
            }
@@ -204,7 +204,7 @@ const SectionOnClick=()=>{
     return
   }
   if(sectionId==0){
-    const data={"id":0,"name":sectionName};
+    const data={"id":0,"name":sectionName,"items":[]};
     axios.post(variables.API_URL+"Item/AddSection",data)
     .then((result)=>{
       refresh();

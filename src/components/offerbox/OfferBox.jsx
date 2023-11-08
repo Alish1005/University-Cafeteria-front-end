@@ -89,7 +89,7 @@ const onClickEdit=()=>{
                     <MoreVertIcon className="icon"/>
                     </div>
                     <ul class={`dropdown-menu bg-secondary`}>
-                        <li><Link to="/OfferList/AddEditOffer" onClick={()=>onClickEdit()} class="dropdown-item text-primary mt-1" href="#">Edit</Link></li>
+                        <li><Link to="/OfferList/EditOffer" onClick={()=>onClickEdit()} class="dropdown-item text-primary mt-1" href="#">Edit</Link></li>
                         <li><a onClick={()=>onClickDelete(data.id)} class="dropdown-item bg-danger rounded-bottom" href="#">Delete</a></li>
                     </ul>
                 </div>}

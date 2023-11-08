@@ -18,7 +18,7 @@ import { format } from 'date-fns';
 
 function ChooseOfferItems(props) {
   const toast = useToast()
-  const {OfferItems,setOfferItems, setOfferTotal, OfferTotal}=props
+  const {setOfferItems, setOfferTotal,Offer}=props
     const [value, setValue] = useState("1");
     const [orderlist, setOrderlist] = useState([]);
     const [total, setTotal] = useState(0);
@@ -116,27 +116,20 @@ axios.get(variables.API_URL+"Item/Sections")
               {sections.map((section)=>(
                     <TabPanel value={`${section.id}`}>
                 {
-                items.filter((item)=>item.section_id==section.id).map(s => {
-                  if(s.quantity>0){
-                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
+                items.filter((item)=>item.section_id==section.id).map(s => 
+                    <button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
                       <p>{s.name}</p>
                       <p>{s.price}$</p>
                     </button>)
-                  }else{
-                    return (<button className='col-3 m-2 text-black btn btn-secondary' disabled>
-                    <p>{s.name}</p>
-                    <p>{s.price}$</p>
-                  </button>)
-                  }
-
-                  })
                 }
                     </TabPanel>
               ))}
             </TabContext>
           </Box>
           </div>
-          <Link to="/OfferList/AddEditOffer" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>{setOfferItems(orderlist);setOfferTotal(total)}}>Submit items</Link>
+          {Offer.id==0||Offer.id==null ?<Link to="/OfferList/AddOffer" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>{setOfferItems(orderlist);setOfferTotal(total)}}>Submit items</Link>
+:          <Link to="/OfferList/EditOffer" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>{setOfferItems(orderlist);setOfferTotal(total)}}>Submit items</Link>
+}
             <div className="col-lg-4 col-md-6 col-sm-11 ms-sm-3 col-xs-11 p-2 text-black bg-secondary rounded">
                 <div className="OrderListStaff d-flex justify-content-between">
                 <p>{date}</p>

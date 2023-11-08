@@ -1,4 +1,4 @@
-import "./addOffer.css"
+import "./EditOffer.css"
 import React, { useEffect, useState } from "react";
 import TextField from '@mui/material/TextField';
 import { Link, resolvePath } from "react-router-dom";
@@ -11,7 +11,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { format } from 'date-fns';
 
 
-function AddOffer(props) {
+function EditOffer(props) {
   const toast = useToast()
   const url=variables.API_URL;
   const {Offer,setOffer,OfferItems,setOfferItems, setOfferTotal, OfferTotal}=props;
@@ -21,15 +21,14 @@ function AddOffer(props) {
     const [name,setName]=useState("");
     const [description,setdescription]=useState("");
     const [price,setPrice]=useState("");
-
     const onChangeOffer=(key,value)=>{
-      const data={"name":name,"img":imgbase64,"description":description,"price":price};
+      const data={id:Offer.id,"name":name,"img":imgbase64,"description":description,"price":price};
       data[key]=value;
       setOffer(data);
     }
 
     //Add Offer
-    const MakeOffer = () => {
+    const EditOffer = () => {
       const offerItemsList=[]
       OfferItems.map(i=>(offerItemsList.push({"item_id":i.id,"offer_id":Offer.id,"quantity":i.Iquantity})))
       const data={
@@ -72,10 +71,10 @@ function AddOffer(props) {
           isClosable: false,
         })
       }else{
-        axios.post(variables.API_URL+"Offer",data)
+        axios.put(variables.API_URL+"Offer",data)
         .then((result)=>{
           toast({
-            title: 'Offer Added Successfully',
+            title: 'Offer Edited Successfully',
             position:'top-right',
             status: 'success',
             duration: 3000,
@@ -127,6 +126,7 @@ function AddOffer(props) {
   };
 
   useEffect(()=> {
+
     setDate(format(new Date(), 'dd/MM/yyyy'))
     setName(Offer.name);
     setImageBase64(Offer.img);
@@ -136,7 +136,8 @@ function AddOffer(props) {
 
     return ( 
         <div className="ms-lg-5">
-          <h4>ADD Offer</h4>
+        <h4>Edit Offer</h4>
+          <h5>{Offer.id}</h5>
         <div className="row">
         <div className="cForm col-lg-7 col-md-11 ms-3">
           <label for="fileInput">Select an Image : &nbsp;</label>
@@ -191,12 +192,12 @@ function AddOffer(props) {
 
         <div className="cForm">
           {name==""||imgbase64==""||price==0||OfferItems==[]||price>OfferTotal?
-          <button onClick={()=>MakeOffer()} type="button" className="btn btn-primary btn-lg m-3">
-            Add
+          <button onClick={()=>EditOffer()} type="button" className="btn btn-primary btn-lg m-3">
+            Edit
           </button>
           :
-          <Link to="/OfferList" onClick={()=>MakeOffer()} type="button" className="btn btn-primary text-light btn-lg  m-3">
-            Add
+          <Link to="/OfferList" onClick={()=>EditOffer()} type="button" className="btn btn-primary text-light btn-lg  m-3">
+            Edit
           </Link>
           }
           <Link to="/OfferList" onClick={()=>{setOfferItems([]);setOfferTotal(0);setOffer({})}} class="btn btn-secondary btn-lg m-3">
@@ -207,4 +208,4 @@ function AddOffer(props) {
      );
 }
 
-export default AddOffer;
+export default EditOffer;

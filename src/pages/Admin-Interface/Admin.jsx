@@ -23,6 +23,7 @@ import { useState } from "react";
 import AddOffer from "../Admin-Interface/AddOffer/AddOffer";
 import NotFound from "../NotFound/NotFound";
 import ChooseOfferItems from "./ChooseOfferItems/ChooseOfferItems";
+import EditOffer from "./EditOffer/EditOffer";
 
 
 function Admin() {
@@ -60,9 +61,10 @@ function Admin() {
                                 <Route path='/StaffList/AddStaff' element={<AddStaff/>}/>
                                 <Route path='/itemManagment/AddItem' element={<AddItems/>}/>
                                 <Route path='/itemManagment/EditItem' element={<EditItems id={EditItemId}/>}/>
-                                <Route path='/OfferList' element={<OfferList setOffer={setOffer}/>}/>
-                                <Route path='/OfferList/AddEditOffer' element={<AddOffer Offer={Offer} setOffer={setOffer} OfferItems={OfferItems} setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
-                                <Route path='/OfferList/AddEditOffer/ChooseItems' element={<ChooseOfferItems setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
+                                <Route path='/OfferList' element={<OfferList setOfferItems={setOfferItems} setOffer={setOffer}/>}/>
+                                <Route path='/OfferList/AddOffer' element={<AddOffer Offer={Offer} setOffer={setOffer} OfferItems={OfferItems} setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
+                                <Route path='/OfferList/EditOffer' element={<EditOffer Offer={Offer} setOffer={setOffer} OfferItems={OfferItems} setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
+                                <Route path='/OfferList/AddEditOffer/ChooseItems' element={<ChooseOfferItems Offer={Offer} OfferItems={OfferItems} setOfferItems={setOfferItems} setOfferTotal={setOfferTotal} OfferTotal={OfferTotal}/>}/>
                                 <Route path='/*' element={<NotFound/>}/>
                             </Routes>
                     </div>
