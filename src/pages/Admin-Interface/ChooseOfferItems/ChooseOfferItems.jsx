@@ -127,7 +127,7 @@ axios.get(variables.API_URL+"Item/Sections")
             </TabContext>
           </Box>
           </div>
-          {Offer.id==0||Offer.id==null ?<Link to="/OfferList/AddOffer" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>{setOfferItems(orderlist);setOfferTotal(total)}}>Submit items</Link>
+          {Offer.id==0 || Offer.id==null ?<Link to="/OfferList/AddOffer" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>{setOfferItems(orderlist);setOfferTotal(total)}}>Submit items</Link>
 :          <Link to="/OfferList/EditOffer" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>{setOfferItems(orderlist);setOfferTotal(total)}}>Submit items</Link>
 }
             <div className="col-lg-4 col-md-6 col-sm-11 ms-sm-3 col-xs-11 p-2 text-black bg-secondary rounded">

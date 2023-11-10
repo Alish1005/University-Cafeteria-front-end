@@ -74,21 +74,20 @@ const MakeOrder = () => {
       isClosable: false,
     })
   })
+
 };
 
 
 
     //ADD Item to the Order List
     const addItem = (s) => {
-      const found=orderlist.filter((item)=>item.id==s.id);
-      console.log(found[0])
+      const found=orderlist.filter((item)=>item.id==s.id && item.name==s.name);
       if(found.length==0){
       const data={...s,Iquantity:1,note:""}
       setOrderlist(prevArray => [...prevArray, data]);
     }else{
-        //const i=orderlist.filter((item)=>item.id==s.id)[0];
-        const ind=orderlist.map((i)=>i.id).indexOf(s.id);
-        const i=orderlist[ind]
+        const ind=orderlist.map((i,index)=>{return({"index":index,"id":i.id,"name":i.name})}).filter((i)=>i.id==s.id&&i.name==s.name)[0].index;
+        const i=orderlist.filter(k=>k.id==s.id && k.name==s.name)[0];
         const noti=orderlist.filter((item,index)=>index<ind);
         const noti2=orderlist.filter((item,index)=>index>ind);
         const q=i.Iquantity+1;
@@ -100,18 +99,20 @@ const MakeOrder = () => {
     };
     //Delete Item
     const deleteItem=(e)=>{
-      const l=orderlist.filter((item)=>item.id!=e.id);
-      setOrderlist(l);
+      const l=orderlist.indexOf(e);
+      const list = [...orderlist];
+      list.splice(l, 1)
+      setOrderlist(list);
       setTotal(total-(e.price*e.Iquantity));
       }
     //Add Notes
-    const SetNotePop=(id)=>{
-      const l=orderlist.filter((item)=>item.id==id);
-      setIdNote(id)
+    const SetNotePop=(s)=>{
+      const l=orderlist.filter((item)=>item.id==s.id&&item.name==s.name);
+      setIdNote(s)
       setNote(l[0].note);
     }
-    const SaveNoteItem=(id)=>{
-        const ind=orderlist.map((i)=>i.id).indexOf(id);
+    const SaveNoteItem=(s)=>{
+        const ind=orderlist.indexOf(s);
         const i=orderlist[ind]
         const noti=orderlist.filter((item,index)=>index<ind);
         const noti2=orderlist.filter((item,index)=>index>ind);
@@ -124,12 +125,54 @@ const MakeOrder = () => {
     const CheckOutOfStock=(s)=>{
       const ind=orderlist.map((i)=>i.id).indexOf(s.id);
       const i=orderlist[ind]
-      console.log(i)
       if(i==null){
         return s.quantity<1
       }else{
       return(i.quantity/2<i.Iquantity);
       }
+    }
+    const CheckOutOfStockOffer=(s)=>{
+      const ind=Offers.map((i)=>i.id).indexOf(s.id);
+      const o=Offers[ind]
+
+      const its=items.filter(i=>o.offer_item.some(item => item.item_id == i.id))
+
+      if(its.length!=o.offer_item.length){
+        return true;
+      }
+      console.log(its)
+      for (let index = 0; index < its.length; index++) {
+        //get the item id
+        const element = its[index];
+        //the item inside the offer with its offer count
+        const itemInOffer=o.offer_item.filter(item=>item.item_id==element.id)[0];
+        //total number of item in orderlist
+        var ItemCount=0;
+        //get the item object
+        if(element.quantity<=itemInOffer.quantity){
+          return true;
+        }
+        if(orderlist.length>0){
+          const itemOrder=orderlist.filter(or=>or.id==element.id && or.offer_item==null)
+          const ItemsOffer=Offers.filter(of=>of.offer_item.some(oi=>oi.item_id==element.id))
+          const offerOtherOrder=orderlist.filter(or=>ItemsOffer.some(io => io.id == or.id && io.name==or.name))
+          console.log(itemOrder)
+        if(itemOrder.length!=0){
+          ItemCount=ItemCount+itemOrder[0].Iquantity
+        }
+        if(offerOtherOrder.length!=0){
+          // offerOrder[0].Iquantity
+          for (let b = 0; b < offerOtherOrder.length; b++) {
+            ItemCount=ItemCount+(offerOtherOrder[b].Iquantity*itemInOffer.quantity)
+          }
+        }
+        console.log(`${ItemCount} / ${element.quantity}`)
+      }
+      if(element.quantity/2<=ItemCount){
+        return true;
+      }
+      }
+      return false;
     }
 
 //refresh function
@@ -184,7 +227,7 @@ axios.get(variables.API_URL+"Item/Sections")
               <TabPanel value={`-1`}>
                 {Offers.length>0 ?
                 Offers.map(s => {
-                  if(false){
+                  if(CheckOutOfStockOffer(s)){
                     return (<button className='col-3 m-2 text-black btn btn-secondary' disabled>
                       <p>{s.name}</p>
                       <p>{s.price}$</p>
@@ -264,7 +307,7 @@ axios.get(variables.API_URL+"Item/Sections")
                       <td>{(s.Iquantity*s.price).toFixed(2)}$</td>
                       <td className='OrderListStaffNote'>{s.note}</td>
                       <td className='OrderListStaffActions'>
-                      <Link title='Write note' onClick={()=>SetNotePop(s.id)} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddItemNoteModal" className='text-primary bg-transparent'><EditNoteIcon/></Link>
+                      <Link title='Write note' onClick={()=>SetNotePop(s)} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddItemNoteModal" className='text-primary bg-transparent'><EditNoteIcon/></Link>
                       <Link title='Delete' onClick={()=>deleteItem(s)} className='text-danger bg-transparent'><DeleteIcon/></Link>
                       </td>
                     </tr>

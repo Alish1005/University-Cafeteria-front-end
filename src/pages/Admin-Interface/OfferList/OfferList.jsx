@@ -11,7 +11,7 @@ import { variables } from '../../Variables';
 import axios from 'axios';
   
 function OfferList(props) {
-  const {setOffer,setOfferItems}=props
+  const {setOffer}=props
     const [value, setValue] = useState('1');
     const [OfferListM, setOfferListM] = useState([]);
     const [OfferListH, setOfferListH] = useState([]);
@@ -25,7 +25,6 @@ const refresh=()=>{
   axios.get(variables.API_URL+"Offer")
   .then((res) => {
     setOfferListM(res.data.filter((offer)=>offer.status==variables.onMenuValue));
-    console.log(OfferListM)
     })
       //Save Offers on-menu
   axios.get(variables.API_URL+"Offer")
@@ -41,7 +40,7 @@ const refresh=()=>{
     return ( 
         <div className="pagesContent ms-lg-5">
             <div className="">
-                <h4>Offer List</h4>
+                <h4>Offers Managment</h4>
                 <div className="actions my-3">
             <Link to="/OfferList/AddOffer" onClick={()=>setOffer({"id":0,"name":"","img":"","description":"","price":0})} className='btn btn-secondary m-1'>Add Offer</Link>
           </div>
@@ -66,7 +65,7 @@ const refresh=()=>{
                 <div className='row'>
                 { /* On-Menu */}
                 {OfferListM.length>0 ?OfferListM.map((offer)=>(
-                  <OfferBox setOffer={setOffer} setOfferItems={setOfferItems} type='1' refresh={refresh} data={offer} action={'Hide'} actionStyle='btn-danger'/>
+                  <OfferBox setOffer={setOffer} type='1' refresh={refresh} data={offer} action={'Hide'} actionStyle='btn-danger'/>
                   )) : <p>Empty</p>}
                 </div>
               </TabPanel>

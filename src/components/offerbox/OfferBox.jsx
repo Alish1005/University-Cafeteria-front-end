@@ -74,7 +74,7 @@ const onClickStatus=(id)=>{
     })
   }
 const onClickEdit=()=>{
-  const d={"id":data.id,"name":data.name,"img":data.photo,"description":data.description,"price":data.price};
+  const d={"id":data.id,"name":data.name,"img":data.photo,"description":data.description,"price":data.price,"number":data.orders_number};
   setOffer(d);
 }
        return ( 
@@ -94,6 +94,10 @@ const onClickEdit=()=>{
                     </ul>
                 </div>}
            </div>
+            <div className="d-flex justify-content-between bg-primary text-light p-2 px-4">
+                <p className='m-0'>Orders number : {data.orders_number}</p>
+               {/* <p>Date Publish:{data.publishDate}</p>  */}
+           </div> 
            <div className="boxItem">
              <table className={`table pt-3 my-2 ${table_primary} ${text_secondary} table-hover table-striped-gray`}>
                <thead>
