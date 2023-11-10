@@ -52,11 +52,12 @@ renderCell: (params) => {
 },
 },
 {field: "description",type: "string",headerName: "component",width: 100,sortable: false},
+{field: "calories",type: "number",headerName: "calories",width: 70},
  {field: "price",type: "float",headerName: "price",width: 70},
  {field: "quantity",type: "number",headerName: "Quantity",width: 70},
  {field: "orders_number",type: "number",headerName: "orders #",width: 70},
  {field: "publishDate",headerName: "Publish Date",renderCell: (params) => (<div>{format(new Date(params.value), 'yyyy-MM-dd')}</div>),width: 100,type: "Date",},
- {field: "action",headerName: "Action",width: 200,sortable: false,disableExport: true,renderCell: (params) => {
+ {field: "action",headerName: "Action",width: 150,sortable: false,disableExport: true,renderCell: (params) => {
   return (
     <div className="action">
         <Link to="/itemManagment/EditItem" title='Edit' className="delete bg-transparent text-primary btn-sm"  onClick={()=>props.setEditItemId(params.row.id)}  /*onClick={()=>EditSectionOnClick(params.row.id,params.row.name)}*/>
@@ -114,7 +115,6 @@ const Sectioncolumns = [
   const [sectionId,setSectionId]=useState(0)
   const [sectionName,setSectionName]=useState("")
   const [sections,setSections]=useState([])
-  const [items,setItems]=useState([])
   const [itemsM,setItemsM]=useState([])
   const [itemsH,setItemsH]=useState([])
 
@@ -124,10 +124,8 @@ const refresh=()=>{
     //Save items
     axios.get(variables.API_URL+"Item")
     .then((res) => {
-      setItems(res.data);
       setItemsM(res.data.filter((item)=>item.status==variables.onMenuValue));
       setItemsH(res.data.filter((item)=>item.status==variables.hideValue));   
-      console.log(items);   
       })
   //Save Sections
   axios.get(variables.API_URL+"Item/Sections")

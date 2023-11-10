@@ -7,6 +7,9 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import OrderBox from '../../../components/orderbox/OrderBox';
 import DoneIcon from '@mui/icons-material/Done';
+import { useState,useEffect } from 'react';
+import { variables } from '../../Variables';
+import axios from 'axios';
 const orders = [
   {
     id: 1,
@@ -88,7 +91,33 @@ const orders = [
 ];
 
 function OrderList() {
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] =useState('1');
+  const [OrderUnC, setOrderUnC] =useState([]);
+  const [OrderC, setOrderC] =useState([]);
+  const [OrderH, setOrderH] =useState([]);
+
+//refresh function
+const refresh=()=>{
+  //Save un-complete
+      axios.get(variables.API_URL+"order")
+      .then((res) => {
+        setOrderUnC(res.data.filter((offer)=>offer.status==variables.order_uncompete));
+      })
+
+      axios.get(variables.API_URL+"order")
+      .then((res) => {
+        setOrderC(res.data.filter((offer)=>offer.status==variables.order_completed));
+      })
+
+      axios.get(variables.API_URL+"order")
+      .then((res) => {
+        setOrderH(res.data.filter((offer)=>offer.status==variables.order_delivered || variables.order_cancelled));
+      })
+}
+
+  useEffect(()=> {
+    refresh();
+    },[])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -112,12 +141,11 @@ function OrderList() {
                   <Tab label="History" value="3"  className='btn btn-secondary' />
                 </TabList>
               </Box>
-              <TabPanel value="1"><div className='row'>
-                <OrderBox  type='1' data={orders[0]} action={<DoneIcon/>} disableMoreIcon={true}/>
-                <OrderBox  type='1' data={orders[1]} action={'Complete'}/>
-                <OrderBox  type='1' data={orders[2]} action={'Complete'}/>
-                <OrderBox  type='1' data={orders[2]} action={'Complete'}/>
-                <OrderBox  type='1' data={orders[0]} action={'Complete'}/>
+              <TabPanel value="1">
+                <div className='row'>
+                { /* Un-complete */}
+                {OrderUnC.length>0 ?OrderUnC.map((order)=>(<OrderBox  type='1' data={order} action={'Complete'} /*disableMoreIcon={true}*//>)) 
+                : <p>Empty</p>}
                 </div>
               </TabPanel>
               <TabPanel value="2">
