@@ -1,5 +1,5 @@
 .offerbox{
-    
+    height: fit-content !important;
 }
 .table.table-striped-gray tr:hover{
     background-color: rgb(151, 148, 148);

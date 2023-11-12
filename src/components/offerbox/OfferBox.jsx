@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useToast } from '@chakra-ui/react'
 import { variables } from '../../pages/Variables';
 import { Link } from 'react-router-dom';
+import "./offerbox.css"
 
 let bg_main="bg-light";
 let bg_primary="bg-light";
@@ -78,8 +79,8 @@ const onClickEdit=()=>{
   setOffer(d);
 }
        return ( 
-       <div className= {`col-lg-5 col-xs-11 col-sm-11 col-md-11 border shadow rounded m-md-4 m-lg-4 mx-sm-0 my-sm-3 p-0 ${bg_main}`}>
-         <div>
+       <div className= {`offerbox col-lg-5 col-xs-11 col-sm-11 col-md-11 border shadow rounded m-md-4 m-lg-4 mx-sm-0 my-sm-3 p-0 ${bg_main}`}>
+         <div className=''>
            <div className={`d-flex justify-content-between pt-3 px-3 ${text_secondary}`}>
                <h5># Offer {data.id}</h5>
                <h5>{data.name}</h5>
