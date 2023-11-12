@@ -1,6 +1,15 @@
 @import url("../../style/variables.css");
+
+.canceledOrder{
+    border: solid 1px red !important;
+}
+
 .trOrderOfferItem{
     border: solid 1px black !important;
+}
+.tdOrderOffer{
+    border: solid 1px black !important;
+    width: fit-content;
 }
 .trOrderOffer{
     width: 90%;
@@ -9,6 +18,7 @@
 }
 .orderbox{
     border-radius: 5px;
+    height: fit-content !important;
 }
 .table-striped-gray tr:nth-child(2n){
 background-color: lightgrey ;

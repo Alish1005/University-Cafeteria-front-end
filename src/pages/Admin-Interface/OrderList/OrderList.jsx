@@ -101,7 +101,7 @@ const refresh=()=>{
   //Save un-complete
       axios.get(variables.API_URL+"order")
       .then((res) => {
-        setOrderUnC(res.data.filter((offer)=>offer.status==variables.order_uncompete));
+        setOrderUnC(res.data.filter((offer)=>offer.status==variables.order_uncomplete));
       })
 
       axios.get(variables.API_URL+"order")
@@ -111,7 +111,7 @@ const refresh=()=>{
 
       axios.get(variables.API_URL+"order")
       .then((res) => {
-        setOrderH(res.data.filter((offer)=>offer.status==variables.order_delivered || variables.order_cancelled));
+        setOrderH(res.data.filter((offer)=>offer.status==variables.order_delivered || offer.status==variables.order_cancelled));
       })
 }
 
@@ -144,18 +144,22 @@ const refresh=()=>{
               <TabPanel value="1">
                 <div className='row'>
                 { /* Un-complete */}
-                {OrderUnC.length>0 ?OrderUnC.map((order)=>(<OrderBox  type='1' data={order} action={'Complete'} /*disableMoreIcon={true}*//>)) 
+                {OrderUnC.length>0 ?OrderUnC.map((order)=>(<OrderBox refresh={refresh}  type='1' data={order} action={order.status} /*disableMoreIcon={true}*//>)) 
                 : <p>Empty</p>}
                 </div>
               </TabPanel>
               <TabPanel value="2">
-                <div className="row">
-                  <OrderBox  type='2' data={orders[1]} action={'Delivered'}/><OrderBox  type='2' data={orders[2]} action={'Delivered'}/><OrderBox  type='2' data={orders[1]} action={'Delivered'}/><OrderBox  type='2' data={orders[0]} action={'Delivered'}/>
-                  </div>
+              <div className='row'>
+                { /* Un-complete */}
+                {OrderC.length>0 ?OrderC.map((order)=>(<OrderBox refresh={refresh}   type='2' data={order} action={order.status} /*disableMoreIcon={true}*//>)) 
+                : <p>Empty</p>}
+                </div>
                 </TabPanel>
               <TabPanel value="3">
-                <div className="row">
-                  <OrderBox  type='3' data={orders[2]} action={'Reorder'}/><OrderBox  type='3' data={orders[1]} action={'Reorder'}/><OrderBox  type='3' data={orders[0]} action={'Reorder'}/><OrderBox  type='3' data={orders[2]} action={'Reorder'}/><OrderBox  type='3' data={orders[1]} action={'Reorder'}/><OrderBox  type='3' data={orders[1]} action={'Reorder'}/><OrderBox  type='3' data={orders[0]} action={'Reorder'}/><OrderBox  type='3' data={orders[2]} action={'Reorder'}/>
+              <div className='row'>
+                { /* Un-complete */}
+                {OrderH.length>0 ?OrderH.map((order)=>(<OrderBox  refresh={refresh}  type='3' data={order} action={order.status} disableMoreIcon={true}/>)) 
+                : <p>Empty</p>}
                 </div>
                 </TabPanel>
             </TabContext>

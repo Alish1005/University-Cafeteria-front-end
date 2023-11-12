@@ -1,8 +1,11 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import "./orderbox.css"
 import { format } from 'date-fns';
+import { variables } from '../../pages/Variables';
+import { useToast } from '@chakra-ui/react'
+import axios from 'axios';
 
 let bg_main="bg-light";
 let bg_primary="bg-light";
@@ -16,6 +19,9 @@ let table_secondary="table-dark";
 
 function OrderBox(props) {
 const {data}=props;
+let discount=0
+
+
 let t=0;
 for (var i = 0; i < data.order_item.length; i++) {
     t=t+(data.order_item[i].quantity*data.order_item[i].item.price)
@@ -23,22 +29,127 @@ for (var i = 0; i < data.order_item.length; i++) {
 for (var i = 0; i < data.order_offer.length; i++) {
   t=t+(data.order_offer[i].quantity*data.order_offer[i].offer.price)
 }
-
-const deleteOrder=()=>{
-  
+const ChangeStatus=(status)=>{
+  axios.put(`${variables.API_URL}order/UpdateStatus/${data.id}/${status}`)
+  .then((res) => {
+    props.refresh()
+    toast({
+      title: `Order Changed to "${status}" Order`,
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
+  }).catch((error)=>(
+    toast({
+      title: "Something went wrong!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  ))
 }
-const CompleteOrder=()=>{
-  
+const DeleteOrder=()=>{
+  axios.delete(`${variables.API_URL}order/${data.id}`)
+  .then((res) => {
+    props.refresh()
+    toast({
+      title: "Order Deleted Successfully !",
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
+  }).catch((error)=>(
+    toast({
+      title: "Something went wrong!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  ))
 }
 const ChangeDiscount=()=>{
-  
+  if(discount<0 || discount>100){
+    toast({
+      title: "Discount can't be less than 0 or greater than 100!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+    return
+  }
+  axios.put(`${variables.API_URL}order/UpdateDiscount/${data.id}/${discount}`)
+  .then((res) => {
+    props.refresh();
+    toast({
+      title: "Order Discount Changed Successfully",
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
+  }).catch((error)=>(
+    toast({
+      title: "Something went wrong!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  ))
 }
-
+const Reorder=()=>{
+  let d=data;
+  d.order_item.order=null;
+  d.order_item.order=null;
+  d.order_item.map((i)=>{
+    i.order=null;
+    i.item=null;
+  })
+  d.order_offer.map((i)=>{
+    i.order=null;
+    i.offer=null;
+  })
+  const order={
+    "id":0,
+    "status":variables.order_uncomplete,
+    "discount":0,
+    "del_Room":data.Del_Room,
+    "order_item":d.order_item,
+    "order_offer":d.order_offer,
+  }
+  console.log(order)
+  axios.post(`${variables.API_URL}order`,order)
+  .then((res) => {
+    props.refresh();
+    toast({
+      title: "Order has been reordered Successfully",
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
+  }).catch((error)=>(
+    toast({
+      title: "Something went wrong!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  ))
+}
+  const toast = useToast()
     return ( 
-    <div className= {`orderbox col-lg-5 col-xs-11 col-sm-11 col-md-11 m-md-4 m-lg-4 mx-sm-0 my-sm-3 p-0 border shadow ${bg_main}`}>
-      <div>
+    <div className= {`orderbox ${props.action==variables.order_cancelled && "canceledOrder"} col-lg-5 col-xs-11 col-sm-11 col-md-11 m-md-4 m-lg-4 mx-sm-0 my-sm-3 p-0 border shadow ${bg_main}`}>
+      <div className='align-i'>
         <div className={`d-flex justify-content-between pt-3 px-3 ${text_secondary}`}>
             <h5># Order {data.id}</h5>
+            {data.Del_Room!="0000" && <h5><strong>{data.Del_Room}</strong></h5>}
             {props.disableMoreIcon!=true &&
             <div class="dropdown">
                     <div class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,7 +158,8 @@ const ChangeDiscount=()=>{
                     <ul class={`dropdown-menu bg-secondary`}>
                         <li><a class="dropdown-item text-primary mt-1" href="#">Edit</a></li>
                         <li><a class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#OrderBoxDiscount" href="#">Disount</a></li>
-                        <li><a class="dropdown-item bg-danger rounded-bottom" href="#">Delete</a></li>
+                        <li><a onClick={()=>DeleteOrder()} class="dropdown-item bg-danger" href="#">Delete</a></li>
+                        <li><a onClick={()=>ChangeStatus(variables.order_cancelled)} class="dropdown-item bg-danger rounded-bottom" href="#">Cancel</a></li>
                     </ul>
                 </div>
           }
@@ -83,7 +195,7 @@ const ChangeDiscount=()=>{
                       <td>{oo.quantity}</td>
                       <td>{oo.offer.price}$</td>
                       <td>{oo.quantity*oo.offer.price}$</td>
-                      <td  className='text-danger'>{oo.note}</td>
+                      <td rowSpan={oo.offer.offer_item.length+1} className='tdOrderOffer text-danger'>{oo.note}</td>
                     </tr>
                     {oo.offer.offer_item.map((oi)=>(
                       <tr className='trOrderOfferItem'>
@@ -91,7 +203,6 @@ const ChangeDiscount=()=>{
                       <td>{oi.quantity}</td>
                       <td>{oi.item.price}$</td>
                       <td>{oi.quantity*oi.item.price}$</td>
-                      <td  ></td>
                     </tr>
                     ))}
             </React.Fragment>
@@ -101,14 +212,21 @@ const ChangeDiscount=()=>{
         {/* <div className={`boxTotal d-flex justify-content-between ${text_secondary} m-3 mb-0`}>
           <p>Discount : {data.discount} %</p>     <p>Actual price : {t} $</p>
         </div> */}
-        <div className={`boxTotal row ${text_secondary} m-3 `}>
-          <div className='col-lg-8 col-xs-12 m-1'>        
+        <div className={`boxTotal row ${text_secondary} m-3 fg `}>
+          <div className='col-lg-8  col-xs-12 m-1'>        
             <div className={`boxTotal d-flex justify-content-between ${text_secondary} mx-1 gap-lg-2 `}>
             <p>Discount : {data.discount} %</p>     <p>Actual price : {t} $</p>
           </div>
           <h5 className='fw-bold'>Total Price : {(t*(1-data.discount/100)).toFixed(2)}$</h5>
           </div>
-          <button className={`btn ${btn_secondary} col-lg-3 col-xs-12 fw-bold p-2 mx-1`}>{props.action}</button>
+          {props.action==variables.order_uncomplete ?
+          <button onClick={()=>ChangeStatus(variables.order_completed)} className={`btn ${btn_secondary} col-lg-3 col-xs-12 fw-bold p-2 mx-1`}>Complete</button>
+        : props.action==variables.order_completed &&
+        <button onClick={()=>ChangeStatus(variables.order_delivered)} className={`btn ${btn_secondary} col-lg-3 col-xs-12 fw-bold p-2 mx-1`}>Delivered</button>
+        }
+        {props.action==variables.order_cancelled && 
+                <button onClick={()=>ChangeStatus(variables.order_uncomplete)} className={`btn ${btn_secondary} col-lg-3 col-xs-12 fw-bold p-2 mx-1`}>Reorder</button> || props.action==variables.order_delivered && 
+                <button  onClick={()=>Reorder()} className={`btn ${btn_secondary} col-lg-3 col-xs-12 fw-bold p-2 mx-1`}>Reorder</button>}
         </div>
         </div>
 {props.disableMoreIcon!=true &&
@@ -121,11 +239,11 @@ const ChangeDiscount=()=>{
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <input className='col-5 p-1' type="number" min={0} max={100} placeholder='Discount' />
+        <input className='col-5 p-1' onChange={(e)=>discount=e.target.value}  type="number" min={0} max={100} placeholder='Discount' />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+        <button onClick={()=>ChangeDiscount()} type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
       </div>
     </div>
   </div>

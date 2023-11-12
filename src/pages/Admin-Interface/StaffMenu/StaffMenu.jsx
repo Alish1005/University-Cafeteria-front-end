@@ -46,9 +46,19 @@ const MakeOrder = () => {
   :
   order_items.push({"order_id":0,"item_id":item.id,"quantity":item.Iquantity,"note":item.note})
   ));
+  if(orderlist.length<=0){
+    toast({
+      title: "Select item to add order!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+    return
+  }
   const order={
     "id":0,
-    "status":variables.order_uncompete,
+    "status":variables.order_uncomplete,
     "discount":discount,
     "del_Room":"0000",
     "order_item":order_items,
@@ -76,8 +86,6 @@ const MakeOrder = () => {
   })
 
 };
-
-
 
     //ADD Item to the Order List
     const addItem = (s) => {
@@ -140,7 +148,6 @@ const MakeOrder = () => {
       if(its.length!=o.offer_item.length){
         return true;
       }
-      console.log(its)
       for (let index = 0; index < its.length; index++) {
         //get the item id
         const element = its[index];
@@ -156,7 +163,6 @@ const MakeOrder = () => {
           const itemOrder=orderlist.filter(or=>or.id==element.id && or.offer_item==null)
           const ItemsOffer=Offers.filter(of=>of.offer_item.some(oi=>oi.item_id==element.id))
           const offerOtherOrder=orderlist.filter(or=>ItemsOffer.some(io => io.id == or.id && io.name==or.name))
-          console.log(itemOrder)
         if(itemOrder.length!=0){
           ItemCount=ItemCount+itemOrder[0].Iquantity
         }
@@ -166,7 +172,6 @@ const MakeOrder = () => {
             ItemCount=ItemCount+(offerOtherOrder[b].Iquantity*itemInOffer.quantity)
           }
         }
-        console.log(`${ItemCount} / ${element.quantity}`)
       }
       if(element.quantity/2<=ItemCount){
         return true;
@@ -197,9 +202,6 @@ axios.get(variables.API_URL+"Item/Sections")
     refresh();
     setDate(format(new Date(), 'dd/MM/yyyy'))
     },[])
-
-
-
 
     return ( 
         <div className="pagesContent">
@@ -265,7 +267,10 @@ axios.get(variables.API_URL+"Item/Sections")
             </TabContext>
           </Box>
           </div>
-          <button className='btn-makeOrder btn btn-primary' onClick={()=>MakeOrder()}><SendIcon/> Make Order</button>
+          {orderlist.length>0 ?
+          <Link to="/OrdersList#" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>MakeOrder()}><SendIcon/> Make Order</Link>:
+          <button className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>MakeOrder()}><SendIcon/> Make Order</button>
+}
           {/*-----------------Order List----------------*/}
             <div className="col-lg-4 col-md-6 col-sm-11 ms-sm-3 col-xs-11 p-2 text-black bg-secondary rounded">
 
