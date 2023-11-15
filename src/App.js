@@ -7,7 +7,7 @@ import { createStandaloneToast } from '@chakra-ui/react'
 
 const { ToastContainer, toast } = createStandaloneToast()
 function App() {
-  const [isA,setA]=useState(false)
+  const [isA,setA]=useState(true)
   return (
     <div className="App">
       <button className='APPbtn' onClick={() => setA(!isA)}>

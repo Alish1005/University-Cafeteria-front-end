@@ -10,87 +10,9 @@ import DoneIcon from '@mui/icons-material/Done';
 import { useState,useEffect } from 'react';
 import { variables } from '../../Variables';
 import axios from 'axios';
-const orders = [
-  {
-    id: 1,
-    name: "John Doe",
-    phone: "123-456-7890",
-    time: "15:30",
-    total: 75.50,
-    items: [
-      {
-        name: "Widget A",
-        quantity: 3,
-        price: 10.00,
-        total: 30.00,
-        note: "Customer prefers blue color"
-      },
-      {
-        name: "Gadget B",
-        quantity: 2,
-        price: 25.50,
-        total: 51.00,
-        note: "Expedited shipping requested"
-      },
-      {
-        name: "Accessory C",
-        quantity: 1,
-        price: 5.75,
-        total: 5.75,
-        note: "No specific notes"
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    phone: "987-654-3210",
-    time: "12:15",
-    total: 105.25,
-    items: [
-      {
-        name: "Gadget X",
-        quantity: 1,
-        price: 90.00,
-        total: 90.00,
-        note: "Expedited shipping requested"
-      },
-      {
-        name: "Accessory Y",
-        quantity: 3,
-        price: 5.50,
-        total: 16.50,
-        note: "Gift wrap required"
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: "Michael Johnson",
-    phone: "555-123-4567",
-    time: "09:45",
-    total: 50.75,
-    items: [
-      {
-        name: "Widget B",
-        quantity: 2,
-        price: 15.00,
-        total: 30.00,
-        note: "Urgent delivery needed"
-      },
-      {
-        name: "Accessory Z",
-        quantity: 1,
-        price: 20.75,
-        total: 20.75,
-        note: "Special request: custom engraving"
-      }
-    ]
-  },
-  // Continue adding more orders...
-];
 
-function OrderList() {
+
+function OrderList(props) {
   const [value, setValue] =useState('1');
   const [OrderUnC, setOrderUnC] =useState([]);
   const [OrderC, setOrderC] =useState([]);
@@ -102,15 +24,7 @@ const refresh=()=>{
       axios.get(variables.API_URL+"order")
       .then((res) => {
         setOrderUnC(res.data.filter((offer)=>offer.status==variables.order_uncomplete));
-      })
-
-      axios.get(variables.API_URL+"order")
-      .then((res) => {
         setOrderC(res.data.filter((offer)=>offer.status==variables.order_completed));
-      })
-
-      axios.get(variables.API_URL+"order")
-      .then((res) => {
         setOrderH(res.data.filter((offer)=>offer.status==variables.order_delivered || offer.status==variables.order_cancelled));
       })
 }
@@ -144,21 +58,21 @@ const refresh=()=>{
               <TabPanel value="1">
                 <div className='row'>
                 { /* Un-complete */}
-                {OrderUnC.length>0 ?OrderUnC.map((order)=>(<OrderBox refresh={refresh}  type='1' data={order} action={order.status} /*disableMoreIcon={true}*//>)) 
+                {OrderUnC.length>0 ?OrderUnC.map((order)=>(<OrderBox refresh={refresh} setOrderId={props.setOrderId} type='1' data={order} action={order.status} /*disableMoreIcon={true}*//>)) 
                 : <p>Empty</p>}
                 </div>
               </TabPanel>
               <TabPanel value="2">
               <div className='row'>
                 { /* Un-complete */}
-                {OrderC.length>0 ?OrderC.map((order)=>(<OrderBox refresh={refresh}   type='2' data={order} action={order.status} /*disableMoreIcon={true}*//>)) 
+                {OrderC.length>0 ?OrderC.map((order)=>(<OrderBox refresh={refresh} setOrderId={props.setOrderId}  type='2' data={order} action={order.status} /*disableMoreIcon={true}*//>)) 
                 : <p>Empty</p>}
                 </div>
                 </TabPanel>
               <TabPanel value="3">
               <div className='row'>
                 { /* Un-complete */}
-                {OrderH.length>0 ?OrderH.map((order)=>(<OrderBox  refresh={refresh}  type='3' data={order} action={order.status} disableMoreIcon={true}/>)) 
+                {OrderH.length>0 ?OrderH.map((order)=>(<OrderBox  refresh={refresh} setOrderId={props.setOrderId} type='3' data={order} action={order.status} disableMoreIcon={true}/>)) 
                 : <p>Empty</p>}
                 </div>
                 </TabPanel>
