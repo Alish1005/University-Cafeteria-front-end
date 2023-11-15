@@ -30,6 +30,7 @@ function Admin() {
     const [EditItemId,setEditItemId]=useState(-1);
     const [CustomerName,setCustomerName]=useState("");
     const [CustomerPhone,setCustomerPhone]=useState("");
+    const {OrderId,setOrderId}=useState(0);
     const [OfferItems,setOfferItems]=useState([]);
     const [OfferTotal,setOfferTotal]=useState(0);
     const [Offer,setOffer]=useState({"id":0,"name":"","img":"","description":"","price":0});
@@ -52,8 +53,8 @@ function Admin() {
                                 <Route path='/itemManagment' element={<ItemManagments setEditItemId={setEditItemId}/>}/>
                                 <Route path='/StaffList' element={<StaffList/>}/>
                                 <Route path='/CustomerList' element={<CustomerList/>}/>
-                                <Route path='/OrdersList' element={<OrderList/>}/>
-                                <Route path='/StaffMenu' element={<StaffMenu CName={CustomerName} CPhone={CustomerPhone} />}/>
+                                <Route path='/OrdersList' element={<OrderList setOrderId={setOrderId}/>}/>
+                                <Route path='/StaffMenu' element={<StaffMenu CName={CustomerName} CPhone={CustomerPhone} OrderId={OrderId} />}/>
                                 <Route path='/FeedBack' element={<Feedback/>}/>
                                 <Route path='/Settings' element={<AdminSettings/>}/>
                                 <Route path="/ChangePassword" element={<ChangePassword/>} />

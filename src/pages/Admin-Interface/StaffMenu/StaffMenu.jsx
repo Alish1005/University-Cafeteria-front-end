@@ -88,17 +88,17 @@ const MakeOrder = () => {
 };
 
     //ADD Item to the Order List
-    const addItem = (s) => {
+    const addItem = (s,quant) => {
       const found=orderlist.filter((item)=>item.id==s.id && item.name==s.name);
       if(found.length==0){
-      const data={...s,Iquantity:1,note:""}
+      const data={...s,Iquantity:quant,note:""}
       setOrderlist(prevArray => [...prevArray, data]);
     }else{
         const ind=orderlist.map((i,index)=>{return({"index":index,"id":i.id,"name":i.name})}).filter((i)=>i.id==s.id&&i.name==s.name)[0].index;
         const i=orderlist.filter(k=>k.id==s.id && k.name==s.name)[0];
         const noti=orderlist.filter((item,index)=>index<ind);
         const noti2=orderlist.filter((item,index)=>index>ind);
-        const q=i.Iquantity+1;
+        const q=i.Iquantity+quant;
         i.Iquantity=q;
         setOrderlist([...noti,i,...noti2])
       }
@@ -182,6 +182,22 @@ const MakeOrder = () => {
 
 //refresh function
 const refresh=()=>{
+      //Order Fetch
+      console.log(props.OrderId)
+      if(props.OrderId>0){
+        axios.get(variables.API_URL+'order/'+props.OrderId).then((res)=>{
+          setOrderlist(res.data.Result);
+          const data=res.data.Result;
+          data.order_item.map((item)=>{
+            addItem(item.item,item.quantity)
+            console.log("IIIIIIIIIIIII")
+          })
+          data.order_offer.map((offer)=>{
+            addItem(offer.offer,offer.quantity)
+            console.log("OOOOOOOOOOO")
+          })
+          });
+      }
   //Save Sections
 axios.get(variables.API_URL+"Item/Sections")
 .then((res) => {
@@ -197,6 +213,7 @@ axios.get(variables.API_URL+"Item/Sections")
   .then((res) => {
     setOffers(res.data.filter((item)=>item.status==variables.onMenuValue));
     })
+
 }
   useEffect(()=> {
     refresh();
@@ -235,7 +252,7 @@ axios.get(variables.API_URL+"Item/Sections")
                       <p>{s.price}$</p>
                     </button>)
                   }else{
-                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
+                    return (<button onClick={()=>addItem(s,1)} className='col-3 m-2 text-black btn btn-secondary'>
                     <p>{s.name}</p>
                     <p>{s.price}$</p>
                   </button>)
@@ -254,7 +271,7 @@ axios.get(variables.API_URL+"Item/Sections")
                     <p>{s.price}$</p>
                   </button>)
                   }else{
-                    return (<button onClick={()=>addItem(s)} className='col-3 m-2 text-black btn btn-secondary'>
+                    return (<button onClick={()=>addItem(s,1)} className='col-3 m-2 text-black btn btn-secondary'>
                     <p>{s.name}</p>
                     <p>{s.price}$</p>
                   </button>)

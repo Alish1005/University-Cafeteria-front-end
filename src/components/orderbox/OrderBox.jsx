@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { variables } from '../../pages/Variables';
 import { useToast } from '@chakra-ui/react'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 let bg_main="bg-light";
 let bg_primary="bg-light";
@@ -20,7 +21,6 @@ let table_secondary="table-dark";
 function OrderBox(props) {
 const {data}=props;
 let discount=0
-
 
 let t=0;
 for (var i = 0; i < data.order_item.length; i++) {
@@ -50,8 +50,8 @@ const ChangeStatus=(status)=>{
     })
   ))
 }
-const DeleteOrder=()=>{
-  axios.delete(`${variables.API_URL}order/${data.id}`)
+const DeleteOrder=(id)=>{
+  axios.delete(`${variables.API_URL}order/${id}`)
   .then((res) => {
     props.refresh()
     toast({
@@ -122,7 +122,6 @@ const Reorder=()=>{
     "order_item":d.order_item,
     "order_offer":d.order_offer,
   }
-  console.log(order)
   axios.post(`${variables.API_URL}order`,order)
   .then((res) => {
     props.refresh();
@@ -156,10 +155,10 @@ const Reorder=()=>{
                     <MoreVertIcon className="icon"/>
                     </div>
                     <ul class={`dropdown-menu bg-secondary`}>
-                        <li><a class="dropdown-item text-primary mt-1" href="#">Edit</a></li>
-                        <li><a class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#OrderBoxDiscount" href="#">Disount</a></li>
-                        <li><a onClick={()=>DeleteOrder()} class="dropdown-item bg-danger" href="#">Delete</a></li>
-                        <li><a onClick={()=>ChangeStatus(variables.order_cancelled)} class="dropdown-item bg-danger rounded-bottom" href="#">Cancel</a></li>
+                        <li><Link to="/StaffMenu"  onClick={()=>{props.setOrderId(data.id)}}  class="dropdown-item text-primary"  >Edit</Link></li>
+                        <li><Link class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target={`#OrderBoxDiscount${data.id}`} href="#">Disount</Link></li>
+                        <li><Link onClick={()=>DeleteOrder(data.id)} class="dropdown-item bg-danger">Delete</Link></li>
+                        <li><Link onClick={()=>ChangeStatus(variables.order_cancelled)} class="dropdown-item bg-danger rounded-bottom">Cancel</Link></li>
                     </ul>
                 </div>
           }
@@ -231,7 +230,7 @@ const Reorder=()=>{
         </div>
 {props.disableMoreIcon!=true &&
 <div>
-<div class="modal fade" id="OrderBoxDiscount" tabindex="-1" aria-labelledby="OrderBoxDiscountLabel" aria-hidden="true">
+<div class="modal fade" id={`OrderBoxDiscount${data.id}`} tabindex="-1" aria-labelledby="OrderBoxDiscountLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
