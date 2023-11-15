@@ -10,8 +10,11 @@ import { variables } from "../../Variables";
 import Modal from "react-modal";
 
 function Cart(props) {
-  const { cart, setCart } = props;
+  const { cart, setCart, Iquantity } = props;
   const [total, setTotal] = useState(0);
+  // const [notes, setNotes] = useState("");
+  // const [count, setCount] = useState(1);
+  const [orderlist, setOrderlist] = useState([]);
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
@@ -32,6 +35,26 @@ function Cart(props) {
     const deletedItem = props.cart.filter((i) => i.id == itemId)[0];
     setTotal(total - deletedItem.Iquantity * deletedItem.price);
     props.setCart(updatedCart);
+  };
+
+  const PlaceOrder = (s) => {
+    const found = orderlist.filter((item) => item.id == s.id);
+    if (found.length == 0) {
+      const data = { ...s, Iquantity: 1 };
+      setOrderlist((prevArray) => [...prevArray, data]);
+    } else {
+      //const i=orderlist.filter((item)=>item.id==s.id)[0];
+      const ind = orderlist.map((i) => i.id).indexOf(s.id);
+      console.log(ind);
+      const i = orderlist[ind];
+      console.log(i);
+      const noti = orderlist.filter((item, index) => index < ind);
+      const noti2 = orderlist.filter((item, index) => index > ind);
+      const q = i.Iquantity + 1;
+      i.Iquantity = q;
+      setOrderlist([...noti, i, ...noti2]);
+    }
+    setTotal(total + s.price);
   };
 
   const disabledHours = () => {
@@ -124,6 +147,7 @@ function Cart(props) {
           type="button"
           id="order_btn"
           className="btn-send btn btn-primary text-center p-3 "
+          onClick={() => PlaceOrder()}
         >
           <SendIcon /> Place Order
         </button>
