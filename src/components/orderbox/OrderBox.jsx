@@ -121,6 +121,7 @@ const Reorder=()=>{
     "del_Room":data.Del_Room,
     "order_item":d.order_item,
     "order_offer":d.order_offer,
+    "TotalPrice":t
   }
   axios.post(`${variables.API_URL}order`,order)
   .then((res) => {
