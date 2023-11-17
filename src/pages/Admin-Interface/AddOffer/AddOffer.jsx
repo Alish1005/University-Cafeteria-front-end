@@ -105,7 +105,7 @@ function AddOffer(props) {
       500,
       500,
       "JPEG",
-      100,
+      50,
       0,
       (uri) => {
         resolve(uri);
