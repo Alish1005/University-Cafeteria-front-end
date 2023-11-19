@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,Label } from 'recharts';
 function BarCharts(props) {
     return ( 
             <ResponsiveContainer width="100%" height="100%">
@@ -14,10 +14,10 @@ function BarCharts(props) {
                         }}
                         barSize={20}
                       >
-                        <XAxis dataKey={props.xkey} angle={-45} textAnchor="end" tick={{ fontSize: 14 }} scale="point" padding={{ left: 20, right: 20 }}/>
+                        <XAxis dataKey={props.xkey} angle={-45} textAnchor="end" tick={{ fontSize: 14 }} scale="point" padding={{ left: 20, right: 20 }}><Label value={props.xkey} className='fw-bold' offset={-25} position="insideBottom" /></XAxis>
                         <YAxis yAxisId="left" padding={{ left: 20, right: 20 }}/>
                         {props.datakey2!=null &&
-                        <YAxis yAxisId="right" orientation="right" />}
+                        <YAxis yAxisId="right" orientation="right"><Label value={`${props.datakey2} axis`} offset={30} angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }}/></YAxis>}
                         <Tooltip />
                         {/* <Legend /> */}
                         <CartesianGrid strokeDasharray="3 3" />
