@@ -9,17 +9,17 @@ function BarCharts(props) {
                         margin={{
                           top: 5,
                           right: 30,
-                          left: 20,
-                          bottom: 5,
+                          left: 30,
+                          bottom: 100,
                         }}
                         barSize={20}
                       >
-                        <XAxis dataKey={props.xkey} scale="point" padding={{ left: 20, right: 20 }} />
+                        <XAxis dataKey={props.xkey} angle={-45} textAnchor="end" tick={{ fontSize: 14 }} scale="point" padding={{ left: 20, right: 20 }}/>
                         <YAxis yAxisId="left" padding={{ left: 20, right: 20 }}/>
                         {props.datakey2!=null &&
                         <YAxis yAxisId="right" orientation="right" />}
                         <Tooltip />
-                        <Legend />
+                        {/* <Legend /> */}
                         <CartesianGrid strokeDasharray="3 3" />
                         {props.datakey!=null && <Bar dataKey={props.datakey} yAxisId="left" fill="#8884d8" background={{ fill: '#eee' }} />}
                         {props.datakey2!=null && <Bar dataKey={props.datakey2} yAxisId="right" fill="#0DCAF0" background={{ fill: '#eee' }} />}

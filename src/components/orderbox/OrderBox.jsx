@@ -206,7 +206,7 @@ const Reorder=()=>{
                     </tr>
                     ))}
             </React.Fragment>
-      ))}
+      ))}{console.log(data)}
           </table>
         </div>
         {/* <div className={`boxTotal d-flex justify-content-between ${text_secondary} m-3 mb-0`}>
