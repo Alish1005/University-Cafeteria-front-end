@@ -1,0 +1,23 @@
+@media print {
+    *{
+        margin: 0;
+    }
+    .PDFbtn{
+        display: none;
+    }
+    .CSVbtn{
+        display: none;
+    }
+    .sheetPrint{
+        width: 80% !important;
+    }
+    .TopBox,.TopBox2{
+        width: 15% !important;
+    }
+    .TopBoxes{
+        margin:20px 0 ;
+    }
+    .Chart{
+        height: 400px !important;
+    }
+}
