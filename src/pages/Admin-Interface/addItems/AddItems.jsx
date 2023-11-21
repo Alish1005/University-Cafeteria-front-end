@@ -97,7 +97,7 @@ function AddItems(){
       500,
       500,
       "JPEG",
-      100,
+      20,
       0,
       (uri) => {
         resolve(uri);

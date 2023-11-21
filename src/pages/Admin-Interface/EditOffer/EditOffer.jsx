@@ -21,6 +21,7 @@ function EditOffer(props) {
     const [name,setName]=useState("");
     const [description,setdescription]=useState("");
     const [price,setPrice]=useState("");
+
     const onChangeOffer=(key,value)=>{
       const data={id:Offer.id,"name":name,"img":imgbase64,"description":description,"price":price};
       data[key]=value;
@@ -104,7 +105,7 @@ function EditOffer(props) {
       500,
       500,
       "JPEG",
-      100,
+      50,
       0,
       (uri) => {
         resolve(uri);

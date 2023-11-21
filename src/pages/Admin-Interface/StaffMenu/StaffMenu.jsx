@@ -63,6 +63,7 @@ const MakeOrder = () => {
     "del_Room":"0000",
     "order_item":order_items,
     "order_offer":order_offers,
+    "TotalPrice":total
   }
   axios.post(`${variables.API_URL}order`,order)  
   .then((result)=>{

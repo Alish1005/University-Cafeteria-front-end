@@ -19,6 +19,7 @@ let table_primary="table-secondary";
 let table_secondary="table-dark";
 
 function OrderBox(props) {
+const toast = useToast()
 const {data}=props;
 let discount=0
 
@@ -121,6 +122,7 @@ const Reorder=()=>{
     "del_Room":data.Del_Room,
     "order_item":d.order_item,
     "order_offer":d.order_offer,
+    "TotalPrice":t
   }
   axios.post(`${variables.API_URL}order`,order)
   .then((res) => {
@@ -142,7 +144,6 @@ const Reorder=()=>{
     })
   ))
 }
-  const toast = useToast()
     return ( 
     <div className= {`orderbox ${props.action==variables.order_cancelled && "canceledOrder"} col-lg-5 col-xs-11 col-sm-11 col-md-11 m-md-4 m-lg-4 mx-sm-0 my-sm-3 p-0 border shadow ${bg_main}`}>
       <div className='align-i'>
@@ -205,7 +206,7 @@ const Reorder=()=>{
                     </tr>
                     ))}
             </React.Fragment>
-      ))}
+      ))}{console.log(data)}
           </table>
         </div>
         {/* <div className={`boxTotal d-flex justify-content-between ${text_secondary} m-3 mb-0`}>
