@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Menu from "./Menu/Menu";
 import Cart from "./Cart/Cart";
 import ChangePassword from "./changePass/ChangePass";
-import FeedbacksRate from "./feedbacksRate/FeedbacksRate";
+//import FeedbacksRate from "./feedbacksRate/FeedbacksRate";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
 import Footer from "../../components/footer/Footer";
@@ -13,10 +13,12 @@ import MyOrders from "./MyOrders/MyOrders";
 import Offers from "./Offers/Offers";
 import NotFound from "../NotFound/NotFound";
 import { useState } from "react";
+import Profile from "./Profile/profile";
 
 function User() {
   const [cart, setCart] = useState([]);
-  const [feedback, setFeedback] = useState("");
+  //const [feedback, setFeedback] = useState("");
+  const [orderlist, setOrderlist] = useState([]);
 
   //list item for cart
   //Add item to cart list (function)
@@ -41,8 +43,11 @@ function User() {
           <Route path="/ChangePassword" element={<ChangePassword />} />
           <Route
             path="/MyOrders"
-            element={<MyOrders cart={cart} setCart={setCart} />}
+            element={
+              <MyOrders orderlist={orderlist} setOrderlist={setOrderlist} />
+            }
           />
+          <Route path="/Profile" element={<Profile />} />
           <Route path="/Offers" element={<Offers />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/AboutUs" element={<Home />} />

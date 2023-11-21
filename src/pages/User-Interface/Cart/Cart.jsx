@@ -10,11 +10,11 @@ import { variables } from "../../Variables";
 import Modal from "react-modal";
 
 function Cart(props) {
-  const { cart, setCart, Iquantity } = props;
+  const { cart, setCart, Iquantity, orderlist, setOrderlist } = props;
   const [total, setTotal] = useState(0);
   // const [notes, setNotes] = useState("");
   // const [count, setCount] = useState(1);
-  const [orderlist, setOrderlist] = useState([]);
+  // const [orderlist, setOrderlist] = useState([]);
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
@@ -55,6 +55,7 @@ function Cart(props) {
       setOrderlist([...noti, i, ...noti2]);
     }
     setTotal(total + s.price);
+    refresh();
   };
 
   const disabledHours = () => {
