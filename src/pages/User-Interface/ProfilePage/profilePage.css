@@ -1,0 +1,55 @@
+.profilePage{
+    margin-top: 110px;
+}
+.Profile{
+    display: flex;
+    flex-direction: row;
+    color: navy;
+    padding-top: 5px;
+    margin: 5px;
+}
+img, svg{
+    vertical-align: middle;
+    width: 80px;
+}
+#fileInput{
+    display:none;
+   visibility: none;
+}
+.form-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+.form-row ,.FName{
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.form-row, .email{
+    display: flex;
+    justify-content: center;
+    
+}
+.form-row, .phone{
+    margin-left: 4px;
+    padding: 1px;
+  
+}
+
+.form-row, .Building{
+    margin-left: 4px;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+.save{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+    background-color: navy;
+    color: yellow;
+    width: 100px;
+    height: 50px;
+   
+}

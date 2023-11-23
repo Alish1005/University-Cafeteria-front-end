@@ -5,8 +5,8 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import { useState, useEffect } from "react";
 
 function MyOrders(props) {
-  const { item, cart, setCart } = props;
-  const [orderlist, setOrderlist] = useState([]);
+  const { item, cart, setCart, orderlist } = props;
+  // const [orderlist, setOrderlist] = useState([]);
   const [total, setTotal] = useState(0);
 
   //ADD Item to the Order List

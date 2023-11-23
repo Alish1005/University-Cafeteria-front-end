@@ -19,7 +19,7 @@ function Navbar(props) {
       className={`navbar bg-${props.theme} text-${secondary} position-fixed top-0`}
     >
       <div className="logo">
-        <img src={logo} style={{ width: "30px", height: "30px", margin: "" }} />{" "}
+        <img src={logo} style={{ width: "40px", height: "40px", margin: "" }} />{" "}
         <span>
           <strong>MU Cafeteria</strong>
         </span>
@@ -57,7 +57,7 @@ function Navbar(props) {
           <span className="notificationCount">21</span>
           <NotificationsIcon className="notificationIcon" />
         </div>
-        <div class="dropdown me-4">
+        <div class="dropdown  me-5 ">
           <div
             class=""
             type="button"
@@ -72,9 +72,9 @@ function Navbar(props) {
               <span>Ali Sherry</span>
             </div>
           </div>
-          <ul class="dropdown-menu bg-secondary">
+          <ul class="dropdown-menu ">
             <li>
-              <Link to="/Profile " class="dropdown-item mt-1">
+              <Link to="/profile " class="dropdown-item mt-1">
                 Profile
               </Link>
             </li>
@@ -91,7 +91,7 @@ function Navbar(props) {
             <li>
               <Link
                 to="/Login"
-                class="dropdown-item bg-danger rounded-bottom"
+                class="dropdown-item bg rounded-bottom text-danger"
                 href="#"
               >
                 Logout

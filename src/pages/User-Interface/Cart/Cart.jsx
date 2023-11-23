@@ -7,18 +7,21 @@ import SendIcon from "@mui/icons-material/Send";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { variables } from "../../Variables";
-import Modal from "react-modal";
+import { useToast } from "@chakra-ui/react";
+import { toast } from "react-toastify";
+
+//import Modal from "react-modal";
 
 function Cart(props) {
   const { cart, setCart, Iquantity, orderlist, setOrderlist } = props;
   const [total, setTotal] = useState(0);
   // const [notes, setNotes] = useState("");
   // const [count, setCount] = useState(1);
-  // const [orderlist, setOrderlist] = useState([]);
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
   };
+
   //Refresh
   const refresh = async () => {
     //Save items
@@ -37,25 +40,89 @@ function Cart(props) {
     props.setCart(updatedCart);
   };
 
-  const PlaceOrder = (s) => {
-    const found = orderlist.filter((item) => item.id == s.id);
+  //add items to the list of orders
+  const addItem = (s, quant) => {
+    const found = orderlist.filter(
+      (item) => item.id == s.id && item.name == s.name
+    );
     if (found.length == 0) {
-      const data = { ...s, Iquantity: 1 };
+      const data = { ...s, Iquantity: quant, note: "" };
       setOrderlist((prevArray) => [...prevArray, data]);
     } else {
-      //const i=orderlist.filter((item)=>item.id==s.id)[0];
-      const ind = orderlist.map((i) => i.id).indexOf(s.id);
-      console.log(ind);
-      const i = orderlist[ind];
-      console.log(i);
+      const ind = orderlist
+        .map((i, index) => {
+          return { index: index, id: i.id, name: i.name };
+        })
+        .filter((i) => i.id == s.id && i.name == s.name)[0].index;
+      const i = orderlist.filter((k) => k.id == s.id && k.name == s.name)[0];
       const noti = orderlist.filter((item, index) => index < ind);
       const noti2 = orderlist.filter((item, index) => index > ind);
-      const q = i.Iquantity + 1;
+      const q = i.Iquantity + quant;
       i.Iquantity = q;
       setOrderlist([...noti, i, ...noti2]);
     }
     setTotal(total + s.price);
     refresh();
+  };
+
+  const PlaceOrder = (s) => {
+    const order_items = [];
+    const order_offers = [];
+    orderlist.map((item) =>
+      item.offer_item != null
+        ? order_offers.push({
+            order_id: 0,
+            offer_id: item.id,
+            quantity: item.Iquantity,
+            note: item.note,
+          })
+        : order_items.push({
+            order_id: 0,
+            item_id: item.id,
+            quantity: item.Iquantity,
+            note: item.note,
+          })
+    );
+    if (orderlist.length <= 0) {
+      toast({
+        title: "Select item to add order!",
+        position: "top-right",
+        status: "error",
+        duration: 3000,
+        isClosable: false,
+      });
+      return;
+    }
+    const order = {
+      id: 0,
+      status: variables.order_incomplete,
+      del_Room: "0000",
+      order_item: order_items,
+      order_offer: order_offers,
+      TotalPrice: total,
+    };
+    axios
+      .post(`${variables.API_URL}order`, order)
+      .then((result) => {
+        refresh();
+        toast({
+          title: "Order Added Successfully !",
+          /*description: "Fill all the information",*/
+          position: "top-right",
+          status: "success",
+          duration: 3000,
+          isClosable: false,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Something went wrong!",
+          position: "top-right",
+          status: "error",
+          duration: 3000,
+          isClosable: false,
+        });
+      });
   };
 
   const disabledHours = () => {
@@ -119,7 +186,7 @@ function Cart(props) {
                     className="btn btn-danger"
                     onClick={() => deleteFromCart(item.id)}
                   >
-                    Delete
+                    Remove
                   </button>
                 </td>
               </tr>

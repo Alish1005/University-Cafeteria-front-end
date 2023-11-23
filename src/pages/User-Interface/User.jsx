@@ -13,17 +13,13 @@ import MyOrders from "./MyOrders/MyOrders";
 import Offers from "./Offers/Offers";
 import NotFound from "../NotFound/NotFound";
 import { useState } from "react";
-import Profile from "./Profile/profile";
+import ProfilePage from "./ProfilePage/ProfilePage";
 
 function User() {
   const [cart, setCart] = useState([]);
   //const [feedback, setFeedback] = useState("");
   const [orderlist, setOrderlist] = useState([]);
 
-  //list item for cart
-  //Add item to cart list (function)
-  //give the Menu page the fucntion (props)
-  //give the items list to the cart
   return (
     <div className="">
       <Router>
@@ -47,7 +43,7 @@ function User() {
               <MyOrders orderlist={orderlist} setOrderlist={setOrderlist} />
             }
           />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/Profile" element={<ProfilePage />} />
           <Route path="/Offers" element={<Offers />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/AboutUs" element={<Home />} />

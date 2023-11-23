@@ -17,8 +17,16 @@
 
 .input-delv{
     width: 10%;
+    height: 30px;
+    text-align: center;
+    border-color: lightgray;
+    border-radius: 5px;
     min-width: 40px;
     margin: 10px 10px 0 10px;
+}
+.input-delv:hover{
+    box-shadow: 2px 2px 2px lightgrey;
+   
 }
 .btn-send{
     position: fixed;
@@ -26,6 +34,6 @@
     left: 42%;
 }
 .btn-send:hover{
-    box-shadow: 0 0 50px 5px yellow;
+    box-shadow: 3px 0px 3px 3px lightgray;
     transition: all .3s;
 }
