@@ -7,12 +7,16 @@
     padding-top: 6px;
 }
 .Usermenu ul li :hover{
-    color: #aa9627 !important;
+    color: #f3d844 !important;
     transition: all .35s;
 }
+
+*{
+    font-family: "Poppins";
+  }
 .Usermenu{
-    background-color: navy;
-    color: yellow;
+    background-color: #1f3668;
+    color: #f3d844;
     transition: all .35s;
 }
 .Usermenu ul{

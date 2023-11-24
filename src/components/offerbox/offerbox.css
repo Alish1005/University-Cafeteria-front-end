@@ -7,3 +7,6 @@
 .table.table-striped-gray tr:nth-child(2n){
     background-color: lightgray;
 }
+*{
+    font-family: "Poppins";
+  }

@@ -1,12 +1,19 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins";
+}
+
 .profilePage{
     margin-top: 110px;
 }
 .Profile{
     display: flex;
     flex-direction: row;
-    color: navy;
-    padding-top: 5px;
-    margin: 5px;
+    color: #1f3668;
+    padding-top: 15px;
+    margin: 10px 0px 0px 15px;
+    
 }
 img, svg{
     vertical-align: middle;
@@ -47,9 +54,23 @@ img, svg{
     justify-content: center;
     text-align: center;
     border-radius: 5px;
-    background-color: navy;
-    color: yellow;
-    width: 100px;
+    background-color: #1f3668;
+    color: #f3d844;
+    width: 75px;
     height: 50px;
    
+}
+#editProfile{
+    position: absolute;
+  top: 130px; /* Adjust the distance from the top */
+  right: 20px; /* Adjust the distance from the right */
+    text-align: center;
+    background-color: #f3d844;
+    color: #1f3668;
+    width: 50px;
+    border-radius: 8px;
+    border: none;
+}
+#editProfile:hover{
+    box-shadow: 1px 0px 1px 1px lightgray;
 }

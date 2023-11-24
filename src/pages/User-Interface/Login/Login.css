@@ -17,8 +17,12 @@
   right: 20px;
 }
 
+*{
+  font-family: "Poppins";
+}
+
 .login-box {
-    font-family: sans-serif;
+  font-family: "Poppins";
     margin-top: 10px;
     position: absolute;
     top: 50%;

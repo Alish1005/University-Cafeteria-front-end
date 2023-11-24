@@ -20,6 +20,10 @@
     margin-top: 120px;
 
 }
+
+*{
+    font-family: "Poppins";
+}
 #about{
     text-align: center;
 }
@@ -48,6 +52,12 @@
 }
 .section_main_title strong{
     font-weight: 600;
+}
+.text-start{
+    font-family: "poppins";
+}
+p{
+    font-family: "poppins";
 }
 .about-box{
     -wekbit-box-shadow:0 0 0 10px #000000 inset;

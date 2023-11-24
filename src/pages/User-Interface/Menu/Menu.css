@@ -12,6 +12,10 @@
     grid-gap: 10px 20px;
 }
 
+*{
+    font-family: "Poppins";
+}
+
 .heading{
     margin-bottom: 30px;
     padding: 5px 0;

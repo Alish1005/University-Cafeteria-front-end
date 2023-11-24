@@ -3,9 +3,34 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Resizer from "react-image-file-resizer";
 import "./profilePage.css";
 import profileIcon from "../../../assets/profileIcon.png";
+import { FaUserEdit } from "react-icons/fa";
+import "@fontsource/poppins";
 
 function ProfilePage() {
   const [imgbase64, setImageBase64] = useState(""); //set encoded img
+
+  const [editable, setEditable] = useState(false);
+  const [formData, setFormData] = useState({
+    FName: "",
+    LName: "",
+    email: "",
+    PhoneNb: "",
+    Room: "",
+    Building: "",
+  });
+
+  // Function to handle changes in the input fields
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value,
+    });
+  };
+
+  const handleEditClick = () => {
+    setEditable(!editable);
+  };
 
   const resizeFile = (file) =>
     new Promise((resolve) => {
@@ -27,6 +52,15 @@ function ProfilePage() {
     try {
       const file = event.target.files[0];
       const image = await resizeFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageBase64(reader.result);
+      };
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        setImageBase64("");
+      }
       console.log(image);
       setImageBase64(image);
     } catch (err) {
@@ -37,12 +71,13 @@ function ProfilePage() {
   return (
     <div className="profilePage">
       <h3 className="Profile">Profile</h3>
+
       <div className="col-span-full">
         <label
           for="fileInput"
           className="block text-sm font-medium leading-6 text-gray-900"
         >
-          <img src={profileIcon} width={"80px"}></img>
+          <img id="profileIcon" src={profileIcon} width={"80px"}></img>
         </label>
         <div className="mt-2 flex items-center gap-x-3">
           {/* <UserCircleIcon
@@ -84,7 +119,10 @@ function ProfilePage() {
                 type="text"
                 class="form-control"
                 id="FName"
+                value={formData.FName}
                 placeholder="First Name"
+                readOnly={!editable}
+                onChange={handleInputChange}
               ></input>
             </div>
             <div class="form-group col-md-3">
@@ -93,6 +131,9 @@ function ProfilePage() {
                 class="form-control"
                 id="LName"
                 placeholder="Last Name"
+                value={formData.LName}
+                readOnly={!editable}
+                onChange={handleInputChange}
               ></input>
             </div>
           </div>
@@ -104,6 +145,9 @@ function ProfilePage() {
                 class="form-control"
                 id="email"
                 placeholder="Email"
+                value={formData.email}
+                readOnly={!editable}
+                onChange={handleInputChange}
               ></input>
             </div>
 
@@ -113,6 +157,9 @@ function ProfilePage() {
                 class="form-control"
                 id="PhoneNb"
                 placeholder="Phone Number"
+                value={formData.PhoneNb}
+                readOnly={!editable}
+                onChange={handleInputChange}
               ></input>
             </div>
           </div>
@@ -125,6 +172,9 @@ function ProfilePage() {
                 id="Room"
                 maxLength={4}
                 placeholder="Room Number"
+                value={formData.Room}
+                readOnly={!editable}
+                onChange={handleInputChange}
               ></input>
             </div>
 
@@ -135,15 +185,20 @@ function ProfilePage() {
                 id="Building"
                 maxLength={1}
                 placeholder="Building Block"
+                value={formData.Building}
+                readOnly={!editable}
+                onChange={handleInputChange}
               ></input>
             </div>
           </div>
-
           <button
-            type="submit"
-            className="btn-send btn btn-primary text-center p-3 save"
+            type="button"
+            id="editProfile"
+            class="btn  btn-sm"
+            data-mdb-ripple-init
+            onClick={handleEditClick}
           >
-            Save
+            {editable ? "Save" : "Edit"}
           </button>
         </form>
       </div>
