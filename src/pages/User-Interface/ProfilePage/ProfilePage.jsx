@@ -5,6 +5,7 @@ import "./profilePage.css";
 import profileIcon from "../../../assets/profileIcon.png";
 import { FaUserEdit } from "react-icons/fa";
 import "@fontsource/poppins";
+import { FaUser } from "react-icons/fa";
 
 function ProfilePage() {
   const [imgbase64, setImageBase64] = useState(""); //set encoded img
@@ -18,6 +19,7 @@ function ProfilePage() {
     Room: "",
     Building: "",
   });
+  const [placeholderAbove, setPlaceholderAbove] = useState(false);
 
   // Function to handle changes in the input fields
   const handleInputChange = (e) => {
@@ -30,6 +32,16 @@ function ProfilePage() {
 
   const handleEditClick = () => {
     setEditable(!editable);
+  };
+
+  const handleInputClick = () => {
+    setPlaceholderAbove(true);
+  };
+
+  const handleInputBlur = () => {
+    if (formData.FName === "" || formData.LName === "") {
+      setPlaceholderAbove(false);
+    }
   };
 
   const resizeFile = (file) =>
@@ -70,8 +82,6 @@ function ProfilePage() {
 
   return (
     <div className="profilePage">
-      <h3 className="Profile">Profile</h3>
-
       <div className="col-span-full">
         <label
           for="fileInput"
@@ -79,7 +89,7 @@ function ProfilePage() {
         >
           <img id="profileIcon" src={profileIcon} width={"80px"}></img>
         </label>
-        <div className="mt-2 flex items-center gap-x-3">
+        <div className="mt-2 flex items-center gap-x-3 picContainer">
           {/* <UserCircleIcon
             className="h-12 w-12 text-gray-300"
             aria-hidden="true"
@@ -115,82 +125,183 @@ function ProfilePage() {
         <form>
           <div class="form-row">
             <div class="form-group col-md-3 FName">
-              <input
-                type="text"
-                class="form-control"
-                id="FName"
-                value={formData.FName}
-                placeholder="First Name"
-                readOnly={!editable}
-                onChange={handleInputChange}
-              ></input>
+              {/* <FaUser /> */}
+              <div
+                className={`input-container ${
+                  placeholderAbove ? "input-focused" : ""
+                }`}
+              >
+                <label
+                  htmlFor="FName"
+                  className={`placeholder ${
+                    placeholderAbove || formData.FName !== "" ? "above" : ""
+                  }`}
+                >
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="FName"
+                  value={formData.FName}
+                  placeholder=""
+                  readOnly={!editable}
+                  onChange={handleInputChange}
+                  onClick={handleInputClick}
+                  onBlur={handleInputBlur}
+                ></input>
+              </div>
             </div>
-            <div class="form-group col-md-3">
-              <input
-                type="text"
-                class="form-control"
-                id="LName"
-                placeholder="Last Name"
-                value={formData.LName}
-                readOnly={!editable}
-                onChange={handleInputChange}
-              ></input>
+
+            <div class="form-group col-md-3 LName">
+              {/* <FaUser /> */}
+              <div
+                className={`input-container ${
+                  placeholderAbove ? "input-focused" : ""
+                }`}
+              >
+                <label
+                  htmlFor="LName"
+                  className={`placeholder ${
+                    placeholderAbove || formData.LName !== "" ? "above" : ""
+                  }`}
+                >
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="LName"
+                  value={formData.LName}
+                  placeholder=""
+                  readOnly={!editable}
+                  onChange={handleInputChange}
+                  onClick={handleInputClick}
+                  onBlur={handleInputBlur}
+                ></input>
+              </div>
             </div>
           </div>
 
           <div className="form-row">
             <div class="form-group col-md-3 email">
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="Email"
-                value={formData.email}
-                readOnly={!editable}
-                onChange={handleInputChange}
-              ></input>
+              {/* <FaUser /> */}
+              <div
+                className={`input-container ${
+                  placeholderAbove ? "input-focused" : ""
+                }`}
+              >
+                <label
+                  htmlFor="email"
+                  className={`placeholder ${
+                    placeholderAbove || formData.email !== "" ? "above" : ""
+                  }`}
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  value={formData.email}
+                  placeholder=""
+                  readOnly={!editable}
+                  onChange={handleInputChange}
+                  onClick={handleInputClick}
+                  onBlur={handleInputBlur}
+                ></input>
+              </div>
             </div>
 
             <div class="form-group col-md-3 phone">
-              <input
-                type="text"
-                class="form-control"
-                id="PhoneNb"
-                placeholder="Phone Number"
-                value={formData.PhoneNb}
-                readOnly={!editable}
-                onChange={handleInputChange}
-              ></input>
+              <div
+                className={`input-container ${
+                  placeholderAbove ? "input-focused" : ""
+                }`}
+              >
+                <label
+                  htmlFor="PhoneNb"
+                  className={`placeholder ${
+                    placeholderAbove || formData.PhoneNb !== "" ? "above" : ""
+                  }`}
+                >
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="PhoneNb"
+                  value={formData.PhoneNb}
+                  placeholder=""
+                  readOnly={!editable}
+                  onChange={handleInputChange}
+                  onClick={handleInputClick}
+                  onBlur={handleInputBlur}
+                ></input>
+              </div>
             </div>
           </div>
 
           <div className="form-row">
             <div class="form-group col-md-3 Room">
-              <input
-                type="text"
-                class="form-control"
-                id="Room"
-                maxLength={4}
-                placeholder="Room Number"
-                value={formData.Room}
-                readOnly={!editable}
-                onChange={handleInputChange}
-              ></input>
+              <div
+                className={`input-container ${
+                  placeholderAbove ? "input-focused" : ""
+                }`}
+              >
+                <label
+                  htmlFor="Room"
+                  className={`placeholder ${
+                    placeholderAbove || formData.Room !== "" ? "above" : ""
+                  }`}
+                >
+                  Room Number
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Room"
+                  value={formData.Room}
+                  maxLength={4}
+                  placeholder=""
+                  readOnly={!editable}
+                  onChange={handleInputChange}
+                  onClick={handleInputClick}
+                  onBlur={handleInputBlur}
+                ></input>
+              </div>
             </div>
 
             <div class="form-group col-md-3 Building">
-              <input
-                type="text"
-                class="form-control"
-                id="Building"
-                maxLength={1}
-                placeholder="Building Block"
-                value={formData.Building}
-                readOnly={!editable}
-                onChange={handleInputChange}
-              ></input>
+              <div
+                className={`input-container ${
+                  placeholderAbove ? "input-focused" : ""
+                }`}
+              >
+                <label
+                  htmlFor="Building"
+                  className={`placeholder ${
+                    placeholderAbove || formData.Building !== "" ? "above" : ""
+                  }`}
+                >
+                  Building Block
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Building"
+                  value={formData.Building}
+                  maxLength={1}
+                  placeholder=""
+                  readOnly={!editable}
+                  onChange={handleInputChange}
+                  onClick={handleInputClick}
+                  onBlur={handleInputBlur}
+                ></input>
+              </div>
             </div>
           </div>
+
           <button
             type="button"
             id="editProfile"
