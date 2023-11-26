@@ -21,7 +21,8 @@ let table_secondary="table-dark";
 function OrderBox(props) {
 const toast = useToast()
 const {data}=props;
-let discount=0
+const [discount,setDiscount]=useState(data.discount);
+const [discountReal,setDiscountReal]=useState(data.discount)
 
 let t=0;
 for (var i = 0; i < data.order_item.length; i++) {
@@ -33,7 +34,6 @@ for (var i = 0; i < data.order_offer.length; i++) {
 const ChangeStatus=(status)=>{
   axios.put(`${variables.API_URL}order/UpdateStatus/${data.id}/${status}`)
   .then((res) => {
-    props.refresh()
     toast({
       title: `Order Changed to "${status}" Order`,
       position:'top-right',
@@ -83,9 +83,9 @@ const ChangeDiscount=()=>{
     })
     return
   }
+  setDiscountReal(discount);
   axios.put(`${variables.API_URL}order/UpdateDiscount/${data.id}/${discount}`)
   .then((res) => {
-    props.refresh();
     toast({
       title: "Order Discount Changed Successfully",
       position:'top-right',
@@ -206,7 +206,7 @@ const Reorder=()=>{
                     </tr>
                     ))}
             </React.Fragment>
-      ))}{console.log(data)}
+      ))}
           </table>
         </div>
         {/* <div className={`boxTotal d-flex justify-content-between ${text_secondary} m-3 mb-0`}>
@@ -215,9 +215,9 @@ const Reorder=()=>{
         <div className={`boxTotal row ${text_secondary} m-3 fg `}>
           <div className='col-lg-8  col-xs-12 m-1'>        
             <div className={`boxTotal d-flex justify-content-between ${text_secondary} mx-1 gap-lg-2 `}>
-            <p>Discount : {data.discount} %</p>     <p>Actual price : {t} $</p>
+            <p>Discount : {discountReal} %</p>     <p>Actual price : {t} $</p>
           </div>
-          <h5 className='fw-bold'>Total Price : {(t*(1-data.discount/100)).toFixed(2)}$</h5>
+          <h5 className='fw-bold'>Total Price : {(t*(1-discountReal/100)).toFixed(2)}$</h5>
           </div>
           {props.action==variables.order_uncomplete ?
           <button onClick={()=>ChangeStatus(variables.order_completed)} className={`btn ${btn_secondary} col-lg-3 col-xs-12 fw-bold p-2 mx-1`}>Complete</button>
@@ -239,7 +239,7 @@ const Reorder=()=>{
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <input className='col-5 p-1' onChange={(e)=>discount=e.target.value}  type="number" min={0} max={100} placeholder='Discount' />
+        <input className='col-5 p-1' onChange={(e)=>{setDiscount(e.target.value)}}  type="number" min={0} max={100} placeholder='Discount' />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

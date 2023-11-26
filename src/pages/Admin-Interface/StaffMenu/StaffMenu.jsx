@@ -21,7 +21,7 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 function StaffMenu(props) {
   const toast = useToast()
-
+  const {OrderId,setOrderId}=props;
     const [value, setValue] = useState("-1");
     const [orderlist, setOrderlist] = useState([]);
     const [total, setTotal] = useState(0);
@@ -60,7 +60,7 @@ const MakeOrder = () => {
     "id":0,
     "status":variables.order_uncomplete,
     "discount":discount,
-    "del_Room":"0000",
+    "Del_Room":"0000",
     "order_item":order_items,
     "order_offer":order_offers,
     "TotalPrice":total
@@ -87,7 +87,57 @@ const MakeOrder = () => {
   })
 
 };
+const EditOrder=()=>{
+  const order_items=[];
+  const order_offers=[];
+  orderlist.map((item)=>(item.offer_item!=null ?
+  order_offers.push({"order_id":OrderId,"offer_id":item.id,"quantity":item.Iquantity,"note":item.note})
+  :
+  order_items.push({"order_id":OrderId,"item_id":item.id,"quantity":item.Iquantity,"note":item.note})
+  ));
+  if(orderlist.length<=0){
+    toast({
+      title: "Select item to add order!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+    return
+  }
+  const order={
+    "id":OrderId,
+    "status":variables.order_uncomplete,
+    "discount":discount,
+    "Del_Room":"0000",
+    "order_item":order_items,
+    "order_offer":order_offers,
+    "TotalPrice":total
+  }
+  console.log(order)
+  axios.put(`${variables.API_URL}order`,order)  
+  .then((result)=>{
+    refresh();
+    toast({
+      title: 'Order Edited Successfully !',
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
+  }).catch((error)=>{
+    toast({
+      title: "Something went wrong!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  })
+  setOrderId(0)
 
+}
     //ADD Item to the Order List
     const addItem = (s,quant) => {
       const found=orderlist.filter((item)=>item.id==s.id && item.name==s.name);
@@ -103,8 +153,10 @@ const MakeOrder = () => {
         i.Iquantity=q;
         setOrderlist([...noti,i,...noti2])
       }
-      setTotal(total+s.price);
+      setTotal(total+(s.price*quant));
       refresh()
+      console.log(orderlist)
+      console.log("++++++++++++++++++")
     };
     //Delete Item
     const deleteItem=(e)=>{
@@ -184,21 +236,6 @@ const MakeOrder = () => {
 //refresh function
 const refresh=()=>{
       //Order Fetch
-      console.log(props.OrderId)
-      if(props.OrderId>0){
-        axios.get(variables.API_URL+'order/'+props.OrderId).then((res)=>{
-          setOrderlist(res.data.Result);
-          const data=res.data.Result;
-          data.order_item.map((item)=>{
-            addItem(item.item,item.quantity)
-            console.log("IIIIIIIIIIIII")
-          })
-          data.order_offer.map((offer)=>{
-            addItem(offer.offer,offer.quantity)
-            console.log("OOOOOOOOOOO")
-          })
-          });
-      }
   //Save Sections
 axios.get(variables.API_URL+"Item/Sections")
 .then((res) => {
@@ -219,6 +256,26 @@ axios.get(variables.API_URL+"Item/Sections")
   useEffect(()=> {
     refresh();
     setDate(format(new Date(), 'dd/MM/yyyy'))
+    if(OrderId>0){
+      axios.get(variables.API_URL+'order/'+OrderId).then((res)=>{
+        const data=res.data.Result;
+        console.log(data)
+        let d=[]
+        data.order_item.map((item)=>{
+          item.item.offer_item=null;
+          d.push({...item.item,Iquantity:item.quantity,note:item.note})
+        })
+        data.order_offer.map((offer)=>{
+          d.push({...offer.offer,Iquantity:offer.quantity,note:offer.note})
+        })
+        console.log("================")
+        setOrderlist(d)
+        setTotal(data.TotalPrice)
+        setDiscount(data.discount)
+        return;
+      });
+      console.log(orderlist)
+    }
     },[])
 
     return ( 
@@ -285,8 +342,8 @@ axios.get(variables.API_URL+"Item/Sections")
             </TabContext>
           </Box>
           </div>
-          {orderlist.length>0 ?
-          <Link to="/OrdersList#" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>MakeOrder()}><SendIcon/> Make Order</Link>:
+          {orderlist.length>0 ? OrderId<=0 ? <Link to="/OrdersList#" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>MakeOrder()}><SendIcon/> Make Order</Link> :<Link to="/OrdersList#" className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>EditOrder()}><SendIcon/> Edit Order</Link> 
+          :
           <button className='btn-makeOrder btn btn-primary text-secondary' onClick={()=>MakeOrder()}><SendIcon/> Make Order</button>
 }
           {/*-----------------Order List----------------*/}
@@ -294,7 +351,7 @@ axios.get(variables.API_URL+"Item/Sections")
 
                 <div className="OrderListStaff d-flex justify-content-between">
                 <p>{date}</p>
-                <h4>Order List</h4>
+                <h4>Order List</h4>{console.log(orderlist)}
                 <div class="dropdown">
                     <div class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <MoreVertIcon className="icon"/>
@@ -337,13 +394,13 @@ axios.get(variables.API_URL+"Item/Sections")
                       {s.offer_item!=null && 
                       s.offer_item.map((i)=>(
                         <tr className='trOfferItems'>
-                        <td>{i.item.name}</td>
-                        <td>{`${i.item.price} $`}</td>
-                        <td>{i.quantity}</td>
-                        <td>{`${i.quantity*i.item.price.toFixed(2)} $`}</td>
-                        <td colSpan={2}>
-                        </td>
-                      </tr>
+                          <td>{i.item.name}</td>
+                          <td>{`${i.item.price} $`}</td>
+                          <td>{i.quantity}</td>
+                          <td>{`${i.quantity*i.item.price.toFixed(2)} $`}</td>
+                          <td colSpan={2}>
+                          </td>
+                        </tr>
                       ))
                       }
                     </React.Fragment>

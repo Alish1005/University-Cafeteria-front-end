@@ -3,7 +3,7 @@ import {
     LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,Legend,Brush,AreaChart,Area,ResponsiveContainer,Label } from 'recharts';
 function LineCharts(props) {
     return ( 
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width={"90%"} height={300}>
           <LineChart
             width={500}
             height={200}

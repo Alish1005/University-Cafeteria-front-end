@@ -31,8 +31,8 @@ function ItemManagments(props) {
 //Columns Data
 const columns = [
  { field: "id", headerName: "ID", width: 70 },
- {field: "photo",headerName: "Avatar",sortable: false,width: 60,disableExport: true,renderCell: (params) => {return <img src={params.row.photo || "/noavatar.png"} alt="" />;},},
- {field: "name",type: "string",headerName: "Item name",width: 150},
+ {field: "photo",headerName: "Avatar",sortable: false,width: 55,disableExport: true,renderCell: (params) => {return <img src={params.row.photo || "/noavatar.png"} alt="" />;},},
+ {field: "name",type: "string",headerName: "Item name",width: 140},
  /*{field: "section",type: "string",headerName: "section",width: 150},*/
  {field: "section",type: "string",headerName: "section",width: 100,
  
@@ -51,12 +51,12 @@ renderCell: (params) => {
   return s;
 },
 },
-{field: "description",type: "string",headerName: "component",width: 100,sortable: false},
+{field: "description",type: "string",headerName: "component",disableExport: true,width: 100,sortable: false},
 {field: "calories",type: "number",headerName: "calories",width: 70},
  {field: "price",type: "float",headerName: "price",width: 70},
  {field: "quantity",type: "number",headerName: "Quantity",width: 70},
  {field: "orders_number",type: "number",headerName: "orders #",width: 70},
- {field: "publishDate",headerName: "Publish Date",renderCell: (params) => (<div>{format(new Date(params.value), 'yyyy-MM-dd')}</div>),width: 100,type: "Date",},
+ {field: "publishDate",headerName: "Publish Date",renderCell: (params) => (<div>{format(new Date(params.value), 'yyyy-MM-dd')}</div>),width: 95,type: "Date",},
  {field: "action",headerName: "Action",width: 150,sortable: false,disableExport: true,renderCell: (params) => {
   return (
     <div className="action">

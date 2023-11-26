@@ -23,9 +23,9 @@ const refresh=()=>{
   //Save un-complete
       axios.get(variables.API_URL+"order")
       .then((res) => {
-        setOrderUnC(res.data.filter((offer)=>offer.status==variables.order_uncomplete));
-        setOrderC(res.data.filter((offer)=>offer.status==variables.order_completed));
-        setOrderH(res.data.filter((offer)=>offer.status==variables.order_delivered || offer.status==variables.order_cancelled));
+        setOrderUnC(res.data.filter((offer)=>offer.status==variables.order_uncomplete).sort((a,b)=>{return new Date(a.order_time)-new Date(b.order_time)}));
+        setOrderC(res.data.filter((offer)=>offer.status==variables.order_completed).sort((a,b)=>{return new Date(a.order_time)-new Date(b.order_time)}));
+        setOrderH(res.data.filter((offer)=>offer.status==variables.order_delivered || offer.status==variables.order_cancelled).sort((a,b)=>{return new Date(b.order_time)-new Date(a.order_time)}));
       })
 }
 
