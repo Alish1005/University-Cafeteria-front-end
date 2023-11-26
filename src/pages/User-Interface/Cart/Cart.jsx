@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 //import Modal from "react-modal";
 
 function Cart(props) {
-  const { cart, setCart, Iquantity, orderlist, setOrderlist } = props;
+  const { cart, setCart, Iquantity } = props;
   const [total, setTotal] = useState(0);
   // const [notes, setNotes] = useState("");
   // const [count, setCount] = useState(1);
@@ -39,31 +39,6 @@ function Cart(props) {
     setTotal(total - deletedItem.Iquantity * deletedItem.price);
     props.setCart(updatedCart);
   };
-
-  //add items to the list of orders
-  // const addItem = (s, quant) => {
-  //   const found = orderlist.filter(
-  //     (item) => item.id == s.id && item.name == s.name
-  //   );
-  //   if (found.length == 0) {
-  //     const data = { ...s, Iquantity: quant, note: "" };
-  //     setOrderlist((prevArray) => [...prevArray, data]);
-  //   } else {
-  //     const ind = orderlist
-  //       .map((i, index) => {
-  //         return { index: index, id: i.id, name: i.name };
-  //       })
-  //       .filter((i) => i.id == s.id && i.name == s.name)[0].index;
-  //     const i = orderlist.filter((k) => k.id == s.id && k.name == s.name)[0];
-  //     const noti = orderlist.filter((item, index) => index < ind);
-  //     const noti2 = orderlist.filter((item, index) => index > ind);
-  //     const q = i.Iquantity + quant;
-  //     i.Iquantity = q;
-  //     setOrderlist([...noti, i, ...noti2]);
-  //   }
-  //   setTotal(total + s.price);
-  //   refresh();
-  // };
 
   const PlaceOrder = (s) => {
     const order_items = [];

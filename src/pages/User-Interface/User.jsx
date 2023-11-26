@@ -18,7 +18,6 @@ import ProfilePage from "./ProfilePage/ProfilePage";
 function User() {
   const [cart, setCart] = useState([]);
   //const [feedback, setFeedback] = useState("");
-  // const [orderlist, setOrderlist] = useState([]);
 
   return (
     <div className="">
