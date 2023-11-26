@@ -18,7 +18,7 @@ import ProfilePage from "./ProfilePage/ProfilePage";
 function User() {
   const [cart, setCart] = useState([]);
   //const [feedback, setFeedback] = useState("");
-  const [orderlist, setOrderlist] = useState([]);
+  // const [orderlist, setOrderlist] = useState([]);
 
   return (
     <div className="">
@@ -39,9 +39,7 @@ function User() {
           <Route path="/ChangePassword" element={<ChangePassword />} />
           <Route
             path="/MyOrders"
-            element={
-              <MyOrders orderlist={orderlist} setOrderlist={setOrderlist} />
-            }
+            element={<MyOrders cart={cart} setCart={setCart} />}
           />
           <Route path="/Profile" element={<ProfilePage />} />
           <Route path="/Offers" element={<Offers />} />
