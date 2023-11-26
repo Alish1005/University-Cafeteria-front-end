@@ -39,7 +39,14 @@ function ProfilePage() {
   };
 
   const handleInputBlur = () => {
-    if (formData.FName === "" || formData.LName === "") {
+    if (
+      formData.FName === "" ||
+      formData.LName === "" ||
+      formData.email === "" ||
+      formData.PhoneNb === "" ||
+      formData.Room === "" ||
+      formData.Building === ""
+    ) {
       setPlaceholderAbove(false);
     }
   };

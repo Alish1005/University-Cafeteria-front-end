@@ -41,34 +41,34 @@ function Cart(props) {
   };
 
   //add items to the list of orders
-  const addItem = (s, quant) => {
-    const found = orderlist.filter(
-      (item) => item.id == s.id && item.name == s.name
-    );
-    if (found.length == 0) {
-      const data = { ...s, Iquantity: quant, note: "" };
-      setOrderlist((prevArray) => [...prevArray, data]);
-    } else {
-      const ind = orderlist
-        .map((i, index) => {
-          return { index: index, id: i.id, name: i.name };
-        })
-        .filter((i) => i.id == s.id && i.name == s.name)[0].index;
-      const i = orderlist.filter((k) => k.id == s.id && k.name == s.name)[0];
-      const noti = orderlist.filter((item, index) => index < ind);
-      const noti2 = orderlist.filter((item, index) => index > ind);
-      const q = i.Iquantity + quant;
-      i.Iquantity = q;
-      setOrderlist([...noti, i, ...noti2]);
-    }
-    setTotal(total + s.price);
-    refresh();
-  };
+  // const addItem = (s, quant) => {
+  //   const found = orderlist.filter(
+  //     (item) => item.id == s.id && item.name == s.name
+  //   );
+  //   if (found.length == 0) {
+  //     const data = { ...s, Iquantity: quant, note: "" };
+  //     setOrderlist((prevArray) => [...prevArray, data]);
+  //   } else {
+  //     const ind = orderlist
+  //       .map((i, index) => {
+  //         return { index: index, id: i.id, name: i.name };
+  //       })
+  //       .filter((i) => i.id == s.id && i.name == s.name)[0].index;
+  //     const i = orderlist.filter((k) => k.id == s.id && k.name == s.name)[0];
+  //     const noti = orderlist.filter((item, index) => index < ind);
+  //     const noti2 = orderlist.filter((item, index) => index > ind);
+  //     const q = i.Iquantity + quant;
+  //     i.Iquantity = q;
+  //     setOrderlist([...noti, i, ...noti2]);
+  //   }
+  //   setTotal(total + s.price);
+  //   refresh();
+  // };
 
   const PlaceOrder = (s) => {
     const order_items = [];
     const order_offers = [];
-    orderlist.map((item) =>
+    cart.map((item) =>
       item.offer_item != null
         ? order_offers.push({
             order_id: 0,
@@ -83,7 +83,7 @@ function Cart(props) {
             note: item.note,
           })
     );
-    if (orderlist.length <= 0) {
+    if (cart.length <= 0) {
       toast({
         title: "Select item to add order!",
         position: "top-right",
