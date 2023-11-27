@@ -1,0 +1,131 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins";
+}
+
+.profilePage{
+    margin-top: 110px;
+}
+/* .Profile{
+    display: flex;
+    flex-direction: row;
+    color: #1f3668;
+    padding-top: 15px;
+    margin: 10px 0px 0px 15px;
+    
+} */
+img, svg{
+    vertical-align: middle;
+    width: 80px;
+}
+#fileInput{
+    display:none;
+   visibility: none;
+}
+
+#profileIcon{
+    margin-top: 50px;
+}
+
+.form-group{
+    margin-bottom: 10px;
+    padding-right: 10px;
+}
+.form-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+.form-row ,.FName{
+    margin-right: 5px;
+    margin-bottom: 5px;
+    
+}
+/* .form-row, .email{
+    display: flex;
+    justify-content: center;
+    
+} */
+.form-row, .phone{
+    margin-left: 4px;
+    padding: 1px;
+  
+}
+
+.form-row, .Building{
+    margin-left: 4px;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+.save{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #1f3668;
+    color: #f3d844;
+    width: 75px;
+    height: 50px;
+   
+}
+#editProfile{
+    position: absolute;
+  top: 130px; /* Adjust the distance from the top */
+  right: 20px; /* Adjust the distance from the right */
+    text-align: center;
+    background-color: #f3d844;
+    color: #1f3668;
+    width: 50px;
+    border-radius: 8px;
+    border: none;
+}
+#editProfile:hover{
+    box-shadow: 1px 0px 1px 1px lightgray;
+}
+
+.form-control:hover{
+    box-shadow: 1px 1px 1px 1px lightgray !important;
+}
+
+
+.form-control:focus {
+    box-shadow: none;  
+    outline: none; 
+  }
+  
+
+.input-container {
+    position: relative;
+    
+  }
+  
+  .placeholder {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease-out;
+    pointer-events: none;
+    background-color: white; 
+    color: black;
+  }
+  
+  .placeholder.above {
+    font-size: 0.75rem;
+    top: -14px;
+    transform: translateY(0);
+    background-color: white; 
+    color: black;
+  }
+  
+  .input-focused .placeholder {
+    font-size: 0.75rem;
+    top: -14px;
+    transform: translateY(0);
+    background-color: none;
+    background-color: white; 
+    color: black;
+  }
+  

@@ -13,10 +13,14 @@ label{
     width: 150px;
 }
 .add{
-    background-color: navy;
-    color: yellow;
+    background-color:#1f3668;
+    color: #f3d844;
 }
 .cancel{
-    background-color: yellow;
-    color: navy;
+    background-color: #f3d844;
+    color: #1f3668;
 }
+
+*{
+    font-family: "Poppins";
+  }

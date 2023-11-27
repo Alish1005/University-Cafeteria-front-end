@@ -7,18 +7,21 @@ import SendIcon from "@mui/icons-material/Send";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { variables } from "../../Variables";
-import Modal from "react-modal";
+import { useToast } from "@chakra-ui/react";
+import { toast } from "react-toastify";
+
+//import Modal from "react-modal";
 
 function Cart(props) {
   const { cart, setCart, Iquantity } = props;
   const [total, setTotal] = useState(0);
   // const [notes, setNotes] = useState("");
   // const [count, setCount] = useState(1);
-  const [orderlist, setOrderlist] = useState([]);
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
   };
+
   //Refresh
   const refresh = async () => {
     //Save items
@@ -38,23 +41,63 @@ function Cart(props) {
   };
 
   const PlaceOrder = (s) => {
-    const found = orderlist.filter((item) => item.id == s.id);
-    if (found.length == 0) {
-      const data = { ...s, Iquantity: 1 };
-      setOrderlist((prevArray) => [...prevArray, data]);
-    } else {
-      //const i=orderlist.filter((item)=>item.id==s.id)[0];
-      const ind = orderlist.map((i) => i.id).indexOf(s.id);
-      console.log(ind);
-      const i = orderlist[ind];
-      console.log(i);
-      const noti = orderlist.filter((item, index) => index < ind);
-      const noti2 = orderlist.filter((item, index) => index > ind);
-      const q = i.Iquantity + 1;
-      i.Iquantity = q;
-      setOrderlist([...noti, i, ...noti2]);
+    const order_items = [];
+    const order_offers = [];
+    cart.map((item) =>
+      item.offer_item != null
+        ? order_offers.push({
+            order_id: 0,
+            offer_id: item.id,
+            quantity: item.Iquantity,
+            note: item.note,
+          })
+        : order_items.push({
+            order_id: 0,
+            item_id: item.id,
+            quantity: item.Iquantity,
+            note: item.note,
+          })
+    );
+    if (cart.length <= 0) {
+      toast({
+        title: "Select item to add order!",
+        position: "top-right",
+        status: "error",
+        duration: 3000,
+        isClosable: false,
+      });
+      return;
     }
-    setTotal(total + s.price);
+    const order = {
+      id: 0,
+      status: variables.order_incomplete,
+      del_Room: "0000",
+      order_item: order_items,
+      order_offer: order_offers,
+      TotalPrice: total,
+    };
+    axios
+      .post(`${variables.API_URL}order`, order)
+      .then((result) => {
+        refresh();
+        toast({
+          title: "Order Added Successfully !",
+          /*description: "Fill all the information",*/
+          position: "top-right",
+          status: "success",
+          duration: 3000,
+          isClosable: false,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Something went wrong!",
+          position: "top-right",
+          status: "error",
+          duration: 3000,
+          isClosable: false,
+        });
+      });
   };
 
   const disabledHours = () => {
@@ -118,7 +161,7 @@ function Cart(props) {
                     className="btn btn-danger"
                     onClick={() => deleteFromCart(item.id)}
                   >
-                    Delete
+                    Remove
                   </button>
                 </td>
               </tr>

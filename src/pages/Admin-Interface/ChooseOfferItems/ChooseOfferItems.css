@@ -4,6 +4,9 @@
   left: 45%;
   width: 150px;
 }
+*{
+  font-family: "Poppins";
+}
 .OrderListStaffNote{
   display: none;
 }

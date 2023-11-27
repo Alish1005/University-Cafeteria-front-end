@@ -1,8 +1,8 @@
 @import '../../style/variables.css';
 
 *{
-   
-}
+    font-family: "Poppins";
+  }
 
 .menuContainer{
     z-index: 100;

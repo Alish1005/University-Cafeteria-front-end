@@ -3,7 +3,9 @@
 .canceledOrder{
     border: solid 1px red !important;
 }
-
+*{
+    font-family: "Poppins";
+  }
 .trOrderOfferItem{
     border: solid 1px black !important;
 }

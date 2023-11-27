@@ -4,6 +4,9 @@
   left: 45%;
   width: 150px;
 }
+*{
+  font-family: "Poppins";
+}
 .trOffer{
   /*background-color: rgb(255, 255, 0);*/
   /*border: 1px solid black;*/
