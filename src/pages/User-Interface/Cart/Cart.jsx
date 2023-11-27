@@ -9,14 +9,15 @@ import axios from "axios";
 import { variables } from "../../Variables";
 import { useToast } from "@chakra-ui/react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 //import Modal from "react-modal";
 
 function Cart(props) {
-  const { cart, setCart, Iquantity } = props;
+  const toast = useToast()
+  const { cart, setCart} = props;
   const [total, setTotal] = useState(0);
-  // const [notes, setNotes] = useState("");
-  // const [count, setCount] = useState(1);
+  const [Room, setRoom] = useState("");
 
   const onChange = (time, timeString) => {
     console.log(time, timeString);
@@ -40,65 +41,56 @@ function Cart(props) {
     props.setCart(updatedCart);
   };
 
-  const PlaceOrder = (s) => {
-    const order_items = [];
-    const order_offers = [];
-    cart.map((item) =>
-      item.offer_item != null
-        ? order_offers.push({
-            order_id: 0,
-            offer_id: item.id,
-            quantity: item.Iquantity,
-            note: item.note,
-          })
-        : order_items.push({
-            order_id: 0,
-            item_id: item.id,
-            quantity: item.Iquantity,
-            note: item.note,
-          })
-    );
-    if (cart.length <= 0) {
-      toast({
-        title: "Select item to add order!",
-        position: "top-right",
-        status: "error",
-        duration: 3000,
-        isClosable: false,
-      });
-      return;
-    }
-    const order = {
-      id: 0,
-      status: variables.order_incomplete,
-      del_Room: "0000",
-      order_item: order_items,
-      order_offer: order_offers,
-      TotalPrice: total,
-    };
-    axios
-      .post(`${variables.API_URL}order`, order)
-      .then((result) => {
-        refresh();
-        toast({
-          title: "Order Added Successfully !",
-          /*description: "Fill all the information",*/
-          position: "top-right",
-          status: "success",
-          duration: 3000,
-          isClosable: false,
-        });
-      })
-      .catch((error) => {
-        toast({
-          title: "Something went wrong!",
-          position: "top-right",
-          status: "error",
-          duration: 3000,
-          isClosable: false,
-        });
-      });
-  };
+      //Add Order
+const MakeOrder = () => {
+  const order_items=[];
+  const order_offers=[];
+  cart.map((item)=>(item.offer_item!=null ?
+  order_offers.push({"order_id":0,"offer_id":item.id,"quantity":item.Iquantity,"note":item.note})
+  :
+  order_items.push({"order_id":0,"item_id":item.id,"quantity":item.Iquantity,"note":item.note})
+  ));
+  if(cart.length<=0){
+    toast({
+      title: "Select item to send the request",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+    return
+  }
+  const order={
+    "id":0,
+    "status":variables.order_uncomplete,
+    "discount":0,
+    "Del_Room":Room,
+    "order_item":order_items,
+    "order_offer":order_offers,
+    "TotalPrice":total
+  }
+  axios.post(`${variables.API_URL}order`,order)  
+  .then((result)=>{
+    refresh();
+    toast({
+      title: 'Request Sent',
+      /*description: "Fill all the information",*/
+      position:'top-right',
+      status: 'success',
+      duration: 3000,
+      isClosable: false,
+    })
+  }).catch((error)=>{
+    toast({
+      title: "Something went wrong!",
+      position:'top-right',
+      status: 'error',
+      duration: 3000,
+      isClosable: false,
+    })
+  })
+  setCart([])
+};
 
   const disabledHours = () => {
     //Disable Time
@@ -181,19 +173,21 @@ function Cart(props) {
       />
       <input
         type="text"
+        onChange={(e)=>setRoom(e.target.value)}
         className="input-delv"
         maxLength={4}
         placeholder="Delivery Room"
       />
       <div className="cart_footer">
-        <button
+        <Link
+        to="/Menu"
           type="button"
           id="order_btn"
-          className="btn-send btn btn-primary text-center p-3 "
-          onClick={() => PlaceOrder()}
+          className="btn-send btn btn-primary text-secondary text-center p-3 "
+          onClick={() => MakeOrder()}
         >
           <SendIcon /> Place Order
-        </button>
+        </Link>
       </div>
     </div>
   );
