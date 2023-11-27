@@ -19,7 +19,7 @@ import AddCustomer from "./AddCustomer/AddCustomer";
 import AddStaff from "./addStaff/AddStaff";
 import AddItems from "./addItems/AddItems";
 import EditItems from "./editItems/EditItems";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import AddOffer from "../Admin-Interface/AddOffer/AddOffer";
 import NotFound from "../NotFound/NotFound";
 import ChooseOfferItems from "./ChooseOfferItems/ChooseOfferItems";
@@ -30,7 +30,7 @@ function Admin() {
     const [EditItemId,setEditItemId]=useState(-1);
     const [CustomerName,setCustomerName]=useState("");
     const [CustomerPhone,setCustomerPhone]=useState("");
-    const {OrderId,setOrderId}=useState(0);
+    const [OrderId,setOrderId]=useState(0);
     const [OfferItems,setOfferItems]=useState([]);
     const [OfferTotal,setOfferTotal]=useState(0);
     const [Offer,setOffer]=useState({"id":0,"name":"","img":"","description":"","price":0});
@@ -38,6 +38,14 @@ function Admin() {
     const OnClickCustomerOrder=()=>{
         
     }
+
+
+    useEffect(()=> {
+
+        }
+        ,[])
+
+
     return ( 
         <div className="Admin">
             <Router>
@@ -54,7 +62,7 @@ function Admin() {
                                 <Route path='/StaffList' element={<StaffList/>}/>
                                 <Route path='/CustomerList' element={<CustomerList/>}/>
                                 <Route path='/OrdersList' element={<OrderList setOrderId={setOrderId}/>}/>
-                                <Route path='/StaffMenu' element={<StaffMenu CName={CustomerName} CPhone={CustomerPhone} OrderId={OrderId} />}/>
+                                <Route path='/StaffMenu' element={<StaffMenu CName={CustomerName} CPhone={CustomerPhone} OrderId={OrderId} setOrderId={setOrderId} />}/>
                                 <Route path='/FeedBack' element={<Feedback/>}/>
                                 <Route path='/Settings' element={<AdminSettings/>}/>
                                 <Route path="/ChangePassword" element={<ChangePassword/>} />
@@ -90,7 +98,7 @@ function Admin() {
                         {CustomerName==""||CustomerPhone=="" ?
                         <button type="button" data-bs-dismiss="modal" class="btn btn-primary text-secondary" >Save changes</button>
                         :
-                        <Link to="/StaffMenu" class="btn btn-primary text-secondary" >Save changes</Link>
+                        <Link to="/StaffMenu" onClick={()=>setOrderId(0)} class="btn btn-primary text-secondary" >Save changes</Link>
                         }
                     </div>
                     </div>
