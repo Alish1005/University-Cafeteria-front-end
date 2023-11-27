@@ -1,6 +1,4 @@
 *{
-    padding: 0;
-    margin: 0;
     font-family: "Poppins";
 }
 
@@ -15,9 +13,9 @@
     margin: 10px 0px 0px 15px;
     
 } */
-img, svg{
-    vertical-align: middle;
-    width: 80px;
+.Profileimg, .profilesvg{
+    vertical-align: middle !important;
+    width: 80px !important;
 }
 #fileInput{
     display:none;

@@ -16,7 +16,6 @@ function OrderList(props) {
   const [OrderC, setOrderC] = useState([]);
   const [OrderH, setOrderH] = useState([]);
 
-<<<<<<< HEAD
 //refresh function
 const refresh=()=>{
   //Save un-complete
@@ -27,27 +26,7 @@ const refresh=()=>{
         setOrderH(res.data.filter((offer)=>offer.status==variables.order_delivered || offer.status==variables.order_cancelled).sort((a,b)=>{return new Date(b.order_time)-new Date(a.order_time)}));
       })
 }
-=======
-  //refresh function
-  const refresh = () => {
-    //Save incomplete
-    axios.get(variables.API_URL + "order").then((res) => {
-      setOrderUnC(
-        res.data.filter((offer) => offer.status == variables.order_incomplete)
-      );
-      setOrderC(
-        res.data.filter((offer) => offer.status == variables.order_completed)
-      );
-      setOrderH(
-        res.data.filter(
-          (offer) =>
-            offer.status == variables.order_delivered ||
-            offer.status == variables.order_cancelled
-        )
-      );
-    });
-  };
->>>>>>> b7e9f86e1fea523c8c1f1c3613ec724311f0bbee
+
 
   useEffect(() => {
     refresh();

@@ -6,7 +6,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function Topbar() {
   return (
-    <div className="UserTopbar mt-5">
+    <div className="UserTopbar">
       <Navbar theme="transperant" />
       <nav className="Usermenu bg-primary text-secondary">
         <ul>

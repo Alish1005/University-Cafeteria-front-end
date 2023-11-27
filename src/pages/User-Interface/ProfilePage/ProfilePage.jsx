@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Resizer from "react-image-file-resizer";
 import "./profilePage.css";
 import profileIcon from "../../../assets/profileIcon.png";
-import { FaUserEdit } from "react-icons/fa";
 import "@fontsource/poppins";
-import { FaUser } from "react-icons/fa";
 
 function ProfilePage() {
   const [imgbase64, setImageBase64] = useState(""); //set encoded img
