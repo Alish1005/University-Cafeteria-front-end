@@ -11,17 +11,6 @@ function MenuItemBox2(props) {
   const [Iquantity, setIQuantity] = useState(1);
   const [notes, setNotes] = useState("");
 
-  // Function to handle adding the item to the cart
-  // item.map((item) => (
-  //   <div key={item.id}>
-  //     <h3>{item.name}</h3>
-  //     <p>Price: ${item.price}</p>
-  //     <p>Calories: ${item.calories}</p>
-  //     <p>Quantity: ${item.quantity}</p>
-  //     <p>Status: ${item.status}</p>
-  //     <p>{item.description}</p>
-  //   </div>
-  // ));
   //ADD Item to the Order List
   const addToCart = (s) => {
     const found = cart.filter((item) => item.id == s.id);

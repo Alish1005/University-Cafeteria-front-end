@@ -5,7 +5,6 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import MenuItemBox from "../../../components/menuItemBox/MenuItemBox";
 import MenuItemBox2 from "../../../components/menuItemBox2/MenuItemBox2";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -15,7 +14,6 @@ function Menu(props) {
   const [value, setValue] = useState("1");
   const [sections, setSections] = useState([]);
   const [items, setItems] = useState([]);
-  //add new attr.s in the Menu for each Item (Iquantity and notes)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

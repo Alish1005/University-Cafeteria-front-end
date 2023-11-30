@@ -2,6 +2,8 @@ import { PeopleSharp } from "@mui/icons-material";
 import "./myorderbox.css";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import $ from "jquery";
+import axios from "axios";
+import { variables } from "../../Variables";
 import { useState, useEffect } from "react";
 
 let bg_main = "bg-light";
@@ -20,15 +22,26 @@ let cancel = "canceled";
 let delivered = "delivered";
 
 function MyOrderBox(props) {
-  const { item, cart } = props;
+  const { item, order } = props;
   //const {setOrderStatus}=useState("");
 
   const cancelOrder = () => {
-    const orderStatus = props.status;
-    if (orderStatus == incomplete) {
-      orderStatus = cancel;
-      <span class="myOrderbadge badge bg-danger">canceled</span>;
-    } else if ((orderStatus = complete)) {
+    const orderStatus = order.status;
+
+    if (orderStatus === incomplete) {
+      axios
+        .put(`${variables.API_URL}order/CancelOrder`, {
+          Id: order.id,
+          orderStatus: "canceled",
+        })
+        .then((response) => {
+          console.log("Order canceled:", response.data);
+          <span class="myOrderbadge badge bg-danger">canceled</span>;
+        })
+        .catch((error) => {
+          console.error("Error canceling order:", error);
+        });
+    } else if (orderStatus === complete) {
       $("#orderCancellation").prop("disabled", true);
       // toast({
       //   title:"This action can't be done"
@@ -87,20 +100,23 @@ function MyOrderBox(props) {
             className={`table pt-3 ${table_primary} ${text_secondary} table-hover table-striped-gray`}
           >
             <thead>
-              <th>Item Name</th>
-              <th>Quantity</th>
-              <th>Calories</th>
-              <th>Total</th>
-              <th>Notes</th>
+              <th>Item status</th>
+              <th>discount</th>
+              <th>Del_Room</th>
+              <th>order_item</th>
+              <th>order_offer</th>
+              <th>TotalPrice</th>
             </thead>
 
-            {cart.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.Iquantity}</td>
-                <td>{item.calories}</td>
-                <td>{item.Iquantity * item.price}$</td>
-                <td className="text-danger">{item.note}</td>
+            {order.map((o) => (
+              <tr key={o.id}>
+                <td>{o.status}</td>
+                <td>{o.discount}</td>
+                <td>{o.Del_Room}</td>
+                <td>{o.order_item}</td>
+                <td>{o.order_offer}</td>
+                <td>{o.TotalPrice}$</td>
+                {/* <td className="text-danger">{item.note}</td> */}
               </tr>
             ))}
           </table>

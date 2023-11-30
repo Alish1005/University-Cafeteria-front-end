@@ -14,8 +14,8 @@ import { Link } from "react-router-dom";
 //import Modal from "react-modal";
 
 function Cart(props) {
-  const toast = useToast()
-  const { cart, setCart} = props;
+  const toast = useToast();
+  const { cart, setCart } = props;
   const [total, setTotal] = useState(0);
   const [Room, setRoom] = useState("");
 
@@ -41,56 +41,70 @@ function Cart(props) {
     props.setCart(updatedCart);
   };
 
-      //Add Order
-const MakeOrder = () => {
-  const order_items=[];
-  const order_offers=[];
-  cart.map((item)=>(item.offer_item!=null ?
-  order_offers.push({"order_id":0,"offer_id":item.id,"quantity":item.Iquantity,"note":item.note})
-  :
-  order_items.push({"order_id":0,"item_id":item.id,"quantity":item.Iquantity,"note":item.note})
-  ));
-  if(cart.length<=0){
-    toast({
-      title: "Select item to send the request",
-      position:'top-right',
-      status: 'error',
-      duration: 3000,
-      isClosable: false,
-    })
-    return
-  }
-  const order={
-    "id":0,
-    "status":variables.order_uncomplete,
-    "discount":0,
-    "Del_Room":Room,
-    "order_item":order_items,
-    "order_offer":order_offers,
-    "TotalPrice":total
-  }
-  axios.post(`${variables.API_URL}order`,order)  
-  .then((result)=>{
-    refresh();
-    toast({
-      title: 'Request Sent',
-      /*description: "Fill all the information",*/
-      position:'top-right',
-      status: 'success',
-      duration: 3000,
-      isClosable: false,
-    })
-  }).catch((error)=>{
-    toast({
-      title: "Something went wrong!",
-      position:'top-right',
-      status: 'error',
-      duration: 3000,
-      isClosable: false,
-    })
-  })
-  setCart([])
-};
+  //Add Order
+  const MakeOrder = () => {
+    const order_items = [];
+    const order_offers = [];
+    cart.map((item) =>
+      item.offer_item != null
+        ? order_offers.push({
+            order_id: 0,
+            offer_id: item.id,
+            quantity: item.Iquantity,
+            note: item.note,
+          })
+        : order_items.push({
+            order_id: 0,
+            item_id: item.id,
+            quantity: item.Iquantity,
+            note: item.note,
+          })
+    );
+    if (cart.length <= 0) {
+      toast({
+        title: "Select item to send the request",
+        position: "top-right",
+        status: "error",
+        duration: 3000,
+        isClosable: false,
+      });
+      return;
+    }
+
+    const order = {
+      id: 0,
+      status: variables.order_uncomplete,
+      discount: 0,
+      Del_Room: Room,
+      order_item: order_items,
+      order_offer: order_offers,
+      TotalPrice: total,
+    };
+    axios
+      .post(`${variables.API_URL}order`, order)
+      .then((result) => {
+        refresh();
+        toast({
+          title: "Request Sent",
+          /*description: "Fill all the information",*/
+          position: "top-right",
+          status: "success",
+          duration: 3000,
+          isClosable: false,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Something went wrong!",
+          position: "top-right",
+          status: "error",
+          duration: 3000,
+          isClosable: false,
+        });
+      });
+    setCart([]);
+    console.log(order.id);
+  };
 
   const disabledHours = () => {
     //Disable Time
@@ -173,14 +187,14 @@ const MakeOrder = () => {
       />
       <input
         type="text"
-        onChange={(e)=>setRoom(e.target.value)}
+        onChange={(e) => setRoom(e.target.value)}
         className="input-delv"
         maxLength={4}
         placeholder="Delivery Room"
       />
       <div className="cart_footer">
         <Link
-        to="/Menu"
+          to="/Menu"
           type="button"
           id="order_btn"
           className="btn-send btn btn-primary text-secondary text-center p-3 "
