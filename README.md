@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# 🎓 University Cafeteria (Front End) 🍽
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📑 Description
+The **University Cafeteria Front End** is a web application designed to enhance the dining experience for university students, staff, and external visitors. It provides a seamless way for customers to place orders remotely and reduce crowding in the cafeteria. This solution also empowers cafeteria staff and managers with tools to streamline operations, track orders, and manage customer feedback.
 
-## Available Scripts
+> **⚠ Note**: This is the **front-end** portion of the project. The back-end can be found in another repository.
 
-In the project directory, you can run:
+## 🧾 Table of Contents
+- [🖥 Technologies Used](#technologies-used)
+- [✅ Problem Solved](#problem-solved)
+- [👥 User Roles](#user-roles)
+- [💻 Pages Overview](#pages-overview)
+- [👨‍💻 Installation](#installation)
+- [🎯 Usage](#usage)
+- [🎉 Contributing](#contributing)
+- [🏆 License](#license)
+- [🙏 Acknowledgments](#acknowledgments)
 
-### `npm start`
+## 🖥 Technologies Used
+The front end of the University Cafeteria web app is built using:
+- **React.js**
+- **HTML**
+- **CSS**
+- **Bootstrap**
+- **Various React Libraries**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ✅ Problem Solved
+1. **Crowd Reduction**: Customers can place orders online and only visit the cafeteria when their order is ready, reducing congestion.
+2. **Cafeteria Management**: Streamlines daily operations, allowing staff to efficiently manage tasks and improve service.
+3. **Manager Dashboard**: Provides real-time data to help managers monitor and control cafeteria activities.
+4. **Customer Feedback**: Collects customer feedback to improve cafeteria services.
+5. **Personalized Recommendations**: The system suggests additional items based on the customer’s order, enhancing their dining experience.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 👥 User Roles
+The application provides two distinct interfaces for different user roles:
+1. **Customer Interface**
+   - **University Members (students, faculty, staff)**
+   - **Non-University Members (external customers)**
+2. **Cafeteria Staff Interface**
+   - **Staff Members**: Manage orders and inventory.
+   - **Managers**: Oversee operations, analyze data, and configure settings.
 
-### `npm test`
+## 💻 Pages Overview
+The project consists of **26 pages** that cover various functionalities for both customer and staff interfaces:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 👨‍🏫 Customer Pages:
+1. **Home**: Introduction to the cafeteria with an overview of services.
+2. **Login**: Authentication page for user login.
+3. **Menu**: Displays available food and drink options.
+4. **My Orders**: View and track customer orders.
+5. **Offers**: View and choose from cafeteria offers.
+6. **Profile Page**: Customer profile and account settings.
+7. **Cart**: Review and proceed to checkout.
+8. **Feedbacks Rate**: Provide ratings and feedback for completed orders.
+9. **Change Password**: Allows users to update their password.
 
-### `npm run build`
+### 👩‍🍳 Cafeteria Staff & Management Pages:
+1. **Dashboard**: Overview of all ongoing orders, cafeteria statistics, and system analytics.
+2. **Order List**: Display of current and past orders for staff to manage.
+3. **Add Staff**: Form to add new cafeteria staff members.
+4. **Staff List**: Overview of all staff members with management options.
+5. **Add Offer**: Page to create and manage cafeteria offers.
+6. **Edit Offer**: Interface to modify existing offers.
+7. **Offer List**: Display of all available offers.
+8. **Add Items**: Page to add new items to the menu.
+9. **Edit Items**: Modify or update menu items.
+10. **Item Management**: Overview of all menu items with editing capabilities.
+11. **Admin Settings**: System configuration and settings for the manager.
+12. **Choose Offer Items**: Interface to select items for specific offers.
+13. **Customer List**: Display of all customers registered in the system.
+14. **Staff Menu**: Menu interface designed for cafeteria staff.
+15. **Feedback**: View and respond to customer feedback.
+16. **AddCustomer**: Form to register new customers.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Other:
+1. **NotFound**: Page displayed for undefined routes or errors.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 👨‍💻 Installation
+To get this project running locally, follow these steps:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/university-cafeteria-frontend.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd university-cafeteria-frontend
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   ```
 
-### `npm run eject`
+## 🎯 Usage
+1. After starting the server, open the browser and navigate to:
+   ```
+   http://localhost:3000
+   ```
+2. Customers can browse the menu, place orders, and track their orders in real-time.
+3. Cafeteria staff can log in to view and manage orders, while managers can access the dashboard for detailed insights.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🎉 Contributing
+Contributions are welcome! If you'd like to contribute to this project, feel free to submit a pull request or raise an issue.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🏆 License
+This project is licensed under the MIT License.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+MIT License
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Copyright © 2024 ALI Sherry
 
-## Learn More
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🙏 Acknowledgments
+Special thanks to the university's cafeteria management team for their cooperation and feedback during the development of this project. A big thank you to the React and Bootstrap communities for their amazing tools and support.
