@@ -6,15 +6,15 @@ The **University Cafeteria Front End** is a web application designed to enhance 
 > **⚠ Note**: This is the **front-end** portion of the project. The back-end can be found in another repository.
 
 ## 🧾 Table of Contents
-- [🖥 Technologies Used](#technologies-used)
-- [✅ Problem Solved](#problem-solved)
-- [👥 User Roles](#user-roles)
-- [💻 Pages Overview](#pages-overview)
-- [👨‍💻 Installation](#installation)
-- [🎯 Usage](#usage)
-- [🎉 Contributing](#contributing)
-- [🏆 License](#license)
-- [🙏 Acknowledgments](#acknowledgments)
+- [🖥 Technologies Used](#-technologies-used)
+- [✅ Problem Solved](#-problem-solved)
+- [👥 User Roles](#-user-roles)
+- [💻 Pages Overview](#-pages-overview)
+- [👨‍💻 Installation](#-installation)
+- [🎯 Usage](#-usage)
+- [🎉 Contributing](#-contributing)
+- [🏆 License](#-license)
+- [🙏 Acknowledgments](#-acknowledgments)
 
 ## 🖥 Technologies Used
 The front end of the University Cafeteria web app is built using:
