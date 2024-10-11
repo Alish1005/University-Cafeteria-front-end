@@ -80,7 +80,7 @@ To get this project running locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/university-cafeteria-frontend.git
+   git clone https://github.com/yourusername/University-Cafeteria-front-end-.git
    ```
 2. Navigate to the project directory:
    ```bash
